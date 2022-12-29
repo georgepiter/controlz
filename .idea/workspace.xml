@@ -5,23 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a50bbed-17a8-41e5-a454-452725bd7f93" name="Changes" comment="configured project">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/br/com/controlz/ControlzApplicationTests.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/RegisterController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/RegisterDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Debt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Register.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/FieldException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/PhoneException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/RegisterException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/ValueException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/RegisterRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/EmailUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/MoneyUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/PhoneUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/ControlzApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/ControlzApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,11 +60,34 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="br.com.controlz.domain.exception" />
+      <recent name="br.com.controlz.domain.dto" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="br.com.controlz.service" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.com.controlz.utils" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ControlzApplication">
     <configuration name="ControlzApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="DATABASE_URL" value="jdbc:mysql://localhost:3306/controlz?serverTimezone=UTC&amp;useLegacyDatetimeCode=false" />
+        <env name="DATABASE_USERNAME" value="root" />
+        <env name="DATABASE_PASSWORD" value="3425" />
+        <env name="JWT_SECRET" value="MzQyNTAwbW9uaw==" />
+        <env name="JWT_EXPIRATION" value="3600000" />
+      </envs>
       <option name="MAIN_CLASS_NAME" value="br.com.controlz.ControlzApplication" />
       <module name="controlz" />
       <extension name="coverage">
@@ -61,9 +100,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PhoneUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="br.com.controlz.utils.PhoneUtils" />
+      <module name="controlz" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.controlz.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.ControlzApplication" />
+      <item itemvalue="Application.PhoneUtils" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ControlzApplication" />
+        <item itemvalue="Application.PhoneUtils" />
       </list>
     </recent_temporary>
   </component>
@@ -83,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672095404090</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="configured project">
+      <created>1672095769603</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1672095769603</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -100,5 +164,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="configured project" />
     <option name="LAST_COMMIT_MESSAGE" value="configured project" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
