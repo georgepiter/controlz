@@ -4,27 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a50bbed-17a8-41e5-a454-452725bd7f93" name="Changes" comment="configured project">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/RegisterController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/RegisterDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Debt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Register.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/FieldException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/PhoneException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/RegisterException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/ValueException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/RegisterRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/EmailUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/MoneyUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/PhoneUtils.java" afterDir="false" />
+    <list default="true" id="8a50bbed-17a8-41e5-a454-452725bd7f93" name="Changes" comment="configured Service register new person">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/ResponseEntityError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/ControlzApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/ControlzApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/PhoneException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/PhoneException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/RegisterException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/RegisterException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/PhoneException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/PhoneException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/RegisterException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/RegisterException.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672095769603</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="configured Service register new person">
+      <created>1672275592743</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1672275592743</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -163,17 +157,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="configured project" />
-    <option name="LAST_COMMIT_MESSAGE" value="configured project" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="configured Service register new person" />
+    <option name="LAST_COMMIT_MESSAGE" value="configured Service register new person" />
   </component>
 </project>
