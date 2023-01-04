@@ -10,13 +10,13 @@ import java.util.Objects;
 public class Debt implements Serializable {
 
 	@ManyToOne
-	@JoinColumn(name = "debt", updatable = false, insertable = false)
+	@JoinColumn(name = "register_id", updatable = false, insertable = false)
 	private Register register;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long id;
+	private Long idDebt;
 
 	@Column(name = "input_date")
 	private LocalDate inputDate;
@@ -27,19 +27,34 @@ public class Debt implements Serializable {
 	@Column(name = "value")
 	private Double value;
 
-	protected Debt(LocalDate inputDate, String debtDescription, Double value) {
+	@Column(name = "register_id")
+	private Long idRegister;
+
+	public Debt() {
+	}
+
+	protected Debt(Long idDebt, LocalDate inputDate, String debtDescription, Double value, Long idRegister) {
+		this.idDebt = idDebt;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
 		this.value = value;
+		this.idRegister = idRegister;
 	}
 
 	public static final class Builder {
-
+		private Long idDebt;
 		private LocalDate inputDate;
 		private String debtDescription;
 		private Double value;
+		private Long idRegister;
 
 		public Builder() {
+			//ignored
+		}
+
+		public Builder idDebt(Long val) {
+			idDebt = val;
+			return this;
 		}
 
 		public Builder inputDate(LocalDate val) {
@@ -57,11 +72,28 @@ public class Debt implements Serializable {
 			return this;
 		}
 
+		public Builder idRegister(Long val) {
+			idRegister = val;
+			return this;
+		}
+
 		public Debt createDebt() {
 			return new Debt(
-					inputDate, debtDescription, value
+					idDebt,inputDate, debtDescription, value, idRegister
 			);
 		}
+	}
+
+	public void setIdDebt(Long idDebt) {
+		this.idDebt = idDebt;
+	}
+
+	public Long getIdDebt() {
+		return idDebt;
+	}
+
+	public Long getIdRegister() {
+		return idRegister;
 	}
 
 	public LocalDate getInputDate() {
@@ -88,24 +120,31 @@ public class Debt implements Serializable {
 		this.value = value;
 	}
 
+	public void setIdRegister(Long idRegister) {
+		this.idRegister = idRegister;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Debt debt = (Debt) o;
-		return Objects.equals(id, debt.id) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value);
+		return Objects.equals(register, debt.register) && Objects.equals(idDebt, debt.idDebt) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value) && Objects.equals(idRegister, debt.idRegister);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, inputDate, debtDescription, value);
+		return Objects.hash(register, idDebt, inputDate, debtDescription, value, idRegister);
 	}
 
 	@Override
 	public String toString() {
-		return "Debt{" + "inputDate=" + inputDate +
+		return "Debt{" + "register=" + register +
+				", id=" + idDebt +
+				", inputDate=" + inputDate +
 				", debtDescription='" + debtDescription + '\'' +
 				", value=" + value +
+				", idRegister=" + idRegister +
 				'}';
 	}
 }

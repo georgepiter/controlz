@@ -3,22 +3,19 @@ package br.com.controlz.domain.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "register")
 public class Register implements Serializable {
 
-	@OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "register", cascade = CascadeType.REMOVE)
 	private final List<Debt> debts = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long id;
+	private Long idRegister;
 
 	@Column(name = "name")
 	private String name;
@@ -41,10 +38,14 @@ public class Register implements Serializable {
 	@Column(name = "photo")
 	private byte[] photo;
 
+	@Column(name = "update_date")
+	private LocalDate updateDate;
+
 	public Register() {
 	}
 
-	protected Register(String name, LocalDate registrationDate, String email, String cell, Double others, Double salary, byte[] photo) {
+	protected Register(Long idRegister, String name, LocalDate registrationDate, String email, String cell, Double others, Double salary, byte[] photo, LocalDate updateDate) {
+		this.idRegister = idRegister;
 		this.name = name;
 		this.registrationDate = registrationDate;
 		this.email = email;
@@ -52,10 +53,11 @@ public class Register implements Serializable {
 		this.others = others;
 		this.salary = salary;
 		this.photo = photo;
+		this.updateDate = updateDate;
 	}
 
 	public static final class Builder {
-
+		private Long id;
 		private String name;
 		private LocalDate registrationDate;
 		private String email;
@@ -63,8 +65,15 @@ public class Register implements Serializable {
 		private Double others;
 		private Double salary;
 		private byte[] photo;
+		private LocalDate update;
 
 		public Builder() {
+			//ignored
+		}
+
+		public Builder id(Long val) {
+			id = val;
+			return this;
 		}
 
 		public Builder name(String val) {
@@ -102,12 +111,25 @@ public class Register implements Serializable {
 			return this;
 		}
 
+		public Builder update(LocalDate val) {
+			update = val;
+			return this;
+		}
+
 		public Register createNewRegister() {
 			return new Register(
-					name, registrationDate, email,
-					cell, others, salary, photo
+					id, name, registrationDate, email,
+					cell, others, salary, photo, update
 			);
 		}
+	}
+
+	public List<Debt> getDebts() {
+		return debts;
+	}
+
+	public Long getIdRegister() {
+		return idRegister;
 	}
 
 	public String getName() {
@@ -166,30 +188,38 @@ public class Register implements Serializable {
 		this.photo = photo;
 	}
 
+	public LocalDate getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(LocalDate updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Register register = (Register) o;
-		return Objects.equals(id, register.id) && Objects.equals(name, register.name) && Objects.equals(registrationDate, register.registrationDate) && Objects.equals(email, register.email) && Objects.equals(cell, register.cell) && Objects.equals(others, register.others) && Objects.equals(salary, register.salary) && Arrays.equals(photo, register.photo);
+		return Objects.equals(idRegister, register.idRegister) && Objects.equals(name, register.name) && Objects.equals(registrationDate, register.registrationDate) && Objects.equals(email, register.email) && Objects.equals(cell, register.cell) && Objects.equals(others, register.others) && Objects.equals(salary, register.salary) && Objects.equals(updateDate, register.updateDate);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = Objects.hash(id, name, registrationDate, email, cell, others, salary);
-		result = 31 * result + Arrays.hashCode(photo);
-		return result;
+		return Objects.hash(idRegister, name, registrationDate, email, cell, others, salary, updateDate);
 	}
 
 	@Override
 	public String toString() {
-		return "Register{" + "name='" + name + '\'' +
-				", registrationDate=" + registrationDate +
-				", email='" + email + '\'' +
-				", cell='" + cell + '\'' +
-				", others=" + others +
-				", salary=" + salary +
-				", photo=" + Arrays.toString(photo) +
-				'}';
+		return new StringJoiner(", ", Register.class.getSimpleName() + "[", "]")
+				.add("id=" + idRegister)
+				.add("name='" + name + "'")
+				.add("registrationDate=" + registrationDate)
+				.add("email='" + email + "'")
+				.add("cell='" + cell + "'")
+				.add("others=" + others)
+				.add("salary=" + salary)
+				.add("updateDate=" + updateDate)
+				.toString();
 	}
 }

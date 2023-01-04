@@ -28,4 +28,13 @@ public class RestExceptionHandler {
 	public ResponseEntityError handleConflict(Exception e) {
 		return new ResponseEntityError(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, e.getMessage());
 	}
+
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler({
+			RegisterNotFoundException.class,
+			DebtNotFoundException.class
+	})
+	public ResponseEntityError handleNotFound(Exception e) {
+		return new ResponseEntityError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
+	}
 }
