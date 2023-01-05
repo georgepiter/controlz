@@ -4,35 +4,76 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a50bbed-17a8-41e5-a454-452725bd7f93" name="Changes" comment="created handler for registerService">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtValueDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/DebtNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/RegisterNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/DebtService.java" afterDir="false" />
+    <list default="true" id="8a50bbed-17a8-41e5-a454-452725bd7f93" name="Changes" comment="updated project with spring boot 3 and java17">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/security/Email.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/security/EmailProperty.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/security/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/security/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/enums/RoleEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/enums/StatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/UserException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/RegisterDTO$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/UserDto$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/UserDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/security/Email.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/security/EmailProperty.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/security/Role.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/security/User$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/security/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/enums/RoleEnum.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/enums/StatusEnum.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/DebtNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/RegisterNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/UserException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/UserRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/UserService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/RegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/RegisterDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/Constant.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Debt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Debt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Register.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/FieldException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/FieldException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/ValueException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/ValueException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/RegisterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/RegisterRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/EmailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/EmailUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/ControlzApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/ControlzApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/RegisterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/RegisterController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/Constant.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/RegisterDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/RegisterDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/ResponseEntityError.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/ResponseEntityError.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt$Builder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Register$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Register$Builder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Register.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Register.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/EmailException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/EmailException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/FieldException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/FieldException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/PhoneException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/PhoneException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/RegisterException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/RegisterException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/ValueException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exception/ValueException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/RegisterRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/RegisterRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/utils/EmailUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/utils/EmailUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/utils/MoneyUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/utils/MoneyUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/utils/PhoneUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/utils/PhoneUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/br/com/controlz/ControlzApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/br/com/controlz/ControlzApplicationTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +119,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/enum" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -87,14 +131,27 @@
       <recent name="br.com.controlz.domain.dto" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz\domain\enum" />
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz\domain\entity\security" />
       <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz\domain" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="br.com.controlz.service" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.com.controlz.domain.dto" />
+      <recent name="br.com.controlz.domain.repository" />
       <recent name="br.com.controlz.utils" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean:clean" />
+      <command value="mvn install" />
+    </option>
   </component>
   <component name="RunManager" selected="Application.ControlzApplication">
     <configuration name="ControlzApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -178,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672359963781</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="full crud for financial control project">
+      <created>1672860104667</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1672860104667</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -196,7 +260,9 @@
     <MESSAGE value="configured project" />
     <MESSAGE value="configured Service register new person" />
     <MESSAGE value="created handler for registerService" />
-    <option name="LAST_COMMIT_MESSAGE" value="created handler for registerService" />
+    <MESSAGE value="full crud for financial control project" />
+    <MESSAGE value="updated project with spring boot 3 and java17" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated project with spring boot 3 and java17" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

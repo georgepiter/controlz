@@ -15,7 +15,8 @@ public class RestExceptionHandler {
 			PhoneException.class,
 			EmailException.class,
 			FieldException.class,
-			ValueException.class
+			ValueException.class,
+			EmailException.class
 	})
 	public ResponseEntityError handleBadRequest(Exception e) {
 		return new ResponseEntityError(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, e.getMessage());
@@ -23,7 +24,8 @@ public class RestExceptionHandler {
 
 	@ResponseStatus(HttpStatus.CONFLICT)
 	@ExceptionHandler({
-			RegisterException.class
+			RegisterException.class,
+			UserException.class
 	})
 	public ResponseEntityError handleConflict(Exception e) {
 		return new ResponseEntityError(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, e.getMessage());
