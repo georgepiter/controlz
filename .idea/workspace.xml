@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="update java version" />
+    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="update pom" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673066732059</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update pom">
+      <created>1673067138579</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1673067138579</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,6 +175,7 @@
     <MESSAGE value="adjust the build" />
     <MESSAGE value="adjust the archive yml" />
     <MESSAGE value="update java version" />
-    <option name="LAST_COMMIT_MESSAGE" value="update java version" />
+    <MESSAGE value="update pom" />
+    <option name="LAST_COMMIT_MESSAGE" value="update pom" />
   </component>
 </project>
