@@ -116,6 +116,6 @@ public class DebtService {
 	}
 
 	public ResponseEntity<HttpStatus> payValue(Long debtId) {
-		return null;
+		return null;//todo parei aqui
 	}
 }
