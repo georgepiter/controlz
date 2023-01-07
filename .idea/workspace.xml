@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="teste sonar">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-br.com.controlz.ControlzApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-br.com.controlz.ControlzApplicationTests.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/br.com.controlz.ControlzApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/br.com.controlz.ControlzApplicationTests.txt" afterDir="false" />
-    </list>
+    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="update sonar configuration yml" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673061479906</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update sonar configuration yml">
+      <created>1673064331385</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1673064331385</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -115,6 +114,7 @@
     <MESSAGE value="add payment date to pojo debt" />
     <MESSAGE value="teste" />
     <MESSAGE value="teste sonar" />
-    <option name="LAST_COMMIT_MESSAGE" value="teste sonar" />
+    <MESSAGE value="update sonar configuration yml" />
+    <option name="LAST_COMMIT_MESSAGE" value="update sonar configuration yml" />
   </component>
 </project>
