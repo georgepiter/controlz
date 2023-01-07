@@ -1,6 +1,10 @@
 package br.com.controlz.domain.dto;
 
-public class UserDto {
+import br.com.controlz.domain.entity.security.User;
+import br.com.controlz.domain.enums.RoleEnum;
+import br.com.controlz.domain.enums.StatusEnum;
+
+public class UserDTO {
 
 	private Long idUser;
 	private String name;
@@ -10,10 +14,10 @@ public class UserDto {
 	private String status;
 	private String perfil;
 
-	public UserDto() {
+	public UserDTO() {
 	}
 
-	protected UserDto(Long idUser, String name, String password, String email, Long idRole, String status, String perfil) {
+	protected UserDTO(Long idUser, String name, String password, String email, Long idRole, String status, String perfil) {
 		this.idUser = idUser;
 		this.name = name;
 		this.password = password;
@@ -21,6 +25,14 @@ public class UserDto {
 		this.idRole = idRole;
 		this.status = status;
 		this.perfil = perfil;
+	}
+
+	public UserDTO(User user) {
+		name = user.getName();
+		email = user.getEmail();
+		idRole = user.getIdRole();
+		status = user.getStatus().equals(StatusEnum.ACTIVE.getValue()) ? "ACTIVE" : "INACTIVE";
+		perfil = user.getIdRole().equals(RoleEnum.ADMIN.getCod()) ? "ADMIN" : "MANAGER";
 	}
 
 	public static final class Builder {
@@ -70,8 +82,8 @@ public class UserDto {
 			return this;
 		}
 
-		public UserDto createNewUser() {
-			return new UserDto(
+		public UserDTO createNewUser() {
+			return new UserDTO(
 					idUser, name, password, email,
 					idRole, status, perfil
 			);

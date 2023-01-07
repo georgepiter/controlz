@@ -1,10 +1,10 @@
 package br.com.controlz.domain.entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
 @Table(name = "debt_control")
@@ -31,15 +31,19 @@ public class Debt implements Serializable {
 	@Column(name = "register_id")
 	private Long idRegister;
 
+	@Column(name = "status")
+	private Integer status;
+
 	public Debt() {
 	}
 
-	protected Debt(Long idDebt, LocalDate inputDate, String debtDescription, Double value, Long idRegister) {
+	protected Debt(Long idDebt, LocalDate inputDate, String debtDescription, Double value, Long idRegister,Integer status) {
 		this.idDebt = idDebt;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
 		this.value = value;
 		this.idRegister = idRegister;
+		this.status = status;
 	}
 
 	public static final class Builder {
@@ -48,6 +52,7 @@ public class Debt implements Serializable {
 		private String debtDescription;
 		private Double value;
 		private Long idRegister;
+		private Integer status;
 
 		public Builder() {
 			//ignored
@@ -78,9 +83,14 @@ public class Debt implements Serializable {
 			return this;
 		}
 
+		public Builder status(Integer val) {
+			status = val;
+			return this;
+		}
+
 		public Debt createDebt() {
 			return new Debt(
-					idDebt,inputDate, debtDescription, value, idRegister
+					idDebt,inputDate, debtDescription, value, idRegister,status
 			);
 		}
 	}
@@ -125,27 +135,37 @@ public class Debt implements Serializable {
 		this.idRegister = idRegister;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Debt debt = (Debt) o;
-		return Objects.equals(register, debt.register) && Objects.equals(idDebt, debt.idDebt) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value) && Objects.equals(idRegister, debt.idRegister);
+		return Objects.equals(register, debt.register) && Objects.equals(idDebt, debt.idDebt) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value) && Objects.equals(idRegister, debt.idRegister) && Objects.equals(status, debt.status);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(register, idDebt, inputDate, debtDescription, value, idRegister);
+		return Objects.hash(register, idDebt, inputDate, debtDescription, value, idRegister, status);
 	}
 
 	@Override
 	public String toString() {
-		return "Debt{" + "register=" + register +
-				", id=" + idDebt +
-				", inputDate=" + inputDate +
-				", debtDescription='" + debtDescription + '\'' +
-				", value=" + value +
-				", idRegister=" + idRegister +
-				'}';
+		return new StringJoiner(", ", Debt.class.getSimpleName() + "[", "]")
+				.add("register=" + register)
+				.add("idDebt=" + idDebt)
+				.add("inputDate=" + inputDate)
+				.add("debtDescription='" + debtDescription + "'")
+				.add("value=" + value)
+				.add("idRegister=" + idRegister)
+				.add("status=" + status)
+				.toString();
 	}
 }

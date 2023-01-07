@@ -3,6 +3,8 @@ package br.com.controlz.domain.exceptionHandler;
 import br.com.controlz.domain.dto.ResponseEntityError;
 import br.com.controlz.domain.exception.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,9 +36,19 @@ public class RestExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler({
 			RegisterNotFoundException.class,
-			DebtNotFoundException.class
+			DebtNotFoundException.class,
+			UsernameNotFoundException.class
 	})
 	public ResponseEntityError handleNotFound(Exception e) {
 		return new ResponseEntityError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
+	}
+
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ExceptionHandler({
+			AuthenticationException.class,
+			AuthInvalidException.class
+	})
+	public ResponseEntityError handleForbidden(Exception e) {
+		return new ResponseEntityError(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN, e.getMessage());
 	}
 }

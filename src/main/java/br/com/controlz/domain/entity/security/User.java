@@ -1,7 +1,6 @@
 package br.com.controlz.domain.entity.security;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -37,6 +36,9 @@ public class User implements Serializable {
 
 	@Column(name = "status")
 	private Integer status;
+
+	public User() {
+	}
 
 	public User(Role role, Long idUser, String name, String password, String email, LocalDateTime createTime, Long idRole, Integer status) {
 		this.role = role;
