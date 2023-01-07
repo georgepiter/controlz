@@ -4,6 +4,7 @@ import br.com.controlz.domain.dto.DebtDTO;
 import br.com.controlz.domain.dto.DebtValueDTO;
 import br.com.controlz.domain.entity.Debt;
 import br.com.controlz.domain.entity.Register;
+import br.com.controlz.domain.enums.StatusEnum;
 import br.com.controlz.domain.exception.DebtNotFoundException;
 import br.com.controlz.domain.exception.RegisterNotFoundException;
 import br.com.controlz.domain.repository.DebtRepository;
@@ -44,6 +45,7 @@ public class DebtService {
 				.inputDate(LocalDate.now())
 				.value(debt.getValue())
 				.idRegister(idRegister)
+				.status(StatusEnum.AWAITING_PAYMENT.getValue())
 				.createDebt();
 	}
 
@@ -111,5 +113,9 @@ public class DebtService {
 			throw new DebtNotFoundException("Valor não encontrado pelo ID");
 		}
 		return debt.get();
+	}
+
+	public ResponseEntity<HttpStatus> payValue(Long debtId) {
+		return null;
 	}
 }

@@ -1,9 +1,9 @@
 package br.com.controlz.service;
 
+import br.com.controlz.domain.dto.UserDTO;
+import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
-import br.com.controlz.domain.dto.UserDto;
-import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.UserException;
 import br.com.controlz.domain.repository.UserRepository;
@@ -13,8 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -28,13 +28,13 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public ResponseEntity<HttpStatus> registerNewUser(UserDto userDTO) throws EmailException, UserException {
+	public ResponseEntity<HttpStatus> registerNewUser(UserDTO userDTO) throws EmailException, UserException {
 		if (!EmailUtils.isEmailPatternValid(userDTO.getEmail())) {
 			throw new EmailException("O Email não está no formato válido");
 		}
 		List<User> allUsers = userRepository.findAll()
 				.stream().filter(user -> user.getName().equals(userDTO.getName())
-						|| user.getEmail().equals(userDTO.getEmail())).collect(Collectors.toList());
+						|| user.getEmail().equals(userDTO.getEmail())).toList();
 		if (!allUsers.isEmpty()) {
 			throw new UserException("Usuário já cadastrado com nome ou e-mail");
 		}
@@ -43,6 +43,7 @@ public class UserService {
 				.email(userDTO.getEmail())
 				.idRole(RoleEnum.MANAGER.getCod())
 				.status(StatusEnum.ACTIVE.getValue())
+				.createTime(LocalDateTime.now())
 				.password(passwordEncoder.encode(userDTO.getPassword()))
 				.createNewUser();
 		userRepository.save(newUser);
