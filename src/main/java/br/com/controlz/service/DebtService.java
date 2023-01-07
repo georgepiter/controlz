@@ -115,7 +115,13 @@ public class DebtService {
 		return debt.get();
 	}
 
-	public ResponseEntity<HttpStatus> payValue(Long debtId) {
-		return null;//todo parei aqui
+	public ResponseEntity<HttpStatus> payValue(DebtDTO debtDTO) throws DebtNotFoundException {
+		Optional<Debt> debt = debtRepository.findById(debtDTO.getIdDebt());
+		if (debt.isEmpty()) {
+			throw new DebtNotFoundException("Débito não encontrado pelo ID informado");
+		}
+		debt.get().setStatus(StatusEnum.PAY.getValue());
+		debtRepository.save(debt.get());
+		return ResponseEntity.ok(HttpStatus.OK);
 	}
 }
