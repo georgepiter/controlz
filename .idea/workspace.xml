@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="adjust the archive yml" />
+    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="update java version" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +30,7 @@
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn install" />
+      <command value="mvn compile" />
     </option>
   </component>
   <component name="RunManager">
@@ -116,7 +117,21 @@
       <option name="project" value="LOCAL" />
       <updated>1673065881485</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="adjust the archive yml">
+      <created>1673066279770</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1673066279770</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update java version">
+      <created>1673066458848</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1673066458848</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -138,6 +153,7 @@
     <MESSAGE value="update sonar configuration yml" />
     <MESSAGE value="adjust the build" />
     <MESSAGE value="adjust the archive yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjust the archive yml" />
+    <MESSAGE value="update java version" />
+    <option name="LAST_COMMIT_MESSAGE" value="update java version" />
   </component>
 </project>
