@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="update adjust">
+    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="add payment date to pojo debt">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +70,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673060078355</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add payment date to pojo debt">
+      <created>1673060857367</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1673060857367</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -85,6 +93,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update adjust" />
-    <option name="LAST_COMMIT_MESSAGE" value="update adjust" />
+    <MESSAGE value="add payment date to pojo debt" />
+    <option name="LAST_COMMIT_MESSAGE" value="add payment date to pojo debt" />
   </component>
 </project>
