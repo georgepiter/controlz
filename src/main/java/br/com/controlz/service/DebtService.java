@@ -121,6 +121,7 @@ public class DebtService {
 			throw new DebtNotFoundException("Débito não encontrado pelo ID informado");
 		}
 		debt.get().setStatus(StatusEnum.PAY.getValue());
+		debt.get().setPaymentDate(LocalDate.now());
 		debtRepository.save(debt.get());
 		return ResponseEntity.ok(HttpStatus.OK);
 	}

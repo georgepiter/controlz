@@ -56,7 +56,7 @@ public class DebtController {
 	@ApiOperation(value = "Método utilizado para pagar um débito")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public ResponseEntity<HttpStatus> payValue(@RequestBody DebtDTO debtDTO) throws DebtNotFoundException {
-		return debtService.payValue(debtDTO);
+		return debtService.payValue(debtDTO);//todo implementar métodos que trás todas pagas e todas devidas
 	}
 
 	@DeleteMapping(value = "/debtId/{debtId}")
