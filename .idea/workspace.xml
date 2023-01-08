@@ -4,8 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="update pom">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="remove sonar">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtValueDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtValueDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/DebtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/DebtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO$Builder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO$Builder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/controlz-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/controlz-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/controlz-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/controlz-1.0.0.jar.original" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +58,7 @@
         <env name="DATABASE_USERNAME" value="root" />
         <env name="DATABASE_PASSWORD" value="3425" />
         <env name="JWT_SECRET" value="5062fb05-4b43-4358-9bef-dfa5fbc11a33" />
-        <env name="JWT_EXPIRATION" value="300000" />
+        <env name="JWT_EXPIRATION" value="30000000" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="br.com.controlz.ControlzApplication" />
       <module name="controlz" />
@@ -161,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673067410867</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="remove sonar">
+      <created>1673067960263</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1673067960263</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +208,7 @@
     <MESSAGE value="adjust the archive yml" />
     <MESSAGE value="update java version" />
     <MESSAGE value="update pom" />
-    <option name="LAST_COMMIT_MESSAGE" value="update pom" />
+    <MESSAGE value="remove sonar" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove sonar" />
   </component>
 </project>

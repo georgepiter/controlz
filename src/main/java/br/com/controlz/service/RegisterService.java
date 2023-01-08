@@ -171,7 +171,7 @@ public class RegisterService {
 		Register register = getRegister(registerId);
 		double totalEntryValue = register.getSalary() + register.getOthers();
 		return new DebtValueDTO.Builder()
-				.entryDebtValue(totalEntryValue)
+				.totalEntryValue(totalEntryValue)
 				.createNewDebtValue();
 	}
 
@@ -188,7 +188,7 @@ public class RegisterService {
 		double fullDebt = debtService.getFullDebt(registerId).getTotalDebt();
 		double currentEntryValue = register.getSalary() - fullDebt;
 		return new DebtValueDTO.Builder()
-				.currentDebtValue(currentEntryValue)
+				.currentTotalValue(currentEntryValue)
 				.createNewDebtValue();
 	}
 }

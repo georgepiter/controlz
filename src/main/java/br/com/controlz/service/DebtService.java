@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -51,12 +52,11 @@ public class DebtService {
 
 	public DebtValueDTO getAllDebtsByRegister(Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
 		List<Debt> debts = getDebts(registerId);
-		String name = registerRepository.findById(registerId)
-				.stream().findAny().orElseThrow(() -> new RegisterNotFoundException("Registro não encontrado")).getName();
-		return new DebtValueDTO.Builder()
-				.name(name)
-				.debtList(buildNewDebtListByRegister(debts))
-				.createNewDebtValue();
+		Optional<Register> register = registerRepository.findById(registerId);
+		if (register.isEmpty()) {
+			throw new RegisterNotFoundException("Registro não encontrado na base");
+		}
+		return buildDebtValueDTO(register.get(), debts);
 	}
 
 	private List<Debt> getDebts(Long registerId) throws DebtNotFoundException {
@@ -68,18 +68,21 @@ public class DebtService {
 	}
 
 	private List<DebtDTO> buildNewDebtListByRegister(List<Debt> debts) {
-		List<DebtDTO> newDebtValue = new ArrayList<>();
+		List<DebtDTO> debtsDTO = new ArrayList<>();
 		for (Debt debt : debts) {
+			String statusLabel = debt.getStatus().equals(StatusEnum.PAY.getValue()) ? "PAGO" : "Aguardando Pagamento";
 			DebtDTO newDebtDTO = new DebtDTO.Builder()
 					.idDebt(debt.getIdDebt())
 					.idRegister(debt.getIdRegister())
 					.debtDescription(debt.getDebtDescription())
 					.value(debt.getValue())
 					.inputDate(debt.getInputDate())
+					.status(statusLabel)
+					.paymentDate(debt.getPaymentDate())
 					.createNewDebtDTO();
-			newDebtValue.add(newDebtDTO);
+			debtsDTO.add(newDebtDTO);
 		}
-		return newDebtValue;
+		return debtsDTO;
 	}
 
 	public DebtValueDTO getFullDebt(Long registerId) throws DebtNotFoundException {
@@ -124,5 +127,42 @@ public class DebtService {
 		debt.get().setPaymentDate(LocalDate.now());
 		debtRepository.save(debt.get());
 		return ResponseEntity.ok(HttpStatus.OK);
+	}
+
+	public DebtValueDTO getAllDebtsByStatusAndRegister(boolean isPay, Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
+		List<Debt> debts;
+		if (isPay) {
+			debts = findByDebtByStatusAndRegisterId(StatusEnum.PAY.getValue(), registerId);
+		} else {
+			debts = findByDebtByStatusAndRegisterId(StatusEnum.AWAITING_PAYMENT.getValue(), registerId);
+		}
+		if (debts.isEmpty()) {
+			throw new DebtNotFoundException("Não foram encontrados débitos na base");
+		}
+		Optional<Register> register = registerRepository.findById(registerId);
+		if (register.isEmpty()) {
+			throw new RegisterNotFoundException("Registro não encontrado na base pelo ID");
+		}
+
+		return buildDebtValueDTO(register.get(), debts);//todo olhar os dtos e usar herança por conta de atributos repetidos
+	}
+
+	private DebtValueDTO buildDebtValueDTO(Register register, List<Debt> debts) throws DebtNotFoundException {
+		double fullDebt = getFullDebt(register.getIdRegister()).getTotalDebt();
+		double salary = register.getSalary();
+		double othersValue = Objects.isNull(register.getOthers()) ? 0.00 : register.getOthers();
+		double currentTotalValue = (salary - fullDebt) + othersValue;
+
+		return new DebtValueDTO.Builder()
+				.name(register.getName())
+				.debtList(buildNewDebtListByRegister(debts))
+				.totalEntryValue(salary + register.getOthers())
+				.currentTotalValue(currentTotalValue)
+				.totalDebt(fullDebt)
+				.createNewDebtValue();
+	}
+
+	private List<Debt> findByDebtByStatusAndRegisterId(Integer status, Long registerId) {
+		return debtRepository.findByStatusAndIdRegister(status, registerId);
 	}
 }
