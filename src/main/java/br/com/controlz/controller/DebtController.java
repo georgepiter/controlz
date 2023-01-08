@@ -38,11 +38,18 @@ public class DebtController {
 		return debtService.getAllDebtsByRegister(registerId);
 	}
 
-	@GetMapping(value = "/fullDebt/{registerId}")
-	@ApiOperation(value = "Método que retorna o valor total em débitos por ID Registo")
+	@GetMapping(value = "/allPay/{registerId}")
+	@ApiOperation(value = "Método que retorna todos débitos pagos")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getFullDebt(@PathVariable Long registerId) throws DebtNotFoundException {
-		return debtService.getFullDebt(registerId);
+	public DebtValueDTO getAllDebtsPay(@PathVariable Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
+		return debtService.getAllDebtsByStatusAndRegister(true, registerId);
+	}
+
+	@GetMapping(value = "/allDue/{registerId}")
+	@ApiOperation(value = "Método que retorna todos débitos á pagar")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public DebtValueDTO getAllDebtsDue(@PathVariable Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
+		return debtService.getAllDebtsByStatusAndRegister(false, registerId);
 	}
 
 	@PutMapping(value = "/update")
@@ -56,7 +63,7 @@ public class DebtController {
 	@ApiOperation(value = "Método utilizado para pagar um débito")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public ResponseEntity<HttpStatus> payValue(@RequestBody DebtDTO debtDTO) throws DebtNotFoundException {
-		return debtService.payValue(debtDTO);//todo implementar métodos que trás todas pagas e todas devidas
+		return debtService.payValue(debtDTO);
 	}
 
 	@DeleteMapping(value = "/debtId/{debtId}")

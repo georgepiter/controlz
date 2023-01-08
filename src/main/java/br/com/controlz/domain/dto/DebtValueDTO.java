@@ -7,23 +7,23 @@ public class DebtValueDTO {
 	private String name;
 	private List<DebtDTO> debtList;
 	private Double totalDebt;
-	private Double entryDebtValue;
-	private Double currentDebtValue;
+	private Double totalEntryValue;
+	private Double currentTotalValue;
 
-	protected DebtValueDTO(String name, List<DebtDTO> debtList, Double totalDebt, Double entryDebtValue, Double currentDebtValue) {
+	protected DebtValueDTO(String name, List<DebtDTO> debtList, Double totalDebt, Double totalEntryValue, Double currentTotalValue) {
 		this.name = name;
 		this.debtList = debtList;
 		this.totalDebt = totalDebt;
-		this.entryDebtValue = entryDebtValue;
-		this.currentDebtValue = currentDebtValue;
+		this.totalEntryValue = totalEntryValue;
+		this.currentTotalValue = currentTotalValue;
 	}
 
 	public static final class Builder {
 		private String name;
 		private List<DebtDTO> debtList;
 		private Double totalDebt;
-		private Double entryDebtValue;
-		private Double currentDebtValue;
+		private Double totalEntryValue;
+		private Double currentTotalValue;
 
 		public Builder() {
 			//ignored
@@ -44,19 +44,19 @@ public class DebtValueDTO {
 			return this;
 		}
 
-		public Builder entryDebtValue(Double val) {
-			entryDebtValue = val;
+		public Builder totalEntryValue(Double val) {
+			totalEntryValue = val;
 			return this;
 		}
 
-		public Builder currentDebtValue(Double val) {
-			currentDebtValue = val;
+		public Builder currentTotalValue(Double val) {
+			currentTotalValue = val;
 			return this;
 		}
 
 		public DebtValueDTO createNewDebtValue() {
 			return new DebtValueDTO(
-					name, debtList, totalDebt, entryDebtValue, currentDebtValue
+					name, debtList, totalDebt, totalEntryValue, currentTotalValue
 			);
 		}
 	}
@@ -85,19 +85,19 @@ public class DebtValueDTO {
 		this.totalDebt = totalDebt;
 	}
 
-	public Double getEntryDebtValue() {
-		return entryDebtValue;
+	public Double getTotalEntryValue() {
+		return totalEntryValue;
 	}
 
-	public void setEntryDebtValue(Double entryDebtValue) {
-		this.entryDebtValue = entryDebtValue;
+	public void setTotalEntryValue(Double totalEntryValue) {
+		this.totalEntryValue = totalEntryValue;
 	}
 
-	public Double getCurrentDebtValue() {
-		return currentDebtValue;
+	public Double getCurrentTotalValue() {
+		return currentTotalValue;
 	}
 
-	public void setCurrentDebtValue(Double currentDebtValue) {
-		this.currentDebtValue = currentDebtValue;
+	public void setCurrentTotalValue(Double currentTotalValue) {
+		this.currentTotalValue = currentTotalValue;
 	}
 }

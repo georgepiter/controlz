@@ -10,14 +10,19 @@ public class DebtDTO {
 	private LocalDate inputDate;
 	private String debtDescription;
 	private Double value;
+	private String status;
+	private LocalDate paymentDate;
 
-	protected DebtDTO(Long idDebt, Long idRegister, String name, LocalDate inputDate, String debtDescription, Double value) {
+	protected DebtDTO(Long idDebt, Long idRegister, String name, LocalDate inputDate,
+					  String debtDescription, Double value, String status, LocalDate paymentDate) {
 		this.idDebt = idDebt;
 		this.idRegister = idRegister;
 		this.name = name;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
 		this.value = value;
+		this.status = status;
+		this.paymentDate = paymentDate;
 	}
 
 	public static final class Builder {
@@ -27,6 +32,8 @@ public class DebtDTO {
 		private LocalDate inputDate;
 		private String debtDescription;
 		private Double value;
+		private String status;
+		private LocalDate paymentDate;
 
 		public Builder() {
 			//ignored
@@ -62,9 +69,19 @@ public class DebtDTO {
 			return this;
 		}
 
+		public Builder status(String val) {
+			status = val;
+			return this;
+		}
+
+		public Builder paymentDate(LocalDate val) {
+			paymentDate = val;
+			return this;
+		}
+
 		public DebtDTO createNewDebtDTO() {
 			return new DebtDTO(
-					idDebt, idRegister, name, inputDate, debtDescription, value
+					idDebt, idRegister, name, inputDate, debtDescription, value, status, paymentDate
 			);
 		}
 	}
@@ -115,5 +132,21 @@ public class DebtDTO {
 
 	public void setValue(Double value) {
 		this.value = value;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public LocalDate getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(LocalDate paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 }
