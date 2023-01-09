@@ -18,7 +18,8 @@ public class RestExceptionHandler {
 			EmailException.class,
 			FieldException.class,
 			ValueException.class,
-			EmailException.class
+			EmailException.class,
+			EmailSenderException.class
 	})
 	public ResponseEntityError handleBadRequest(Exception e) {
 		return new ResponseEntityError(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, e.getMessage());
@@ -37,7 +38,8 @@ public class RestExceptionHandler {
 	@ExceptionHandler({
 			RegisterNotFoundException.class,
 			DebtNotFoundException.class,
-			UsernameNotFoundException.class
+			UsernameNotFoundException.class,
+			EmailNotFoundException.class
 	})
 	public ResponseEntityError handleNotFound(Exception e) {
 		return new ResponseEntityError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());

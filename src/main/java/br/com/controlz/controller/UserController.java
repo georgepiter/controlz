@@ -2,6 +2,8 @@ package br.com.controlz.controller;
 
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.exception.EmailException;
+import br.com.controlz.domain.exception.EmailNotFoundException;
+import br.com.controlz.domain.exception.EmailSenderException;
 import br.com.controlz.domain.exception.UserException;
 import br.com.controlz.service.UserService;
 import io.swagger.annotations.Api;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,21 +30,27 @@ public class UserController {
 	@ApiOperation(value = "Método que registra um novo utilizador")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> registerNewUser(@RequestBody UserDTO user) throws EmailException, UserException {
-			return userService.registerNewUser(user);
+		return userService.registerNewUser(user);
 	}
 
-//	@GetMapping(value = "/name/{name}") //todo voltar aqui e depois de implementar os services como troca de senha  e gerar nova senha implementar o envio da senha pelo email sendblue
-//	public ResponseEntity<HttpStatus> getUserByName(@PathVariable String name) {
-//		return userService.getUserByName(name);
-//	}
-//
-//	@PutMapping(value = "/")
-//	public ResponseEntityError updateUser(@RequestBody UserDto user) {
-//		return userService.updateUserNameAndRole(user);
-//	}
-//
-//	@DeleteMapping(value = "/name/{name}")
-//	public ResponseEntityError deleteUserByName(@PathVariable String name) throws UsernameNotFoundException {
-//		return userService.deleteUserByName(name);
-//	}
+	@PostMapping(value = "/reset")
+	@ApiOperation(value = "Método que reseta a senha do utilizador")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public ResponseEntity<HttpStatus> resetPassword(@RequestBody UserDTO user) throws EmailNotFoundException, EmailException {
+		return userService.resetPassword(user);
+	}
+
+	@PostMapping(value = "/forgot")
+	@ApiOperation(value = "Método que reseta a senha do utilizador e envia por e-mail")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(@RequestBody UserDTO user) throws EmailException, EmailSenderException {
+		return userService.resetPasswordAndSendToEmail(user);
+	}
+
+	@DeleteMapping(value = "/id/{id}")
+	@ApiOperation(value = "Método que deleta o user utilizador pelo ID")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<HttpStatus> deleteUserById(@PathVariable Long idRegister) throws UsernameNotFoundException {
+		return userService.deleteUserById(idRegister);
+	}
 }
