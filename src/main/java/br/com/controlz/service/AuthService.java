@@ -2,6 +2,7 @@ package br.com.controlz.service;
 
 import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.exception.EmailException;
+import br.com.controlz.domain.exception.EmailNotFoundException;
 import br.com.controlz.domain.repository.UserRepository;
 import br.com.controlz.utils.EmailUtils;
 import br.com.controlz.utils.TokenAndPasswordUtils;
@@ -16,14 +17,17 @@ public class AuthService {
 
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final MailBuildService mailBuildService;
 
 	public AuthService(UserRepository userRepository,
-					   BCryptPasswordEncoder bCryptPasswordEncoder) {
+					   BCryptPasswordEncoder bCryptPasswordEncoder,
+					   MailBuildService mailBuildService) {
 		this.userRepository = userRepository;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		this.mailBuildService = mailBuildService;
 	}
 
-	public void newPassword(String email) throws UsernameNotFoundException, EmailException {
+	public void generationPasswordAndSend(String email) throws UsernameNotFoundException, EmailException {
 		if (!EmailUtils.isEmailPatternValid(email)) {
 			throw new EmailException("Email inválido");
 		}
@@ -31,16 +35,17 @@ public class AuthService {
 				() -> new UsernameNotFoundException("User não encontrado na base"));
 		String newPassword = TokenAndPasswordUtils.generateNewPassword();
 		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+		mailBuildService.newSendPasswordEmail(user, newPassword);
 		userRepository.save(user);
 	}
 
-	public void changePassword(String email, String password) throws EmailException {
+	public void changePassword(String email, String password) throws EmailException, EmailNotFoundException {
 		if (!EmailUtils.isEmailPatternValid(email)) {
 			throw new EmailException("Email inválido");
 		}
 		Optional<User> user = userRepository.findByEmail(email);
 		if (user.isEmpty()) {
-			throw new EmailException("Email não encontrado na base");
+			throw new EmailNotFoundException("Email não encontrado na base");
 		}
 		user.get().setPassword(bCryptPasswordEncoder.encode(password));
 		userRepository.save(user.get());

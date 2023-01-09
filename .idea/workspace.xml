@@ -4,29 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="remove sonar">
+    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="adjust DTO's, values, implement new methods and adjustments in pojos with builder">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/api/API.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/api/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/EmailController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/Constant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailSenderException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/EmailPropertyRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/EmailRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/response/EmailStatusResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/APIService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/MailBuildService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/job/JobResendEmailWithError.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtValueDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtValueDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/DebtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/DebtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtValueDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/controlz-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/controlz-1.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/controlz-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/controlz-1.0.0.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,6 +55,24 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/br/com/controlz/domain" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="br.com.controlz.domain.exception" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz\domain" />
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz\service" />
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz" />
+      <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz\domain\repository" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.com.controlz.domain" />
+      <recent name="br.com.controlz.domain.exception" />
+      <recent name="br.com.controlz.controller" />
+      <recent name="br.com.controlz.service" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -59,6 +89,8 @@
         <env name="DATABASE_PASSWORD" value="3425" />
         <env name="JWT_SECRET" value="5062fb05-4b43-4358-9bef-dfa5fbc11a33" />
         <env name="JWT_EXPIRATION" value="30000000" />
+        <env name="SENDINBLUE_URL" value="https://api.sendinblue.com" />
+        <env name="SENDINBLUE_API_KEY" value="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" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="br.com.controlz.ControlzApplication" />
       <module name="controlz" />
@@ -184,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673067960263</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="adjust DTO's, values, implement new methods and adjustments in pojos with builder">
+      <created>1673137444606</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1673137444606</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +248,18 @@
     <MESSAGE value="update java version" />
     <MESSAGE value="update pom" />
     <MESSAGE value="remove sonar" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove sonar" />
+    <MESSAGE value="adjust DTO's, values, implement new methods and adjustments in pojos with builder" />
+    <option name="LAST_COMMIT_MESSAGE" value="adjust DTO's, values, implement new methods and adjustments in pojos with builder" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/controller/EmailController.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
