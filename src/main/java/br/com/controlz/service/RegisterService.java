@@ -2,6 +2,7 @@ package br.com.controlz.service;
 
 import br.com.controlz.domain.dto.DebtValueDTO;
 import br.com.controlz.domain.dto.RegisterDTO;
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.entity.Register;
 import br.com.controlz.domain.exception.*;
 import br.com.controlz.domain.repository.RegisterRepository;
@@ -29,7 +30,7 @@ public class RegisterService {
 		this.debtService = debtService;
 	}
 
-	public ResponseEntity<HttpStatus> registerNewPerson(RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException, EmailException, FieldException {
+	public ResponseEntityCustom registerNewPerson(RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException, EmailException, FieldException {
 		if (Boolean.FALSE.equals(EmailUtils.isEmailPatternValid(registerDTO.getEmail()))) {
 			throw new EmailException("Email inválido");
 		}
@@ -39,7 +40,7 @@ public class RegisterService {
 		validateSalary(registerDTO);
 		isRecordAlreadyExists(registerDTO);
 		registerRepository.save(buildNewRegister(registerDTO));
-		return ResponseEntity.ok(HttpStatus.OK);
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "register created");
 	}
 
 	private Register buildNewRegister(RegisterDTO registerDTO) {
@@ -163,9 +164,9 @@ public class RegisterService {
 		return register.get();
 	}
 
-	public ResponseEntity<HttpStatus> deleteRegister(Long registerId) throws RegisterNotFoundException {
+	public ResponseEntityCustom deleteRegister(Long registerId) throws RegisterNotFoundException {
 		registerRepository.delete(getRegisterFromDataBase(registerId));
-		return ResponseEntity.ok(HttpStatus.OK);
+		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "deleted");
 	}
 
 	public DebtValueDTO getTotalEntryValue(Long registerId) throws RegisterNotFoundException {

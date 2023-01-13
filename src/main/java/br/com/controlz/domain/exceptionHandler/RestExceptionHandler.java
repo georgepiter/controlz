@@ -1,6 +1,6 @@
 package br.com.controlz.domain.exceptionHandler;
 
-import br.com.controlz.domain.dto.ResponseEntityError;
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -21,8 +21,8 @@ public class RestExceptionHandler {
 			EmailException.class,
 			EmailSenderException.class
 	})
-	public ResponseEntityError handleBadRequest(Exception e) {
-		return new ResponseEntityError(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, e.getMessage());
+	public ResponseEntityCustom handleBadRequest(Exception e) {
+		return new ResponseEntityCustom(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, e.getMessage());
 	}
 
 	@ResponseStatus(HttpStatus.CONFLICT)
@@ -30,8 +30,8 @@ public class RestExceptionHandler {
 			RegisterException.class,
 			UserException.class
 	})
-	public ResponseEntityError handleConflict(Exception e) {
-		return new ResponseEntityError(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, e.getMessage());
+	public ResponseEntityCustom handleConflict(Exception e) {
+		return new ResponseEntityCustom(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, e.getMessage());
 	}
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -41,8 +41,8 @@ public class RestExceptionHandler {
 			UsernameNotFoundException.class,
 			EmailNotFoundException.class
 	})
-	public ResponseEntityError handleNotFound(Exception e) {
-		return new ResponseEntityError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
+	public ResponseEntityCustom handleNotFound(Exception e) {
+		return new ResponseEntityCustom(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
 	}
 
 	@ResponseStatus(HttpStatus.FORBIDDEN)
@@ -50,7 +50,7 @@ public class RestExceptionHandler {
 			AuthenticationException.class,
 			AuthInvalidException.class
 	})
-	public ResponseEntityError handleForbidden(Exception e) {
-		return new ResponseEntityError(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN, e.getMessage());
+	public ResponseEntityCustom handleForbidden(Exception e) {
+		return new ResponseEntityCustom(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN, e.getMessage());
 	}
 }

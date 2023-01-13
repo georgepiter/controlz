@@ -2,6 +2,7 @@ package br.com.controlz.controller;
 
 import br.com.controlz.domain.dto.DebtValueDTO;
 import br.com.controlz.domain.dto.RegisterDTO;
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.exception.*;
 import br.com.controlz.service.RegisterService;
 import io.swagger.annotations.Api;
@@ -28,7 +29,7 @@ public class RegisterController {
 	@PostMapping(value = "/")
 	@ApiOperation(value = "Método para salvar um novo registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntity<HttpStatus> registerNewPerson(@RequestBody RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException, EmailException, FieldException {
+	public ResponseEntityCustom registerNewPerson(@RequestBody RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException, EmailException, FieldException {
 		return registerService.registerNewPerson(registerDTO);
 	}
 
@@ -77,7 +78,7 @@ public class RegisterController {
 	@DeleteMapping(value = "/id/{id}")
 	@ApiOperation(value = "Deleta o registro e seus débitos pelo ID do Registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> deleteRegister(@PathVariable Long id) throws RegisterNotFoundException {
+	public ResponseEntityCustom deleteRegister(@PathVariable Long id) throws RegisterNotFoundException {
 		return registerService.deleteRegister(id);
 	}
 

@@ -1,5 +1,6 @@
 package br.com.controlz.controller;
 
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
@@ -29,7 +30,7 @@ public class UserController {
 	@PostMapping(value = "/create")
 	@ApiOperation(value = "Método que registra um novo utilizador")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> registerNewUser(@RequestBody UserDTO user) throws EmailException, UserException {
+	public ResponseEntityCustom registerNewUser(@RequestBody UserDTO user) throws EmailException, UserException {
 		return userService.registerNewUser(user);
 	}
 
@@ -49,7 +50,7 @@ public class UserController {
 	@DeleteMapping(value = "/id/{id}")
 	@ApiOperation(value = "Método que deleta o user utilizador pelo ID")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> deleteUserById(@PathVariable Long idRegister) throws UsernameNotFoundException {
+	public ResponseEntityCustom deleteUserById(@PathVariable Long idRegister) throws UsernameNotFoundException {
 		return userService.deleteUserById(idRegister);
 	}
 }

@@ -2,19 +2,19 @@ package br.com.controlz.domain.dto;
 
 import org.springframework.http.HttpStatus;
 
-public class ResponseEntityError {
+public class ResponseEntityCustom {
 
 	private Integer status;
 	private HttpStatus error;
 	private String message;
 
-	public ResponseEntityError(Integer status, HttpStatus error, String message) {
+	public ResponseEntityCustom(Integer status, HttpStatus error, String message) {
 		this.status = status;
 		this.error = error;
 		this.message = message;
 	}
 
-	public ResponseEntityError() {
+	public ResponseEntityCustom() {
 	}
 
 	public Integer getStatus() {
