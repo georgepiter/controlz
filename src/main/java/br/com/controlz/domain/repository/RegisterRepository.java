@@ -11,10 +11,7 @@ import java.util.Optional;
 public interface RegisterRepository extends JpaRepository<Register, Long> {
 
 	Optional<Register> findById(Long id);
-
 	Optional<Register> findByNameAndEmail(String name, String email);
-
 	List<Register> findAll();
-
 	Optional<Register> findByName(String name);
 }

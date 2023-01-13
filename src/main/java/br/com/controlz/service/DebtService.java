@@ -44,6 +44,7 @@ public class DebtService {
 		return new Debt.Builder()
 				.debtDescription(debt.getDebtDescription())
 				.inputDate(LocalDate.now())
+				.dueDate(debt.getDueDate())
 				.value(debt.getValue())
 				.idRegister(idRegister)
 				.status(StatusEnum.AWAITING_PAYMENT.getValue())
@@ -79,6 +80,7 @@ public class DebtService {
 					.inputDate(debt.getInputDate())
 					.status(statusLabel)
 					.paymentDate(debt.getPaymentDate())
+					.dueDate(debt.getDueDate())
 					.createNewDebtDTO();
 			debtsDTO.add(newDebtDTO);
 		}
@@ -125,6 +127,7 @@ public class DebtService {
 		}
 		debt.get().setStatus(StatusEnum.PAY.getValue());
 		debt.get().setPaymentDate(LocalDate.now());
+		debt.get().setReceiptPayment(debtDTO.getReceiptPayment());
 		debtRepository.save(debt.get());
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
@@ -144,7 +147,7 @@ public class DebtService {
 			throw new RegisterNotFoundException("Registro não encontrado na base pelo ID");
 		}
 
-		return buildDebtValueDTO(register.get(), debts);//todo olhar os dtos e usar herança por conta de atributos repetidos
+		return buildDebtValueDTO(register.get(), debts);
 	}
 
 	private DebtValueDTO buildDebtValueDTO(Register register, List<Debt> debts) throws DebtNotFoundException {
@@ -164,5 +167,22 @@ public class DebtService {
 
 	private List<Debt> findByDebtByStatusAndRegisterId(Integer status, Long registerId) {
 		return debtRepository.findByStatusAndIdRegister(status, registerId);
+	}
+
+	public List<DebtDTO> getAllDebtsBetweenDates(Long registerId, String startDate, String endDate) throws DebtNotFoundException {
+		List<Debt> allDebts = debtRepository.findByIdRegister(registerId);
+		LocalDate start = LocalDate.parse(startDate);
+		LocalDate end = LocalDate.parse(endDate);
+
+		List<Debt> debts = allDebts.stream().filter(
+				debt -> debt.getDueDate().isEqual(start)
+						|| debt.getDueDate().isBefore(end)
+						|| debt.getDueDate().isEqual(end)
+		).toList();
+
+		if (debts.isEmpty()) {
+			throw new DebtNotFoundException("Não foram encontrados débitos na faixa de datas solicitada");
+		}
+		return new ArrayList<>(buildNewDebtListByRegister(debts));
 	}
 }

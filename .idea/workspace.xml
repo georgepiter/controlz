@@ -4,29 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="adjust DTO's, values, implement new methods and adjustments in pojos with builder">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/api/API.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/api/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/EmailController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/Constant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exception/EmailSenderException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/EmailPropertyRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/EmailRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/response/EmailStatusResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/APIService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/MailBuildService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/job/JobResendEmailWithError.java" afterDir="false" />
+    <list default="true" id="c19949b5-9e45-4fce-b4c2-23a88d7559e1" name="Changes" comment="implements mail forwarding, job forwarding, and user services">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/job/jobDebtDueDateAlertService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/utils/DateUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/ControlzApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/ControlzApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/DebtController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/EmailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/EmailController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/Constant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/dto/DebtDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Debt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/entity/Debt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/DebtRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/EmailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/EmailRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/RegisterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/RegisterRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/domain/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/DebtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/DebtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/MailBuildService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/MailBuildService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/RegisterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/job/JobResendEmailWithError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/job/JobResendEmailWithError.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/controlz/service/security/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-prod.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/ControlzApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/ControlzApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/DebtController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO$Builder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/dto/DebtDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt$Builder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/entity/Debt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/exceptionHandler/RestExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/DebtRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/domain/repository/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/DebtService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/RegisterService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/controlz/service/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/controlz/service/security/SecurityConfig.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +57,20 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="P-002" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="GithubProjectSettings">
     <option name="branchProtectionPatterns">
@@ -49,6 +78,9 @@
         <option value="main" />
       </list>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
@@ -68,6 +100,7 @@
       <recent name="F:\PROJETOS GPITER\project controlz\controlz\src\main\java\br\com\controlz\domain\repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.com.controlz.service.job" />
       <recent name="br.com.controlz.domain" />
       <recent name="br.com.controlz.domain.exception" />
       <recent name="br.com.controlz.controller" />
@@ -81,8 +114,8 @@
       <command value="mvn compile" />
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="ControlzApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.ControlzApplication">
+    <configuration name="ControlzApplication" type="Application" factoryName="Application" nameIsGenerated="true">
       <envs>
         <env name="DATABASE_URL" value="jdbc:mysql://localhost:3306/controlz?serverTimezone=UTC&amp;useLegacyDatetimeCode=false" />
         <env name="DATABASE_USERNAME" value="root" />
@@ -90,7 +123,7 @@
         <env name="JWT_SECRET" value="5062fb05-4b43-4358-9bef-dfa5fbc11a33" />
         <env name="JWT_EXPIRATION" value="30000000" />
         <env name="SENDINBLUE_URL" value="https://api.sendinblue.com" />
-        <env name="SENDINBLUE_API_KEY" value="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" />
+        <env name="SENDINBLUE_API_KEY" value="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" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="br.com.controlz.ControlzApplication" />
       <module name="controlz" />
@@ -104,9 +137,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="jobDebtDueDateAlertService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="br.com.controlz.service.job.jobDebtDueDateAlertService" />
+      <module name="controlz" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.controlz.service.job.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.ControlzApplication" />
+      <item itemvalue="Application.jobDebtDueDateAlertService" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ControlzApplication" />
+        <item itemvalue="Application.jobDebtDueDateAlertService" />
       </list>
     </recent_temporary>
   </component>
@@ -223,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673137444606</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="implements mail forwarding, job forwarding, and user services">
+      <created>1673282767984</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1673282767984</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -249,17 +306,58 @@
     <MESSAGE value="update pom" />
     <MESSAGE value="remove sonar" />
     <MESSAGE value="adjust DTO's, values, implement new methods and adjustments in pojos with builder" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjust DTO's, values, implement new methods and adjustments in pojos with builder" />
+    <MESSAGE value="implements mail forwarding, job forwarding, and user services" />
+    <option name="LAST_COMMIT_MESSAGE" value="implements mail forwarding, job forwarding, and user services" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/controller/EmailController.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="8" />
+          <line>26</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/service/job/JobResendEmailWithError.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/service/MailBuildService.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/service/MailBuildService.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/service/job/jobDebtDueDateAlertService.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/utils/DateUtils.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/utils/DateUtils.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/br/com/controlz/service/MailBuildService.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/controlz$ControlzApplication.ic" NAME="ControlzApplication Coverage Results" MODIFIED="1673627050464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>br.com.controlz.*</FILTER>
+    </SUITE>
   </component>
 </project>

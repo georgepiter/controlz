@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface DebtRepository extends JpaRepository<Debt, Long> {
 
 	Optional<Debt> findById(Long id);
-
 	List<Debt> findByIdRegister(Long id);
-
 	List<Debt> findByStatusAndIdRegister(Integer status, Long registerId);
+	List<Debt> findByStatus(Integer status);
+	List<Debt> findAll();
 }
