@@ -1,5 +1,6 @@
 package br.com.controlz.service;
 
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.enums.RoleEnum;
@@ -35,7 +36,7 @@ public class UserService {
 		this.authService = authService;
 	}
 
-	public ResponseEntity<HttpStatus> registerNewUser(UserDTO userDTO) throws EmailException, UserException {
+	public ResponseEntityCustom registerNewUser(UserDTO userDTO) throws EmailException, UserException {
 		if (!EmailUtils.isEmailPatternValid(userDTO.getEmail())) {
 			throw new EmailException("O Email não está no formato válido");
 		}
@@ -54,7 +55,7 @@ public class UserService {
 				.password(passwordEncoder.encode(userDTO.getPassword()))
 				.createNewUser();
 		userRepository.save(newUser);
-		return ResponseEntity.ok(HttpStatus.OK);
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "user created");
 	}
 
 	public ResponseEntity<HttpStatus> resetPassword(UserDTO user) throws EmailException, EmailNotFoundException {
@@ -62,13 +63,13 @@ public class UserService {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	public ResponseEntity<HttpStatus> deleteUserById(Long idUser) {
+	public ResponseEntityCustom deleteUserById(Long idUser) {
 		Optional<User> user = userRepository.findById(idUser);
 		if (user.isEmpty()) {
 			throw new UsernameNotFoundException("User não encontrado pelo ID na base");
 		}
 		userRepository.delete(user.get());
-		return ResponseEntity.ok(HttpStatus.OK);
+		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "user deleted");
 	}
 
 	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(UserDTO user) throws EmailException, UsernameNotFoundException, EmailSenderException {

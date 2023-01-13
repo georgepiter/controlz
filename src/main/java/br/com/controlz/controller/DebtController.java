@@ -2,6 +2,7 @@ package br.com.controlz.controller;
 
 import br.com.controlz.domain.dto.DebtDTO;
 import br.com.controlz.domain.dto.DebtValueDTO;
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.exception.DebtNotFoundException;
 import br.com.controlz.domain.exception.RegisterNotFoundException;
 import br.com.controlz.service.DebtService;
@@ -29,7 +30,7 @@ public class DebtController {
 	@PostMapping(value = "/")
 	@ApiOperation(value = "Método que registra novo débito")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntity<HttpStatus> registerNewDebt(@RequestBody DebtDTO debt) throws RegisterNotFoundException {
+	public ResponseEntityCustom registerNewDebt(@RequestBody DebtDTO debt) throws RegisterNotFoundException {
 		return debtService.registerNewDebt(debt);
 	}
 
@@ -78,7 +79,7 @@ public class DebtController {
 	@DeleteMapping(value = "/debtId/{debtId}")
 	@ApiOperation(value = "Método que deleta um débito por ID debt")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> deleteDebt(@PathVariable Long debtId) throws DebtNotFoundException {
+	public ResponseEntityCustom deleteDebt(@PathVariable Long debtId) throws DebtNotFoundException {
 		return debtService.deleteDebtById(debtId);
 	}
 

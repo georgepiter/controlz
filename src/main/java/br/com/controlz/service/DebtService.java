@@ -2,6 +2,7 @@ package br.com.controlz.service;
 
 import br.com.controlz.domain.dto.DebtDTO;
 import br.com.controlz.domain.dto.DebtValueDTO;
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.entity.Debt;
 import br.com.controlz.domain.entity.Register;
 import br.com.controlz.domain.enums.StatusEnum;
@@ -31,13 +32,13 @@ public class DebtService {
 		this.registerRepository = registerRepository;
 	}
 
-	public ResponseEntity<HttpStatus> registerNewDebt(DebtDTO debt) throws RegisterNotFoundException {
+	public ResponseEntityCustom registerNewDebt(DebtDTO debt) throws RegisterNotFoundException {
 		Optional<Register> register = registerRepository.findById(debt.getIdRegister());
 		if (register.isEmpty()) {
 			throw new RegisterNotFoundException("Registro não encontrado na base");
 		}
 		debtRepository.save(buildNewDebt(debt, register.get().getIdRegister()));
-		return ResponseEntity.ok(HttpStatus.OK);
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Debt created");
 	}
 
 	private Debt buildNewDebt(DebtDTO debt, Long idRegister) {
@@ -107,9 +108,9 @@ public class DebtService {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	public ResponseEntity<HttpStatus> deleteDebtById(Long debtId) throws DebtNotFoundException {
+	public ResponseEntityCustom deleteDebtById(Long debtId) throws DebtNotFoundException {
 		debtRepository.delete(getRegisterFromDataBase(debtId));
-		return ResponseEntity.ok(HttpStatus.OK);
+		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "debt deleted");
 	}
 
 	private Debt getRegisterFromDataBase(Long debtId) throws DebtNotFoundException {

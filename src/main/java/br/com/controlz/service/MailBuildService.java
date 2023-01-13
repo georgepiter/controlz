@@ -75,17 +75,11 @@ public class MailBuildService {
 		sendSmtpEmail.setParams(bodyMsg);
 		try {
 			apiService.sendMail(sendSmtpEmail);
-			if (emailNotSent(sendSmtpEmail.getTo().get(0).getEmail())) {
-				saveObject(sendSmtpEmail, bodyMsg);
-			}
+			saveObject(sendSmtpEmail, bodyMsg);
 			logger.info("E-mail enviado com sucesso!");
 		} catch (Exception e) {
 			throw new EmailException(e.getMessage());
 		}
-	}
-
-	private boolean emailNotSent(String email) {
-		return emailRepository.findByEmailAndEmailStatus(email, EMAIL_SEND_ERROR).isPresent();
 	}
 
 	private void saveObject(SendSmtpEmail sendSmtpEmail, Map<String, String> bodyMsg) {
