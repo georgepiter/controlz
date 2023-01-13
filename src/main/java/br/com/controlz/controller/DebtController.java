@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Api(value = "Débito", produces = MediaType.APPLICATION_JSON_VALUE, tags = {"Débito"})
 @RequestMapping(value = "api/v1/debt")
@@ -36,6 +38,13 @@ public class DebtController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public DebtValueDTO getAllDebtsById(@PathVariable Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
 		return debtService.getAllDebtsByRegister(registerId);
+	}
+
+	@GetMapping(value = "/debtsBetweenDates/{registerId}/{startDate}/{endDate}")
+	@ApiOperation(value = "Método que retorna todos débitos por data escolhida")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public List<DebtDTO> getAllDebtsBetweenDates(@PathVariable Long registerId, @PathVariable String startDate, @PathVariable String endDate) throws DebtNotFoundException {
+		return debtService.getAllDebtsBetweenDates(registerId, startDate, endDate);
 	}
 
 	@GetMapping(value = "/allPay/{registerId}")

@@ -16,7 +16,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping(value = "api/v1/email")
 public class EmailController {
 
-	private final MailBuildService mailbuildService; //todo voltar aqui e trabalhar nesse endpoint
+	private final MailBuildService mailbuildService;
 
 	public EmailController(MailBuildService mailbuildService) {
 		this.mailbuildService = mailbuildService;

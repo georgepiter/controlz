@@ -91,6 +91,7 @@ public class RegisterService {
 		List<RegisterDTO> list = new ArrayList<>();
 		for (Register register : registers) {
 			RegisterDTO registerDTO = new RegisterDTO.Builder()
+					.id(register.getIdRegister())
 					.name(register.getName())
 					.email(register.getEmail())
 					.cell(register.getCell())

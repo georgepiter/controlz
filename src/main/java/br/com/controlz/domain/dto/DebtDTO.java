@@ -12,9 +12,13 @@ public class DebtDTO {
 	private Double value;
 	private String status;
 	private LocalDate paymentDate;
+	private byte[] receiptPayment;
+	private LocalDate dueDate;
+
 
 	protected DebtDTO(Long idDebt, Long idRegister, String name, LocalDate inputDate,
-					  String debtDescription, Double value, String status, LocalDate paymentDate) {
+					  String debtDescription, Double value, String status,
+					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate) {
 		this.idDebt = idDebt;
 		this.idRegister = idRegister;
 		this.name = name;
@@ -23,6 +27,8 @@ public class DebtDTO {
 		this.value = value;
 		this.status = status;
 		this.paymentDate = paymentDate;
+		this.receiptPayment = receiptPayment;
+		this.dueDate = dueDate;
 	}
 
 	public static final class Builder {
@@ -34,6 +40,8 @@ public class DebtDTO {
 		private Double value;
 		private String status;
 		private LocalDate paymentDate;
+		private byte[] receiptPayment;
+		private LocalDate dueDate;
 
 		public Builder() {
 			//ignored
@@ -79,9 +87,19 @@ public class DebtDTO {
 			return this;
 		}
 
+		public Builder receiptPayment(byte[] val) {
+			receiptPayment = val;
+			return this;
+		}
+
+		public Builder dueDate(LocalDate val) {
+			dueDate = val;
+			return this;
+		}
+
 		public DebtDTO createNewDebtDTO() {
 			return new DebtDTO(
-					idDebt, idRegister, name, inputDate, debtDescription, value, status, paymentDate
+					idDebt, idRegister, name, inputDate, debtDescription, value, status, paymentDate, receiptPayment, dueDate
 			);
 		}
 	}
@@ -148,5 +166,21 @@ public class DebtDTO {
 
 	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
+	}
+
+	public byte[] getReceiptPayment() {
+		return receiptPayment;
+	}
+
+	public void setReceiptPayment(byte[] receiptPayment) {
+		this.receiptPayment = receiptPayment;
+	}
+
+	public LocalDate getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
 	}
 }

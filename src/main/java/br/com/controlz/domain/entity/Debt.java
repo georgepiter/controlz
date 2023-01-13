@@ -37,10 +37,17 @@ public class Debt implements Serializable {
 	@Column(name = "payment_date")
 	private LocalDate paymentDate;
 
+	@Column(name = "receipt_payment")
+	private byte[] receiptPayment;
+
+	@Column(name = "due_date")
+	private LocalDate dueDate;
+
 	public Debt() {
 	}
 
-	protected Debt(Long idDebt, LocalDate inputDate, String debtDescription, Double value, Long idRegister, Integer status, LocalDate paymentDate) {
+	protected Debt(Long idDebt, LocalDate inputDate, String debtDescription,
+				   Double value, Long idRegister, Integer status, LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate) {
 		this.idDebt = idDebt;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
@@ -48,6 +55,8 @@ public class Debt implements Serializable {
 		this.idRegister = idRegister;
 		this.status = status;
 		this.paymentDate = paymentDate;
+		this.receiptPayment = receiptPayment;
+		this.dueDate = dueDate;
 	}
 
 	public static final class Builder {
@@ -58,6 +67,8 @@ public class Debt implements Serializable {
 		private Long idRegister;
 		private Integer status;
 		private LocalDate paymentDate;
+		private byte[] receiptPayment;
+		private LocalDate dueDate;
 
 		public Builder() {
 			//ignored
@@ -98,9 +109,20 @@ public class Debt implements Serializable {
 			return this;
 		}
 
+		public Builder receiptPayment(byte[] val) {
+			receiptPayment = val;
+			return this;
+		}
+
+		public Builder dueDate(LocalDate val) {
+			dueDate = val;
+			return this;
+		}
+
 		public Debt createDebt() {
 			return new Debt(
-					idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate
+					idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate, receiptPayment, dueDate
+
 			);
 		}
 	}
@@ -161,6 +183,22 @@ public class Debt implements Serializable {
 		this.paymentDate = paymentDate;
 	}
 
+	public byte[] getReceiptPayment() {
+		return receiptPayment;
+	}
+
+	public void setReceiptPayment(byte[] receiptPayment) {
+		this.receiptPayment = receiptPayment;
+	}
+
+	public LocalDate getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -171,7 +209,7 @@ public class Debt implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(register, idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate);
+		return Objects.hash(register, idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate, dueDate);
 	}
 
 	@Override
@@ -185,6 +223,7 @@ public class Debt implements Serializable {
 				.add("idRegister=" + idRegister)
 				.add("status=" + status)
 				.add("paymentDate=" + paymentDate)
+				.add("dueDate=" + dueDate)
 				.toString();
 	}
 }

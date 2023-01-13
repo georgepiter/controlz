@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final UserDetailsService userDetailsService;
 	private final JWTUtilComponent JWTUtilComponent;
 
-	private static final String[] PUBLIC_MATCHERS = {"/api/v1/email**"};
+	private static final String[] PUBLIC_MATCHERS = {"/api/v1/email", "/api/v1/user/forgot"};
 	private static final String[] SWAGGER_MATCHERS = {"/swagger-resources/*", "*.html", "/api/v1/swagger.json"};
 
 	public SecurityConfig(UserDetailsService userDetailsService,

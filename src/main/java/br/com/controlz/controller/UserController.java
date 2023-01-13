@@ -42,7 +42,6 @@ public class UserController {
 
 	@PostMapping(value = "/forgot")
 	@ApiOperation(value = "Método que reseta a senha do utilizador e envia por e-mail")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(@RequestBody UserDTO user) throws EmailException, EmailSenderException {
 		return userService.resetPasswordAndSendToEmail(user);
 	}

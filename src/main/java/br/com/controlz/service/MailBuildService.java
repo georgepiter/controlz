@@ -65,6 +65,8 @@ public class MailBuildService {
 								  String subject) throws EmailException {
 		SendSmtpEmailSender sender = new SendSmtpEmailSender();
 		sender.setName(EMAIL_SENDER);
+		sender.setName("George Piter");
+		sender.setEmail("george.piter@terra.com.br");
 		SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
 		sendSmtpEmail.setSender(sender);
 		sendSmtpEmail.setTo(listEmail);
@@ -78,7 +80,7 @@ public class MailBuildService {
 			}
 			logger.info("E-mail enviado com sucesso!");
 		} catch (Exception e) {
-			throw new EmailException("Ocorreu um erro ao enviar E-mail");
+			throw new EmailException(e.getMessage());
 		}
 	}
 
@@ -113,10 +115,8 @@ public class MailBuildService {
 		String event = emailStatusResponse.getEvent().toLowerCase(Locale.ROOT);
 		try {
 			if (!event.isBlank() && event.contains(EMAIL_DELIVERED)) {
-				validateEmailMessageSucessResponse(emailStatusResponse);
-			} else if (event.contains(EMAIL_DEFERRED) || event.contains(EMAIL_COMPLAINT)
-					|| event.contains(EMAIL_INVALID) || event.contains(EMAIL_ERROR)
-					|| event.contains(EMAIL_SOFT_BOUNCE) || event.contains(EMAIL_HARD_BOUNCE)) {
+				validateEmailMessageSuccessResponse(emailStatusResponse);
+			} else if (event.contains(EMAIL_SPAM) || event.contains(EMAIL_SOFT_BOUNCE) || event.contains(EMAIL_HARD_BOUNCE)) {
 				validateEmailMessageErrorResponse(emailStatusResponse);
 			} else {
 				logger.warn("Evento de email não esperado");
@@ -126,7 +126,7 @@ public class MailBuildService {
 		}
 	}
 
-	private void validateEmailMessageSucessResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
+	private void validateEmailMessageSuccessResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
 		Optional<Email> emailByStatusSent = emailRepository.findByEmailAndEmailStatus(emailStatusResponse.getEmail(), EMAIL_SEND_TRUE);
 		verifyMail(emailByStatusSent);
 		emailRepository.deleteById(emailByStatusSent.get().getIdMail());
