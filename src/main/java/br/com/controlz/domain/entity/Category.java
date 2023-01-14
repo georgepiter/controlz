@@ -22,9 +22,11 @@ public class Category implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-	public Category(Long idCategory, String description) {
-		this.idCategory = idCategory;
+	public Category(String description) {
 		this.description = description;
+	}
+
+	public Category() {
 	}
 
 	public List<Debt> getDebts() {
