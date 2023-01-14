@@ -36,7 +36,7 @@ public class JobResendEmailWithError {
 		this.emailPropertyRepository = emailPropertyRepository;
 	}
 
-//	@Scheduled(cron = "5 * * * * *")
+	@Scheduled(cron = "0 2 * * * *")
 	private void resendEmailWithError() throws EmailSenderException {
 		logger.info("Executando Job de reenvio de emails com erros");
 		List<Email> emailErrorList = emailRepository.findAll().stream()

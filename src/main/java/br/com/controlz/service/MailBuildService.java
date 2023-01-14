@@ -1,6 +1,7 @@
 package br.com.controlz.service;
 
 
+import br.com.controlz.domain.entity.Debt;
 import br.com.controlz.domain.entity.security.Email;
 import br.com.controlz.domain.entity.security.EmailProperty;
 import br.com.controlz.domain.entity.security.User;
@@ -9,6 +10,7 @@ import br.com.controlz.domain.exception.EmailNotFoundException;
 import br.com.controlz.domain.repository.EmailPropertyRepository;
 import br.com.controlz.domain.repository.EmailRepository;
 import br.com.controlz.domain.response.EmailStatusResponse;
+import br.com.controlz.utils.MoneyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,6 +48,24 @@ public class MailBuildService {
 		sendCompiledEmail(listEmail, TEMPLATE_ID_NEW_PASSWORD, bodyMessage, NEW_PASSWORD);
 	}
 
+	public void createEmailDebt(Debt debt, String email) {
+		List<SendSmtpEmailTo> listEmail = compileEmail(email);
+		Map<String, String> bodyMessage = buildMessageDebt(debt);
+		try {
+			sendCompiledEmail(listEmail, TEMPLATE_ID_DEBT, bodyMessage, DUE_DATE_WARNING);
+		} catch (EmailException e) {
+			//ignored
+		}
+	}
+
+	private Map<String, String> buildMessageDebt(Debt debt) {
+		Map<String, String> bodyMessage = new HashMap<>();
+		bodyMessage.put(VALUE, MoneyUtils.formatMoneyToPatternBR(debt.getValue()));
+		bodyMessage.put(DUE_DATE, String.valueOf(debt.getDueDate()));
+		bodyMessage.put(DESCRIPTION, debt.getDebtDescription());
+		return bodyMessage;
+	}
+
 	protected Map<String, String> buildMessageNewPassword(String name, String newPassword) {
 		Map<String, String> bodyMessage = new HashMap<>();
 		bodyMessage.put(PASSWORD, newPassword);
@@ -61,8 +81,7 @@ public class MailBuildService {
 		return listEmail;
 	}
 
-	public void sendCompiledEmail(List<SendSmtpEmailTo> listEmail, Long templateId, Map<String, String> bodyMsg,
-								  String subject) throws EmailException {
+	public void sendCompiledEmail(List<SendSmtpEmailTo> listEmail, Long templateId, Map<String, String> bodyMsg, String subject) throws EmailException {
 		SendSmtpEmailSender sender = new SendSmtpEmailSender();
 		sender.setName(EMAIL_SENDER);
 		sender.setName("George Piter");
@@ -94,8 +113,7 @@ public class MailBuildService {
 		logger.info("E-mail salvo no banco de dados com sucesso!");
 	}
 
-	private void getMessageBodyToProperty(Email email,
-										  Map<String, String> bodyMsg) {
+	private void getMessageBodyToProperty(Email email, Map<String, String> bodyMsg) {
 		bodyMsg.forEach((key, value) -> {
 			EmailProperty emailProperty = new EmailProperty();
 			emailProperty.setEmailPropertyKey(key);
@@ -110,7 +128,7 @@ public class MailBuildService {
 		try {
 			if (!event.isBlank() && event.contains(EMAIL_DELIVERED)) {
 				validateEmailMessageSuccessResponse(emailStatusResponse);
-			} else if (event.contains(EMAIL_SPAM) || event.contains(EMAIL_SOFT_BOUNCE) || event.contains(EMAIL_HARD_BOUNCE)) {
+			} else if (validateEventStatus(event)) {
 				validateEmailMessageErrorResponse(emailStatusResponse);
 			} else {
 				logger.warn("Evento de email não esperado");
@@ -118,6 +136,15 @@ public class MailBuildService {
 		} catch (EmailNotFoundException e) {
 			logger.warn(e.getMessage());
 		}
+	}
+
+	private boolean validateEventStatus(String event) {
+		return event.contains(EMAIL_ERROR)
+				|| event.contains(EMAIL_SOFT_BOUNCE)
+				|| event.contains(EMAIL_HARD_BOUNCE)
+				|| event.contains(EMAIL_INVALID)
+				|| event.contains(EMAIL_DEFERRED)
+				|| event.contains(EMAIL_COMPLAINT);
 	}
 
 	private void validateEmailMessageSuccessResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
