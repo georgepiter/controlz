@@ -14,11 +14,12 @@ public class DebtDTO {
 	private LocalDate paymentDate;
 	private byte[] receiptPayment;
 	private LocalDate dueDate;
+	private Long idCategory;
 
 
 	protected DebtDTO(Long idDebt, Long idRegister, String name, LocalDate inputDate,
 					  String debtDescription, Double value, String status,
-					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate) {
+					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate, Long idCategory) {
 		this.idDebt = idDebt;
 		this.idRegister = idRegister;
 		this.name = name;
@@ -29,6 +30,7 @@ public class DebtDTO {
 		this.paymentDate = paymentDate;
 		this.receiptPayment = receiptPayment;
 		this.dueDate = dueDate;
+		this.idCategory = idCategory;
 	}
 
 	public static final class Builder {
@@ -42,6 +44,7 @@ public class DebtDTO {
 		private LocalDate paymentDate;
 		private byte[] receiptPayment;
 		private LocalDate dueDate;
+		private Long idCategory;
 
 		public Builder() {
 			//ignored
@@ -97,9 +100,14 @@ public class DebtDTO {
 			return this;
 		}
 
+		public Builder idCategory(Long val) {
+			idCategory = val;
+			return this;
+		}
+
 		public DebtDTO createNewDebtDTO() {
 			return new DebtDTO(
-					idDebt, idRegister, name, inputDate, debtDescription, value, status, paymentDate, receiptPayment, dueDate
+					idDebt, idRegister, name, inputDate, debtDescription, value, status, paymentDate, receiptPayment, dueDate, idCategory
 			);
 		}
 	}
@@ -182,5 +190,13 @@ public class DebtDTO {
 
 	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
+	}
+
+	public Long getIdCategory() {
+		return idCategory;
+	}
+
+	public void setIdCategory(Long idCategory) {
+		this.idCategory = idCategory;
 	}
 }
