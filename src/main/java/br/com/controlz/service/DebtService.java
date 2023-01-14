@@ -49,6 +49,7 @@ public class DebtService {
 				.value(debt.getValue())
 				.idRegister(idRegister)
 				.status(StatusEnum.AWAITING_PAYMENT.getValue())
+				.idCategory(debt.getIdCategory())
 				.createDebt();
 	}
 
@@ -82,6 +83,7 @@ public class DebtService {
 					.status(statusLabel)
 					.paymentDate(debt.getPaymentDate())
 					.dueDate(debt.getDueDate())
+					.idCategory(debt.getIdCategory())
 					.createNewDebtDTO();
 			debtsDTO.add(newDebtDTO);
 		}
@@ -103,6 +105,9 @@ public class DebtService {
 				.inputDate(LocalDate.now())
 				.value(debtDTO.getValue())
 				.idRegister(debtDTO.getIdRegister())
+				.dueDate(debtDTO.getDueDate())
+				.idCategory(debtDTO.getIdCategory())
+				.status(debtDTO.getStatus().equals(StatusEnum.PAY.getLabel()) ? StatusEnum.PAY.getValue() : StatusEnum.AWAITING_PAYMENT.getValue())
 				.createDebt();
 		debtRepository.save(updateDebt);
 		return ResponseEntity.ok(HttpStatus.OK);
