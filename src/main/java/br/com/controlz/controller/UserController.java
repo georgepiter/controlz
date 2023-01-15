@@ -4,7 +4,6 @@ import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
-import br.com.controlz.domain.exception.EmailSenderException;
 import br.com.controlz.domain.exception.UserException;
 import br.com.controlz.service.UserService;
 import io.swagger.annotations.Api;
@@ -43,7 +42,7 @@ public class UserController {
 
 	@PostMapping(value = "/forgot")
 	@ApiOperation(value = "Método que reseta a senha do utilizador e envia por e-mail")
-	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(@RequestBody UserDTO user) throws EmailException, EmailSenderException {
+	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(@RequestBody UserDTO user) throws EmailException {
 		return userService.resetPasswordAndSendToEmail(user);
 	}
 
