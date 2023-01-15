@@ -5,46 +5,46 @@ import java.time.LocalDate;
 public class DebtDTO {
 
 	private Long idDebt;
-	private Long idRegister;
-	private String name;
-	private LocalDate inputDate;
-	private String debtDescription;
-	private Double value;
 	private String status;
 	private LocalDate paymentDate;
 	private byte[] receiptPayment;
 	private LocalDate dueDate;
 	private Long idCategory;
+	private Long idRegister;
+	private String name;
+	private LocalDate inputDate;
+	private String debtDescription;
+	private Double value;
 
 
 	protected DebtDTO(Long idDebt, Long idRegister, String name, LocalDate inputDate,
 					  String debtDescription, Double value, String status,
 					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate, Long idCategory) {
 		this.idDebt = idDebt;
+		this.paymentDate = paymentDate;
+		this.receiptPayment = receiptPayment;
+		this.dueDate = dueDate;
+		this.idCategory = idCategory;
 		this.idRegister = idRegister;
 		this.name = name;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
 		this.value = value;
 		this.status = status;
-		this.paymentDate = paymentDate;
-		this.receiptPayment = receiptPayment;
-		this.dueDate = dueDate;
-		this.idCategory = idCategory;
 	}
 
 	public static final class Builder {
+		private String status;
+		private LocalDate paymentDate;
+		private byte[] receiptPayment;
+		private LocalDate dueDate;
+		private Long idCategory;
 		private Long idDebt;
 		private Long idRegister;
 		private String name;
 		private LocalDate inputDate;
 		private String debtDescription;
 		private Double value;
-		private String status;
-		private LocalDate paymentDate;
-		private byte[] receiptPayment;
-		private LocalDate dueDate;
-		private Long idCategory;
 
 		public Builder() {
 			//ignored
@@ -70,21 +70,6 @@ public class DebtDTO {
 			return this;
 		}
 
-		public Builder debtDescription(String val) {
-			debtDescription = val;
-			return this;
-		}
-
-		public Builder value(Double val) {
-			value = val;
-			return this;
-		}
-
-		public Builder status(String val) {
-			status = val;
-			return this;
-		}
-
 		public Builder paymentDate(LocalDate val) {
 			paymentDate = val;
 			return this;
@@ -102,6 +87,21 @@ public class DebtDTO {
 
 		public Builder idCategory(Long val) {
 			idCategory = val;
+			return this;
+		}
+
+		public Builder debtDescription(String val) {
+			debtDescription = val;
+			return this;
+		}
+
+		public Builder value(Double val) {
+			value = val;
+			return this;
+		}
+
+		public Builder status(String val) {
+			status = val;
 			return this;
 		}
 
@@ -144,30 +144,6 @@ public class DebtDTO {
 		this.inputDate = inputDate;
 	}
 
-	public String getDebtDescription() {
-		return debtDescription;
-	}
-
-	public void setDebtDescription(String debtDescription) {
-		this.debtDescription = debtDescription;
-	}
-
-	public Double getValue() {
-		return value;
-	}
-
-	public void setValue(Double value) {
-		this.value = value;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public LocalDate getPaymentDate() {
 		return paymentDate;
 	}
@@ -198,5 +174,29 @@ public class DebtDTO {
 
 	public void setIdCategory(Long idCategory) {
 		this.idCategory = idCategory;
+	}
+
+	public String getDebtDescription() {
+		return debtDescription;
+	}
+
+	public void setDebtDescription(String debtDescription) {
+		this.debtDescription = debtDescription;
+	}
+
+	public Double getValue() {
+		return value;
+	}
+
+	public void setValue(Double value) {
+		this.value = value;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
