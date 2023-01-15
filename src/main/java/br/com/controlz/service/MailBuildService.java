@@ -94,8 +94,10 @@ public class MailBuildService {
 		sendSmtpEmail.setParams(bodyMsg);
 		try {
 			apiService.sendMail(sendSmtpEmail);
-			saveObject(sendSmtpEmail, bodyMsg);
-			logger.info("E-mail enviado com sucesso!");
+			if (validateStatusEmail(sendSmtpEmail.getTo().get(0).getEmail())) {
+				saveObject(sendSmtpEmail, bodyMsg);
+				logger.info("E-mail enviado com sucesso!");
+			}
 		} catch (Exception e) {
 			throw new EmailException(e.getMessage());
 		}
@@ -148,28 +150,38 @@ public class MailBuildService {
 	}
 
 	private void validateEmailMessageSuccessResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
-		Optional<Email> emailByStatusSent = emailRepository.findByEmailAndEmailStatus(emailStatusResponse.getEmail(), EMAIL_SEND_TRUE);
-		verifyMail(emailByStatusSent);
-		emailRepository.deleteById(emailByStatusSent.get().getIdMail());
+		Optional<Email> emailByStatusSent = emailRepository.findByEmail(emailStatusResponse.getEmail());
+		Email email = verifyMail(emailByStatusSent);
+		emailRepository.deleteById(email.getIdMail());
 		logger.info("E-mail entregue com sucesso");
 	}
 
 	private void validateEmailMessageErrorResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
 		Optional<Email> emailByStatusSend = emailRepository.findByEmail(emailStatusResponse.getEmail());
-		verifyMail(emailByStatusSend);
-		if (EMAIL_SEND_ERROR.equals(emailByStatusSend.get().getEmailStatus())) {
-			emailRepository.deleteById(emailByStatusSend.get().getIdMail());
+		Email email = verifyMail(emailByStatusSend);
+		if (EMAIL_SEND_ERROR.equals(email.getEmailStatus())) {
+			emailRepository.deleteById(email.getIdMail());
 		} else {
-			emailByStatusSend.get().setEmailStatus(EMAIL_SEND_ERROR);
-			emailRepository.save(emailByStatusSend.get());
+			email.setEmailStatus(EMAIL_SEND_ERROR);
+			emailRepository.save(email);
 			logger.info("E-mail com status de erro salvo");
 		}
 	}
 
-	private void verifyMail(Optional<Email> emailByStatusSend) throws EmailNotFoundException {
+	private Email verifyMail(Optional<Email> emailByStatusSend) throws EmailNotFoundException {
 		if (emailByStatusSend.isEmpty()) {
 			throw new EmailNotFoundException("email não encontrado na base");
 		}
+		return emailByStatusSend.get();
+	}
+
+	private boolean validateStatusEmail(String email) {
+		boolean status = false;
+		Optional<Email> emailStatus = emailRepository.findByEmailAndEmailStatus(email, EMAIL_SEND_ERROR);
+		if (emailStatus.isEmpty()) {
+			status = true;
+		}
+		return status;
 	}
 }
 
