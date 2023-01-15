@@ -146,7 +146,7 @@ public class DebtService {
 			debts = findByDebtByStatusAndRegisterId(StatusEnum.AWAITING_PAYMENT.getValue(), registerId);
 		}
 		if (debts.isEmpty()) {
-			throw new DebtNotFoundException("Não foram encontrados débitos na base");
+			throw new DebtNotFoundException("Não foram encontrados débitos pagos na base");
 		}
 		Optional<Register> register = registerRepository.findById(registerId);
 		if (register.isEmpty()) {

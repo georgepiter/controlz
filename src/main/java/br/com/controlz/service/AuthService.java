@@ -5,7 +5,7 @@ import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
 import br.com.controlz.domain.repository.UserRepository;
 import br.com.controlz.utils.EmailUtils;
-import br.com.controlz.utils.TokenAndPasswordUtils;
+import br.com.controlz.utils.PasswordUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class AuthService {
 		}
 		User user = userRepository.findByEmail(email).orElseThrow(
 				() -> new UsernameNotFoundException("User não encontrado na base"));
-		String newPassword = TokenAndPasswordUtils.generateNewPassword();
+		String newPassword = PasswordUtils.generateNewPassword();
 		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 		mailBuildService.newSendPasswordEmail(user, newPassword);
 		userRepository.save(user);

@@ -99,6 +99,7 @@ public class RegisterService {
 					.others(register.getOthers())
 					.salary(register.getSalary())
 					.photo(register.getPhoto())
+					.registrationDate(register.getRegistrationDate())
 					.createNewRegisterDTO();
 			list.add(registerDTO);
 		}

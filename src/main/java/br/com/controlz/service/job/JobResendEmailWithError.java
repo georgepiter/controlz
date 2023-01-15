@@ -14,9 +14,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import sibModel.SendSmtpEmailTo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Component
@@ -36,7 +36,7 @@ public class JobResendEmailWithError {
 		this.emailPropertyRepository = emailPropertyRepository;
 	}
 
-	@Scheduled(cron = "0 2 * * * *")
+	@Scheduled(cron = "0 1 * * * *")
 	private void resendEmailWithError() throws EmailSenderException {
 		logger.info("Executando Job de reenvio de emails com erros");
 		List<Email> emailErrorList = emailRepository.findAll().stream()
@@ -49,13 +49,21 @@ public class JobResendEmailWithError {
 					mailBuildService.sendCompiledEmail(sendSmtpEmailTos, email.getIdTemplate(), bodyMsg, email.getSubject());
 				}
 			} catch (EmailException e) {
-				throw new EmailSenderException("Erro ao reenviar email");
+				throw new EmailSenderException(e.getMessage());
 			}
+			logger.info("Job de reenvio de emails com erros finalizado");
 		}
 	}
 
 	private Map<String, String> getEmailProperty(Email email) {
-		return emailPropertyRepository.findById(email.getIdMail())
-				.stream().collect(Collectors.toMap(EmailProperty::getEmailPropertyKey, EmailProperty::getEmailPropertyValue));
+		List<EmailProperty> emailProperty = emailPropertyRepository.findAll()
+				.stream().filter(p -> email.getIdMail().equals(p.getIdEmail())).toList();
+		Map<String, String> bodyMessage = new HashMap<>();
+		if (!emailProperty.isEmpty()) {
+			emailProperty.forEach(
+					property -> bodyMessage.put(property.getEmailPropertyKey(), property.getEmailPropertyValue())
+			);
+		}
+		return bodyMessage;
 	}
 }
