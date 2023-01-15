@@ -7,7 +7,6 @@ import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
-import br.com.controlz.domain.exception.EmailSenderException;
 import br.com.controlz.domain.exception.UserException;
 import br.com.controlz.domain.repository.UserRepository;
 import br.com.controlz.utils.EmailUtils;
@@ -72,7 +71,7 @@ public class UserService {
 		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "user deleted");
 	}
 
-	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(UserDTO user) throws EmailException, UsernameNotFoundException, EmailSenderException {
+	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(UserDTO user) throws EmailException, UsernameNotFoundException {
 		authService.generationPasswordAndSend(user.getEmail());
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
