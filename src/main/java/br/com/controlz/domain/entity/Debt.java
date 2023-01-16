@@ -42,14 +42,15 @@ public class Debt implements Serializable {
 	@Column(name = "payment_date")
 	private LocalDate paymentDate;
 
-	@Column(name = "receipt_payment")
-	private byte[] receiptPayment;
-
 	@Column(name = "due_date")
 	private LocalDate dueDate;
 
 	@Column(name = "category_id")
 	private Long idCategory;
+
+	@Column(name = "receipt_payment")
+	private byte[] receiptPayment;
+
 
 	public Debt() {
 	}
@@ -110,18 +111,13 @@ public class Debt implements Serializable {
 			return this;
 		}
 
-		public Builder status(Integer val) {
-			status = val;
+		public Builder receiptPayment(byte[] val) {
+			receiptPayment = val;
 			return this;
 		}
 
 		public Builder paymentDate(LocalDate val) {
 			paymentDate = val;
-			return this;
-		}
-
-		public Builder receiptPayment(byte[] val) {
-			receiptPayment = val;
 			return this;
 		}
 
@@ -132,6 +128,11 @@ public class Debt implements Serializable {
 
 		public Builder idCategory(Long val) {
 			idCategory = val;
+			return this;
+		}
+
+		public Builder status(Integer val) {
+			status = val;
 			return this;
 		}
 
@@ -183,18 +184,6 @@ public class Debt implements Serializable {
 		this.idRegister = idRegister;
 	}
 
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public LocalDate getPaymentDate() {
-		return paymentDate;
-	}
-
 	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
 	}
@@ -203,8 +192,12 @@ public class Debt implements Serializable {
 		return receiptPayment;
 	}
 
-	public void setReceiptPayment(byte[] receiptPayment) {
-		this.receiptPayment = receiptPayment;
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public LocalDate getDueDate() {
@@ -213,6 +206,14 @@ public class Debt implements Serializable {
 
 	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
+	}
+
+	public LocalDate getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setReceiptPayment(byte[] receiptPayment) {
+		this.receiptPayment = receiptPayment;
 	}
 
 	public Long getIdCategory() {

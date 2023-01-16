@@ -65,6 +65,11 @@ public class DebtDTO {
 			return this;
 		}
 
+		public Builder dueDate(LocalDate val) {
+			dueDate = val;
+			return this;
+		}
+
 		public Builder inputDate(LocalDate val) {
 			inputDate = val;
 			return this;
@@ -75,13 +80,8 @@ public class DebtDTO {
 			return this;
 		}
 
-		public Builder receiptPayment(byte[] val) {
-			receiptPayment = val;
-			return this;
-		}
-
-		public Builder dueDate(LocalDate val) {
-			dueDate = val;
+		public Builder debtDescription(String val) {
+			debtDescription = val;
 			return this;
 		}
 
@@ -90,18 +90,18 @@ public class DebtDTO {
 			return this;
 		}
 
-		public Builder debtDescription(String val) {
-			debtDescription = val;
-			return this;
-		}
-
-		public Builder value(Double val) {
-			value = val;
+		public Builder receiptPayment(byte[] val) {
+			receiptPayment = val;
 			return this;
 		}
 
 		public Builder status(String val) {
 			status = val;
+			return this;
+		}
+
+		public Builder value(Double val) {
+			value = val;
 			return this;
 		}
 
@@ -140,12 +140,28 @@ public class DebtDTO {
 		return inputDate;
 	}
 
+	public String getDebtDescription() {
+		return debtDescription;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void setDebtDescription(String debtDescription) {
+		this.debtDescription = debtDescription;
+	}
+
 	public void setInputDate(LocalDate inputDate) {
 		this.inputDate = inputDate;
 	}
 
-	public LocalDate getPaymentDate() {
-		return paymentDate;
+	public Long getIdCategory() {
+		return idCategory;
 	}
 
 	public void setPaymentDate(LocalDate paymentDate) {
@@ -164,24 +180,16 @@ public class DebtDTO {
 		return dueDate;
 	}
 
+	public LocalDate getPaymentDate() {
+		return paymentDate;
+	}
+
 	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public Long getIdCategory() {
-		return idCategory;
-	}
-
 	public void setIdCategory(Long idCategory) {
 		this.idCategory = idCategory;
-	}
-
-	public String getDebtDescription() {
-		return debtDescription;
-	}
-
-	public void setDebtDescription(String debtDescription) {
-		this.debtDescription = debtDescription;
 	}
 
 	public Double getValue() {
@@ -190,13 +198,5 @@ public class DebtDTO {
 
 	public void setValue(Double value) {
 		this.value = value;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 }
