@@ -3,7 +3,6 @@ package br.com.controlz.domain.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -229,21 +228,17 @@ public class Debt implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Debt debt = (Debt) o;
-		return Objects.equals(register, debt.register) && Objects.equals(category, debt.category) && Objects.equals(idDebt, debt.idDebt) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value) && Objects.equals(idRegister, debt.idRegister) && Objects.equals(status, debt.status) && Objects.equals(paymentDate, debt.paymentDate) && Arrays.equals(receiptPayment, debt.receiptPayment) && Objects.equals(dueDate, debt.dueDate) && Objects.equals(idCategory, debt.idCategory);
+		return Objects.equals(idDebt, debt.idDebt) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value) && Objects.equals(idRegister, debt.idRegister) && Objects.equals(status, debt.status) && Objects.equals(paymentDate, debt.paymentDate) && Objects.equals(dueDate, debt.dueDate) && Objects.equals(idCategory, debt.idCategory);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = Objects.hash(register, category, idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate, dueDate, idCategory);
-		result = 31 * result + Arrays.hashCode(receiptPayment);
-		return result;
+		return Objects.hash(idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate, dueDate, idCategory);
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", Debt.class.getSimpleName() + "[", "]")
-				.add("register=" + register)
-				.add("category=" + category)
 				.add("idDebt=" + idDebt)
 				.add("inputDate=" + inputDate)
 				.add("debtDescription='" + debtDescription + "'")

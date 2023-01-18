@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,10 +46,16 @@ public class JobDebtDueDateAlertService {
 		if (debts.isEmpty()) {
 			logger.info("Não foram encontradas dívidas á pagar");
 		}
-		LocalDate localDateNowSumDays = DateUtils.localDateNowSumDays(2);
 
-		List<Debt> dueDebts = debts.stream().filter(debt ->
-				debt.getDueDate().isEqual(localDateNowSumDays)).toList();
+		List<Debt> dueDebts = new ArrayList<>();
+		debts.forEach(
+				debt -> {
+					boolean isDaysBeforeDueDate = DateUtils.checkDaysBeforeExpiration(debt.getDueDate());
+					if (isDaysBeforeDueDate) {
+						dueDebts.add(debt);
+					}
+				}
+		);
 
 		dueDebts.forEach(
 				debt -> {

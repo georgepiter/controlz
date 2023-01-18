@@ -9,7 +9,7 @@ import java.util.*;
 @Table(name = "register")
 public class Register implements Serializable {
 
-	@OneToMany(mappedBy = "register", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "register", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private final List<Debt> debts = new ArrayList<>();
 
 	@Id
@@ -124,9 +124,6 @@ public class Register implements Serializable {
 		}
 	}
 
-	public List<Debt> getDebts() {
-		return debts;
-	}
 
 	public Long getIdRegister() {
 		return idRegister;
@@ -212,13 +209,14 @@ public class Register implements Serializable {
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", Register.class.getSimpleName() + "[", "]")
-				.add("id=" + idRegister)
+				.add("idRegister=" + idRegister)
 				.add("name='" + name + "'")
 				.add("registrationDate=" + registrationDate)
 				.add("email='" + email + "'")
 				.add("cell='" + cell + "'")
 				.add("others=" + others)
 				.add("salary=" + salary)
+				.add("photo=" + Arrays.toString(photo))
 				.add("updateDate=" + updateDate)
 				.toString();
 	}

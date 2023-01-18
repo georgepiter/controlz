@@ -11,7 +11,7 @@ import java.util.StringJoiner;
 @Table(name = "category")
 public class Category implements Serializable {
 
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private final List<Debt> debts = new ArrayList<>();
 
 	@Id
@@ -54,18 +54,17 @@ public class Category implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Category category = (Category) o;
-		return Objects.equals(debts, category.debts) && Objects.equals(idCategory, category.idCategory) && Objects.equals(description, category.description);
+		return Objects.equals(idCategory, category.idCategory) && Objects.equals(description, category.description);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(debts, idCategory, description);
+		return Objects.hash(idCategory, description);
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", Category.class.getSimpleName() + "[", "]")
-				.add("debts=" + debts)
 				.add("idCategory=" + idCategory)
 				.add("description='" + description + "'")
 				.toString();
