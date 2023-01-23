@@ -37,13 +37,13 @@ public class UserService {
 
 	public ResponseEntityCustom registerNewUser(UserDTO userDTO) throws EmailException, UserException {
 		if (!EmailUtils.isEmailPatternValid(userDTO.getEmail())) {
-			throw new EmailException("O Email não está no formato válido");
+			throw new EmailException("O Email não está nem um formato válido");
 		}
 		List<User> allUsers = userRepository.findAll()
 				.stream().filter(user -> user.getName().equals(userDTO.getName())
 						|| user.getEmail().equals(userDTO.getEmail())).toList();
 		if (!allUsers.isEmpty()) {
-			throw new UserException("Usuário já cadastrado com nome ou e-mail");
+			throw new UserException("Usuário já cadastrado com nome ou e-mail digitado");
 		}
 		User newUser = new User.Builder()
 				.name(userDTO.getName())
@@ -54,7 +54,7 @@ public class UserService {
 				.password(passwordEncoder.encode(userDTO.getPassword()))
 				.createNewUser();
 		userRepository.save(newUser);
-		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "user created");
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Usuário criado com sucesso!");
 	}
 
 	public ResponseEntity<HttpStatus> resetPassword(UserDTO user) throws EmailException, EmailNotFoundException {
@@ -65,10 +65,10 @@ public class UserService {
 	public ResponseEntityCustom deleteUserById(Long idUser) {
 		Optional<User> user = userRepository.findById(idUser);
 		if (user.isEmpty()) {
-			throw new UsernameNotFoundException("User não encontrado pelo ID na base");
+			throw new UsernameNotFoundException("Usuário não encontrado pelo ID na base");
 		}
 		userRepository.delete(user.get());
-		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "user deleted");
+		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Usuário deletado com sucesso!");
 	}
 
 	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(UserDTO user) throws EmailException, UsernameNotFoundException {

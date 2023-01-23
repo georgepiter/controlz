@@ -35,12 +35,12 @@ public class RegisterService {
 			throw new EmailException("Email inválido");
 		}
 		if (Boolean.FALSE.equals(PhoneUtils.validatePhone(registerDTO.getCell()))) {
-			throw new PhoneException("Número de cell inválido");
+			throw new PhoneException("Número de telefone inválido");
 		}
 		validateSalary(registerDTO);
 		isRecordAlreadyExists(registerDTO);
 		registerRepository.save(buildNewRegister(registerDTO));
-		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "register created");
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Registro cadastrado com sucesso!");
 	}
 
 	private Register buildNewRegister(RegisterDTO registerDTO) {
@@ -62,7 +62,7 @@ public class RegisterService {
 		for (Register register : registers) {
 			if (register.getName().equals(name)
 					|| register.getEmail().equals(email)) {
-				throw new RegisterException("Registro já cadastrado com esse nome ou email");
+				throw new RegisterException("Registro já cadastrado com o nome ou email");
 			}
 		}
 	}
@@ -167,7 +167,7 @@ public class RegisterService {
 
 	public ResponseEntityCustom deleteRegister(Long registerId) throws RegisterNotFoundException {
 		registerRepository.delete(getRegisterFromDataBase(registerId));
-		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "deleted");
+		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Registro deletado com sucesso!");
 	}
 
 	public DebtValueDTO getTotalEntryValue(Long registerId) throws RegisterNotFoundException {

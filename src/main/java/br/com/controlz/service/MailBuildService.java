@@ -1,6 +1,5 @@
 package br.com.controlz.service;
 
-
 import br.com.controlz.domain.entity.Debt;
 import br.com.controlz.domain.entity.security.Email;
 import br.com.controlz.domain.entity.security.EmailProperty;

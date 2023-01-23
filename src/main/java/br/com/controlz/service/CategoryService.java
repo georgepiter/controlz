@@ -24,13 +24,13 @@ public class CategoryService {
 	public ResponseEntityCustom registerNewCategory(CategoryDTO categoryDTO) {
 		Category category = new Category(categoryDTO.getDescription());
 		categoryRepository.save(category);
-		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Category created successfully");
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Nova categoria salva com sucesso!");
 	}
 
 	public List<CategoryDTO> getAllCategories() throws CategoryNotFoundException {
 		List<Category> categories = categoryRepository.findAll();
 		if (categories.isEmpty()) {
-			throw new CategoryNotFoundException("no category found");
+			throw new CategoryNotFoundException("Nenhuma categoria localizada na base");
 		}
 		List<CategoryDTO> categoryDTOS = new ArrayList<>();
 		categories.forEach(
@@ -47,9 +47,9 @@ public class CategoryService {
 	public ResponseEntityCustom deleteCategoryById(Long idCategory) throws CategoryNotFoundException {
 		Optional<Category> category = categoryRepository.findById(idCategory);
 		if (category.isEmpty()) {
-			throw new CategoryNotFoundException("category not found by id");
+			throw new CategoryNotFoundException("Categoria não encontrada pelo ID");
 		}
 		categoryRepository.delete(category.get());
-		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "category deleted");
+		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Categoria deletada com sucesso!");
 	}
 }

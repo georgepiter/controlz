@@ -22,6 +22,8 @@ public class JWTUtilComponent {
 		return Jwts.builder()
 				.setSubject(username)
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
+				.claim("name", username)
+				.claim("nameApp", "ControlZ")
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes(StandardCharsets.UTF_8))
 				.compact();
 	}

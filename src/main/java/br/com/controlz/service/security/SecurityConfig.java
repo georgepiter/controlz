@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable(); //todo antes de subir em prod disable em csrf
+		http.cors().and().csrf().disable();
 		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll();
 		http.authorizeRequests().antMatchers(SWAGGER_MATCHERS).hasRole("ADMIN").anyRequest().permitAll();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), JWTUtilComponent));
@@ -57,5 +57,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder encoderPassword() {
 		return new BCryptPasswordEncoder();
 	}
-
 }
+

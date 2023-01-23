@@ -2,6 +2,7 @@ package br.com.controlz.service.security;
 
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.exception.AuthInvalidException;
+import br.com.controlz.domain.response.AuthResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -53,8 +53,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		String username = ((UserSpringSecurityService) authResult.getPrincipal()).getUsername();
 		String token = JWTUtilComponent.generateToken(username);
-		response.addHeader("Authorization", token);
-		response.getWriter().write(token);
+		AuthResponse authResponse = new AuthResponse();
+		authResponse.setToken(token);
+		response.setContentType("application/json; charset=utf-8");
+		response.getWriter().write(new ObjectMapper().writeValueAsString(authResponse));
 		response.getWriter().flush();
 	}
 
@@ -65,16 +67,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 											HttpServletResponse response,
 											AuthenticationException exception) throws IOException {
 			response.setStatus(401);
-			response.setContentType("application/json");
+			response.setContentType("application/json; charset=utf-8");
 			response.getWriter().append(json());
 		}
 
 		private String json() {
-			long date = new Date().getTime();
-			return "{\"timestamp\": " + date + ", "
-					+ "\"status\": 401, "
-					+ "\"error\": \"Not authorized\", "
-					+ "\"message\": \"Invalid credentials or disabled user\", "
+			return "{\"status\": 401, "
+					+ "\"message\": \"Credenciais inválidas ou usuário desativado no sistema\", "
 					+ "\"path\": \"/login\"}";
 		}
 	}

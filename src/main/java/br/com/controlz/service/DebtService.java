@@ -38,7 +38,7 @@ public class DebtService {
 			throw new RegisterNotFoundException("Registro não encontrado na base");
 		}
 		debtRepository.save(buildNewDebt(debt, register.get().getIdRegister()));
-		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Debt created");
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Débito salvo com sucesso!");
 	}
 
 	private Debt buildNewDebt(DebtDTO debt, Long idRegister) {
@@ -115,7 +115,7 @@ public class DebtService {
 
 	public ResponseEntityCustom deleteDebtById(Long debtId) throws DebtNotFoundException {
 		debtRepository.delete(getRegisterFromDataBase(debtId));
-		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "debt deleted");
+		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Débito deletado com sucesso!");
 	}
 
 	private Debt getRegisterFromDataBase(Long debtId) throws DebtNotFoundException {
