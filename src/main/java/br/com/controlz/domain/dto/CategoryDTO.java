@@ -2,18 +2,19 @@ package br.com.controlz.domain.dto;
 
 public class CategoryDTO {
 
-	private Long idCategory;
+	private Long categoryId;
 	private String description;
 
 	public CategoryDTO() {
+		//ignored
 	}
 
-	public Long getIdCategory() {
-		return idCategory;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setIdCategory(Long idCategory) {
-		this.idCategory = idCategory;
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getDescription() {

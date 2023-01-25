@@ -16,17 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final AuthenticationManager authenticationManager;
-	private final JWTUtilComponent JWTUtilComponent;
+	private final JWTUtilComponent jwtUtilComponent;
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager,
-								   JWTUtilComponent JWTUtilComponent) {
+								   JWTUtilComponent jwtUtilComponent) {
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.authenticationManager = authenticationManager;
-		this.JWTUtilComponent = JWTUtilComponent;
+		this.jwtUtilComponent = jwtUtilComponent;
 	}
 
 	@Override
@@ -52,7 +53,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 											Authentication authResult) throws IOException {
 
 		String username = ((UserSpringSecurityService) authResult.getPrincipal()).getUsername();
-		String token = JWTUtilComponent.generateToken(username);
+		Long userId = ((UserSpringSecurityService) authResult.getPrincipal()).getId();
+		String authority = Objects.requireNonNull(((UserSpringSecurityService) authResult.getPrincipal()).getAuthorities()
+				.stream().findFirst().orElse(null)).getAuthority();
+
+		String token = jwtUtilComponent.generateToken(username, userId, authority);
 		AuthResponse authResponse = new AuthResponse();
 		authResponse.setToken(token);
 		response.setContentType("application/json; charset=utf-8");

@@ -40,7 +40,6 @@ public class MailBuildService {
 		this.emailPropertyRepository = emailPropertyRepository;
 	}
 
-
 	public void newSendPasswordEmail(User user, String newPassword) throws UsernameNotFoundException, EmailException {
 		List<SendSmtpEmailTo> listEmail = compileEmail(user.getEmail());
 		Map<String, String> bodyMessage = buildMessageNewPassword(user.getName(), newPassword);
@@ -107,7 +106,7 @@ public class MailBuildService {
 		Email mail = new Email();
 		mail.setEmail(email);
 		mail.setSubject(sendSmtpEmail.getSubject());
-		mail.setIdTemplate(sendSmtpEmail.getTemplateId());
+		mail.setTemplateId(sendSmtpEmail.getTemplateId());
 		mail.setEmailStatus(EMAIL_SEND_TRUE);
 		emailRepository.save(mail);
 		getMessageBodyToProperty(mail, bodyMsg);
@@ -119,7 +118,7 @@ public class MailBuildService {
 			EmailProperty emailProperty = new EmailProperty();
 			emailProperty.setEmailPropertyKey(key);
 			emailProperty.setEmailPropertyValue(value);
-			emailProperty.setIdEmail(email.getIdMail());
+			emailProperty.setEmailId(email.getEmailId());
 			emailPropertyRepository.save(emailProperty);
 		});
 	}
@@ -151,7 +150,7 @@ public class MailBuildService {
 	private void validateEmailMessageSuccessResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
 		Optional<Email> emailByStatusSent = emailRepository.findByEmail(emailStatusResponse.getEmail());
 		Email email = verifyMail(emailByStatusSent);
-		emailRepository.deleteById(email.getIdMail());
+		emailRepository.deleteById(email.getEmailId());
 		logger.info("E-mail entregue com sucesso");
 	}
 
@@ -159,7 +158,7 @@ public class MailBuildService {
 		Optional<Email> emailByStatusSend = emailRepository.findByEmail(emailStatusResponse.getEmail());
 		Email email = verifyMail(emailByStatusSend);
 		if (EMAIL_SEND_ERROR.equals(email.getEmailStatus())) {
-			emailRepository.deleteById(email.getIdMail());
+			emailRepository.deleteById(email.getEmailId());
 		} else {
 			email.setEmailStatus(EMAIL_SEND_ERROR);
 			emailRepository.save(email);

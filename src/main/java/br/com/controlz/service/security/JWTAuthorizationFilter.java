@@ -15,14 +15,14 @@ import java.io.IOException;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private final JWTUtilComponent JWTUtilComponent;
+	private final JWTUtilComponent jwtUtilComponent;
 	private final UserDetailsService userDetailsService;
 
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager,
-								  JWTUtilComponent JWTUtilComponent,
+								  JWTUtilComponent jwtUtilComponent,
 								  UserDetailsService userDetailsService) {
 		super(authenticationManager);
-		this.JWTUtilComponent = JWTUtilComponent;
+		this.jwtUtilComponent = jwtUtilComponent;
 		this.userDetailsService = userDetailsService;
 	}
 
@@ -41,8 +41,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 
 	private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-		if (Boolean.TRUE.equals(JWTUtilComponent.isTokenValid(token))) {
-			String username = JWTUtilComponent.getUserName(token);
+		if (Boolean.TRUE.equals(jwtUtilComponent.isTokenValid(token))) {
+			String username = jwtUtilComponent.getUserName(token);
 			UserDetails user = userDetailsService.loadUserByUsername(username);
 			return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 		}

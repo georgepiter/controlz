@@ -46,10 +46,10 @@ public class UserController {
 		return userService.resetPasswordAndSendToEmail(user);
 	}
 
-	@DeleteMapping(value = "/id/{id}")
+	@DeleteMapping(value = "/{userId}")
 	@ApiOperation(value = "Método que deleta o user utilizador pelo ID")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntityCustom deleteUserById(@PathVariable Long idRegister) throws UsernameNotFoundException {
-		return userService.deleteUserById(idRegister);
+	public ResponseEntityCustom deleteUserById(@PathVariable Long userId) throws UsernameNotFoundException {
+		return userService.deleteUserById(userId);
 	}
 }

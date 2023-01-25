@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @Api(value = "Débito", produces = MediaType.APPLICATION_JSON_VALUE, tags = {"Débito"})
@@ -30,42 +30,35 @@ public class DebtController {
 	@PostMapping(value = "/")
 	@ApiOperation(value = "Método que registra novo débito")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntityCustom registerNewDebt(@RequestBody DebtDTO debt) throws RegisterNotFoundException {
+	public ResponseEntityCustom registerNewDebt(@NotNull @RequestBody DebtDTO debt) throws RegisterNotFoundException {
 		return debtService.registerNewDebt(debt);
 	}
 
-	@GetMapping(value = "/all/{registerId}")
-	@ApiOperation(value = "Método que retorna o nome com todos débitos por ID Registro")
+	@GetMapping(value = "/all/{userId}/{registerId}")
+	@ApiOperation(value = "Método que retorna todos os débitos do mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getAllDebtsById(@PathVariable Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
-		return debtService.getAllDebtsByRegister(registerId);
+	public DebtValueDTO getAllDebtsById(@PathVariable Long registerId, @PathVariable Long userId) throws RegisterNotFoundException {
+		return debtService.getAllDebtsByRegister(registerId, userId);
 	}
 
-	@GetMapping(value = "/debtsBetweenDates/{registerId}/{startDate}/{endDate}")
-	@ApiOperation(value = "Método que retorna todos débitos por data escolhida")
+	@GetMapping(value = "/allPay/{userId}/{registerId}")
+	@ApiOperation(value = "Método que retorna todos débitos pagos do mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public List<DebtDTO> getAllDebtsBetweenDates(@PathVariable Long registerId, @PathVariable String startDate, @PathVariable String endDate) throws DebtNotFoundException {
-		return debtService.getAllDebtsBetweenDates(registerId, startDate, endDate);
+	public DebtValueDTO getAllDebtsPay(@PathVariable Long registerId, @PathVariable Long userId) throws DebtNotFoundException, RegisterNotFoundException {
+		return debtService.getAllDebtsByStatusAndRegister(true, registerId, userId);
 	}
 
-	@GetMapping(value = "/allPay/{registerId}")
-	@ApiOperation(value = "Método que retorna todos débitos pagos")
+	@GetMapping(value = "/allDue/{userId}/{registerId}")
+	@ApiOperation(value = "Método que retorna todos débitos á pagar do mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getAllDebtsPay(@PathVariable Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
-		return debtService.getAllDebtsByStatusAndRegister(true, registerId);
-	}
-
-	@GetMapping(value = "/allDue/{registerId}")
-	@ApiOperation(value = "Método que retorna todos débitos á pagar pelo id do registro")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getAllDebtsDue(@PathVariable Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
-		return debtService.getAllDebtsByStatusAndRegister(false, registerId);
+	public DebtValueDTO getAllDebtsDue(@PathVariable Long registerId, @PathVariable Long userId) throws DebtNotFoundException, RegisterNotFoundException {
+		return debtService.getAllDebtsByStatusAndRegister(false, registerId, userId);
 	}
 
 	@PutMapping(value = "/update")
 	@ApiOperation(value = "Método que atualiza um débito")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntity<HttpStatus> updateValue(@RequestBody DebtDTO debtDTO) {
+	public ResponseEntity<HttpStatus> updateValue(@NotNull @RequestBody DebtDTO debtDTO) {
 		return debtService.updateValue(debtDTO);
 	}
 
@@ -76,8 +69,8 @@ public class DebtController {
 		return debtService.payValue(debtDTO);
 	}
 
-	@DeleteMapping(value = "/debtId/{debtId}")
-	@ApiOperation(value = "Método que deleta um débito por ID debt")
+	@DeleteMapping(value = "/{debtId}")
+	@ApiOperation(value = "Método que deleta um débito")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntityCustom deleteDebt(@PathVariable Long debtId) throws DebtNotFoundException {
 		return debtService.deleteDebtById(debtId);

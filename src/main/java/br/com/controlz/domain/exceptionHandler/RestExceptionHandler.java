@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
 
@@ -53,5 +55,13 @@ public class RestExceptionHandler {
 	})
 	public ResponseEntityCustom handleForbidden(Exception e) {
 		return new ResponseEntityCustom(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN, e.getMessage());
+	}
+
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler({
+			SQLIntegrityConstraintViolationException.class
+	})
+	public ResponseEntityCustom handleInternalServerError(Exception e) {
+		return new ResponseEntityCustom(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 	}
 }

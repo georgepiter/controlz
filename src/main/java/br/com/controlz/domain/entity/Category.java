@@ -17,7 +17,7 @@ public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long idCategory;
+	private Long categoryId;
 
 	@Column(name = "description")
 	private String description;
@@ -33,12 +33,12 @@ public class Category implements Serializable {
 		return debts;
 	}
 
-	public Long getIdCategory() {
-		return idCategory;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setIdCategory(Long idCategory) {
-		this.idCategory = idCategory;
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getDescription() {
@@ -54,18 +54,18 @@ public class Category implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Category category = (Category) o;
-		return Objects.equals(idCategory, category.idCategory) && Objects.equals(description, category.description);
+		return Objects.equals(categoryId, category.categoryId) && Objects.equals(description, category.description);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idCategory, description);
+		return Objects.hash(categoryId, description);
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", Category.class.getSimpleName() + "[", "]")
-				.add("idCategory=" + idCategory)
+				.add("categoryId=" + categoryId)
 				.add("description='" + description + "'")
 				.toString();
 	}

@@ -15,7 +15,7 @@ public class EmailProperty implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long idMailProperty;
+	private Long emailPropertyId;
 
 	@Column(name = "email_property_key")
 	private String emailPropertyKey;
@@ -24,13 +24,13 @@ public class EmailProperty implements Serializable {
 	private String emailPropertyValue;
 
 	@Column(name = "email_id")
-	private Long idEmail;
+	private Long emailId;
 
-	public EmailProperty(Long idMailProperty, String emailPropertyKey, String emailPropertyValue, Long idEmail) {
-		this.idMailProperty = idMailProperty;
+	public EmailProperty(Long emailPropertyId, String emailPropertyKey, String emailPropertyValue, Long emailId) {
+		this.emailPropertyId = emailPropertyId;
 		this.emailPropertyKey = emailPropertyKey;
 		this.emailPropertyValue = emailPropertyValue;
-		this.idEmail = idEmail;
+		this.emailId = emailId;
 	}
 
 	public EmailProperty() {
@@ -44,12 +44,12 @@ public class EmailProperty implements Serializable {
 		this.email = email;
 	}
 
-	public Long getIdMailProperty() {
-		return idMailProperty;
+	public Long getEmailPropertyId() {
+		return emailPropertyId;
 	}
 
-	public void setIdMailProperty(Long idMailProperty) {
-		this.idMailProperty = idMailProperty;
+	public void setEmailPropertyId(Long emailPropertyId) {
+		this.emailPropertyId = emailPropertyId;
 	}
 
 	public String getEmailPropertyKey() {
@@ -68,12 +68,12 @@ public class EmailProperty implements Serializable {
 		this.emailPropertyValue = emailPropertyValue;
 	}
 
-	public Long getIdEmail() {
-		return idEmail;
+	public Long getEmailId() {
+		return emailId;
 	}
 
-	public void setIdEmail(Long idEmail) {
-		this.idEmail = idEmail;
+	public void setEmailId(Long emailId) {
+		this.emailId = emailId;
 	}
 
 	@Override
@@ -82,25 +82,23 @@ public class EmailProperty implements Serializable {
 		if (o == null || getClass() != o.getClass()) return false;
 		EmailProperty that = (EmailProperty) o;
 		return Objects.equals(email, that.email)
-				&& Objects.equals(idMailProperty, that.idMailProperty)
+				&& Objects.equals(emailPropertyId, that.emailPropertyId)
 				&& Objects.equals(emailPropertyKey, that.emailPropertyKey)
 				&& Objects.equals(emailPropertyValue, that.emailPropertyValue)
-				&& Objects.equals(idEmail, that.idEmail);
+				&& Objects.equals(emailId, that.emailId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, idMailProperty, emailPropertyKey, emailPropertyValue, idEmail);
+		return Objects.hash(email, emailPropertyId, emailPropertyKey, emailPropertyValue, emailId);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder mailProperty = new StringBuilder("MailProperty{");
-		mailProperty.append("idMailProperty=").append(idMailProperty);
-		mailProperty.append(", key='").append(emailPropertyKey).append('\'');
-		mailProperty.append(", value='").append(emailPropertyValue).append('\'');
-		mailProperty.append(", idPropertyEmail='").append(idEmail).append('\'');
-		mailProperty.append('}');
-		return mailProperty.toString();
+		return "MailProperty{" + "mailPropertyId=" + emailPropertyId +
+				", key='" + emailPropertyKey + '\'' +
+				", value='" + emailPropertyValue + '\'' +
+				", emailId='" + emailId + '\'' +
+				'}';
 	}
 }

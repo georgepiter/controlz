@@ -4,33 +4,33 @@ import java.time.LocalDate;
 
 public class DebtDTO {
 
-	private Long idDebt;
+	private Long debtId;
+	private Long userId;
 	private String status;
 	private LocalDate paymentDate;
 	private byte[] receiptPayment;
 	private LocalDate dueDate;
 	private Long idCategory;
-	private Long idRegister;
-	private String name;
+	private Long registerId;
 	private LocalDate inputDate;
 	private String debtDescription;
 	private Double value;
 
 
-	protected DebtDTO(Long idDebt, Long idRegister, String name, LocalDate inputDate,
+	protected DebtDTO(Long debtId, Long registerId, LocalDate inputDate,
 					  String debtDescription, Double value, String status,
-					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate, Long idCategory) {
-		this.idDebt = idDebt;
+					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate, Long idCategory, Long userId) {
+		this.debtId = debtId;
 		this.paymentDate = paymentDate;
 		this.receiptPayment = receiptPayment;
 		this.dueDate = dueDate;
 		this.idCategory = idCategory;
-		this.idRegister = idRegister;
-		this.name = name;
+		this.registerId = registerId;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
 		this.value = value;
 		this.status = status;
+		this.userId = userId;
 	}
 
 	public static final class Builder {
@@ -38,30 +38,25 @@ public class DebtDTO {
 		private LocalDate paymentDate;
 		private byte[] receiptPayment;
 		private LocalDate dueDate;
-		private Long idCategory;
-		private Long idDebt;
-		private Long idRegister;
-		private String name;
+		private Long categoryId;
+		private Long debtId;
+		private Long registerId;
 		private LocalDate inputDate;
 		private String debtDescription;
 		private Double value;
+		private Long userId;
 
 		public Builder() {
 			//ignored
 		}
 
-		public Builder idDebt(Long val) {
-			idDebt = val;
+		public Builder debtId(Long val) {
+			debtId = val;
 			return this;
 		}
 
-		public Builder idRegister(Long val) {
-			idRegister = val;
-			return this;
-		}
-
-		public Builder name(String val) {
-			name = val;
+		public Builder registerId(Long val) {
+			registerId = val;
 			return this;
 		}
 
@@ -85,8 +80,8 @@ public class DebtDTO {
 			return this;
 		}
 
-		public Builder idCategory(Long val) {
-			idCategory = val;
+		public Builder categoryId(Long val) {
+			categoryId = val;
 			return this;
 		}
 
@@ -105,39 +100,24 @@ public class DebtDTO {
 			return this;
 		}
 
+		public Builder userId(Long val) {
+			userId = val;
+			return this;
+		}
+
 		public DebtDTO createNewDebtDTO() {
 			return new DebtDTO(
-					idDebt, idRegister, name, inputDate, debtDescription, value, status, paymentDate, receiptPayment, dueDate, idCategory
+					debtId, registerId, inputDate, debtDescription, value, status, paymentDate, receiptPayment, dueDate, categoryId, userId
 			);
 		}
 	}
 
-	public Long getIdDebt() {
-		return idDebt;
+	public Long getDebtId() {
+		return debtId;
 	}
 
-	public void setIdDebt(Long idDebt) {
-		this.idDebt = idDebt;
-	}
-
-	public Long getIdRegister() {
-		return idRegister;
-	}
-
-	public void setIdRegister(Long idRegister) {
-		this.idRegister = idRegister;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LocalDate getInputDate() {
-		return inputDate;
+	public Long getRegisterId() {
+		return registerId;
 	}
 
 	public String getDebtDescription() {
@@ -152,44 +132,16 @@ public class DebtDTO {
 		this.status = status;
 	}
 
-	public void setDebtDescription(String debtDescription) {
-		this.debtDescription = debtDescription;
-	}
-
-	public void setInputDate(LocalDate inputDate) {
-		this.inputDate = inputDate;
-	}
-
 	public Long getIdCategory() {
 		return idCategory;
-	}
-
-	public void setPaymentDate(LocalDate paymentDate) {
-		this.paymentDate = paymentDate;
 	}
 
 	public byte[] getReceiptPayment() {
 		return receiptPayment;
 	}
 
-	public void setReceiptPayment(byte[] receiptPayment) {
-		this.receiptPayment = receiptPayment;
-	}
-
 	public LocalDate getDueDate() {
 		return dueDate;
-	}
-
-	public LocalDate getPaymentDate() {
-		return paymentDate;
-	}
-
-	public void setDueDate(LocalDate dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public void setIdCategory(Long idCategory) {
-		this.idCategory = idCategory;
 	}
 
 	public Double getValue() {
@@ -198,5 +150,13 @@ public class DebtDTO {
 
 	public void setValue(Double value) {
 		this.value = value;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

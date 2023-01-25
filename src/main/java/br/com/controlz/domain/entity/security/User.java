@@ -1,8 +1,12 @@
 package br.com.controlz.domain.entity.security;
 
+import br.com.controlz.domain.entity.Register;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -14,10 +18,13 @@ public class User implements Serializable {
 	@JoinColumn(name = "role_id", updatable = false, insertable = false)
 	private Role role;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	private final List<Register> registers = new ArrayList<>();
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long idUser;
+	private Long userId;
 
 	@Column(name = "username")
 	private String name;
@@ -32,7 +39,7 @@ public class User implements Serializable {
 	private LocalDateTime createTime;
 
 	@Column(name = "role_id")
-	private Long idRole;
+	private Long roleId;
 
 	@Column(name = "status")
 	private Integer status;
@@ -40,28 +47,29 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(Role role, Long idUser, String name, String password, String email, LocalDateTime createTime, Long idRole, Integer status) {
+	public User(Role role, Long userId, String name, String password, String email, LocalDateTime createTime, Long roleId, Integer status) {
 		this.role = role;
-		this.idUser = idUser;
+		this.userId = userId;
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.createTime = createTime;
-		this.idRole = idRole;
+		this.roleId = roleId;
 		this.status = status;
 	}
 
 	public static final class Builder {
 		private Role role;
-		private Long idUser;
+		private Long userId;
 		private String name;
 		private String password;
 		private String email;
 		private LocalDateTime createTime;
-		private Long idRole;
+		private Long roleId;
 		private Integer status;
 
 		public Builder() {
+			//ignored
 		}
 
 		public Builder role(Role val) {
@@ -69,8 +77,8 @@ public class User implements Serializable {
 			return this;
 		}
 
-		public Builder idUser(Long val) {
-			idUser = val;
+		public Builder userId(Long val) {
+			userId = val;
 			return this;
 		}
 
@@ -94,8 +102,8 @@ public class User implements Serializable {
 			return this;
 		}
 
-		public Builder idRole(Long val) {
-			idRole = val;
+		public Builder roleId(Long val) {
+			roleId = val;
 			return this;
 		}
 
@@ -106,24 +114,16 @@ public class User implements Serializable {
 
 		public User createNewUser() {
 			return new User(
-					role, idUser, name, password, email, createTime, idRole, status);
+					role, userId, name, password, email, createTime, roleId, status);
 		}
 	}
 
-	public Role getRole() {
-		return role;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public Long getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getName() {
@@ -150,20 +150,8 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public LocalDateTime getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(LocalDateTime createTime) {
-		this.createTime = createTime;
-	}
-
-	public Long getIdRole() {
-		return idRole;
-	}
-
-	public void setIdRole(Long idRole) {
-		this.idRole = idRole;
+	public Long getRoleId() {
+		return roleId;
 	}
 
 	public Integer getStatus() {
@@ -179,24 +167,24 @@ public class User implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return Objects.equals(role, user.role) && Objects.equals(idUser, user.idUser) && Objects.equals(name, user.name) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(createTime, user.createTime) && Objects.equals(idRole, user.idRole) && Objects.equals(status, user.status);
+		return Objects.equals(role, user.role) && Objects.equals(userId, user.userId) && Objects.equals(name, user.name) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(createTime, user.createTime) && Objects.equals(roleId, user.roleId) && Objects.equals(status, user.status);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(role, idUser, name, password, email, createTime, idRole, status);
+		return Objects.hash(role, userId, name, password, email, createTime, roleId, status);
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
 				.add("role=" + role)
-				.add("idUser=" + idUser)
+				.add("userId=" + userId)
 				.add("name='" + name + "'")
 				.add("password='" + password + "'")
 				.add("email='" + email + "'")
 				.add("createTime=" + createTime)
-				.add("idRole=" + idRole)
+				.add("roleId=" + roleId)
 				.add("status=" + status)
 				.toString();
 	}

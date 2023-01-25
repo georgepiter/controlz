@@ -18,12 +18,14 @@ public class JWTUtilComponent {
 	@Value("${jwt.expiration}")
 	private Long expiration;
 
-	public String generateToken(String username) {
+	public String generateToken(String username, Long userId, String authority) {
 		return Jwts.builder()
 				.setSubject(username)
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.claim("name", username)
+				.claim("userId", userId)
 				.claim("nameApp", "ControlZ")
+				.claim("role", authority)
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes(StandardCharsets.UTF_8))
 				.compact();
 	}

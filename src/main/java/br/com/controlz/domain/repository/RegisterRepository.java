@@ -4,15 +4,13 @@ import br.com.controlz.domain.entity.Register;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface RegisterRepository extends JpaRepository<Register, Long> {
 
-	Optional<Register> findById(Long id);
+	Optional<Register> findByUserIdAndRegisterId(Long userId, Long registerId);
 
-	List<Register> findAll();
+	Optional<Register> findByUserId(Long userId);
 
-	Optional<Register> findByName(String name);
 }

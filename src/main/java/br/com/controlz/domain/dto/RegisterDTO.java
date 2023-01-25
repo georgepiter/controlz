@@ -1,60 +1,57 @@
 package br.com.controlz.domain.dto;
 
+import org.springframework.lang.NonNull;
+
 import java.time.LocalDate;
 
 public class RegisterDTO {
 
-	private final Long id;
-	private String name;
-	private String email;
+	private final Long idRegister;
+	private final Long userId;
 	private String cell;
 	private Double others;
 	private Double salary;
 	private LocalDate registrationDate;
 	private byte[] photo;
 
-	protected RegisterDTO(Long id, String name, String email, String cell, Double others, Double salary, LocalDate registrationDate, byte[] photo) {
-		this.id = id;
-		this.name = name;
-		this.email = email;
+	protected RegisterDTO(Long idRegister, String cell, Double others, Double salary,
+						  LocalDate registrationDate, byte[] photo, Long userId) {
+		this.idRegister = idRegister;
 		this.cell = cell;
 		this.others = others;
 		this.salary = salary;
 		this.registrationDate = registrationDate;
 		this.photo = photo;
+		this.userId = userId;
 	}
 
 	public static final class Builder {
-		private Long id;
-		private String name;
-		private String email;
+
+		@NonNull
+		private Long userId;
+
+		@NonNull
+		private Long idRegister;
+
+		@NonNull
+		private Double salary;
 		private String cell;
 		private Double others;
-		private Double salary;
 		private LocalDate registrationDate;
 		private byte[] photo;
+
 
 		public Builder() {
 			//ignored
 		}
 
-		public Builder name(String val) {
-			name = val;
-			return this;
-		}
-
-		public Builder id(Long val) {
-			id = val;
+		public Builder idRegister(Long val) {
+			idRegister = val;
 			return this;
 		}
 
 		public Builder registrationDate(LocalDate val) {
 			registrationDate = val;
-			return this;
-		}
-
-		public Builder email(String val) {
-			email = val;
 			return this;
 		}
 
@@ -78,72 +75,45 @@ public class RegisterDTO {
 			return this;
 		}
 
+		public Builder userId(Long val) {
+			userId = val;
+			return this;
+		}
+
 		public RegisterDTO createNewRegisterDTO() {
 			return new RegisterDTO(
-					id, name, email, cell,
-					others, salary, registrationDate, photo
+					idRegister, cell,
+					others, salary, registrationDate, photo, userId
 			);
 		}
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public Long getIdRegister() {
+		return idRegister;
 	}
 
 	public String getCell() {
 		return cell;
 	}
 
-	public void setCell(String cell) {
-		this.cell = cell;
-	}
-
 	public Double getOthers() {
 		return others;
-	}
-
-	public void setOthers(Double others) {
-		this.others = others;
 	}
 
 	public Double getSalary() {
 		return salary;
 	}
 
-	public void setSalary(Double salary) {
-		this.salary = salary;
-	}
-
 	public LocalDate getRegistrationDate() {
 		return registrationDate;
-	}
-
-	public void setRegistrationDate(LocalDate registrationDate) {
-		this.registrationDate = registrationDate;
 	}
 
 	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+	public Long getUserId() {
+		return userId;
 	}
 }
 

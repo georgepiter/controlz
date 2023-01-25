@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,11 +34,11 @@ public class DebtService {
 	}
 
 	public ResponseEntityCustom registerNewDebt(DebtDTO debt) throws RegisterNotFoundException {
-		Optional<Register> register = registerRepository.findById(debt.getIdRegister());
+		Optional<Register> register = registerRepository.findByUserIdAndRegisterId(debt.getUserId(), debt.getRegisterId());
 		if (register.isEmpty()) {
 			throw new RegisterNotFoundException("Registro não encontrado na base");
 		}
-		debtRepository.save(buildNewDebt(debt, register.get().getIdRegister()));
+		debtRepository.save(buildNewDebt(debt, register.get().getRegisterId()));
 		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Débito salvo com sucesso!");
 	}
 
@@ -47,50 +48,50 @@ public class DebtService {
 				.inputDate(LocalDate.now())
 				.dueDate(debt.getDueDate())
 				.value(debt.getValue())
-				.idRegister(idRegister)
+				.registerId(idRegister)
 				.status(StatusEnum.AWAITING_PAYMENT.getValue())
-				.idCategory(debt.getIdCategory())
+				.categoryId(debt.getIdCategory())
 				.createDebt();
 	}
 
-	public DebtValueDTO getAllDebtsByRegister(Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
+	public DebtValueDTO getAllDebtsByRegister(Long registerId, Long userId) throws RegisterNotFoundException {
 		List<Debt> debts = getDebts(registerId);
-		Optional<Register> register = registerRepository.findById(registerId);
+		Optional<Register> register = registerRepository.findByUserIdAndRegisterId(userId, registerId);
 		if (register.isEmpty()) {
 			throw new RegisterNotFoundException("Registro não encontrado na base");
 		}
 		return buildDebtValueDTO(register.get(), debts);
 	}
 
-	private List<Debt> getDebts(Long registerId) throws DebtNotFoundException {
-		List<Debt> debts = debtRepository.findByIdRegister(registerId);
-		if (debts.isEmpty()) {
-			throw new DebtNotFoundException("Não foram encontrados Valores para o registro");
-		}
-		return debts;
+	private List<Debt> getDebts(Long registerId) {
+		LocalDate now = LocalDate.now();
+		LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
+		LocalDate lastDayOfMonth = now.with(TemporalAdjusters.lastDayOfMonth());
+		return debtRepository.findByDueDateAndRegisterId(firstDayOfMonth, lastDayOfMonth, registerId);
 	}
+
 
 	private List<DebtDTO> buildNewDebtListByRegister(List<Debt> debts) {
 		List<DebtDTO> debtsDTO = new ArrayList<>();
 		for (Debt debt : debts) {
 			String statusLabel = debt.getStatus().equals(StatusEnum.PAY.getValue()) ? "PAGO" : "Aguardando Pagamento";
 			DebtDTO newDebtDTO = new DebtDTO.Builder()
-					.idDebt(debt.getIdDebt())
-					.idRegister(debt.getIdRegister())
+					.debtId(debt.getDebtId())
+					.registerId(debt.getRegisterId())
 					.debtDescription(debt.getDebtDescription())
 					.value(debt.getValue())
 					.inputDate(debt.getInputDate())
 					.status(statusLabel)
 					.paymentDate(debt.getPaymentDate())
 					.dueDate(debt.getDueDate())
-					.idCategory(debt.getIdCategory())
+					.categoryId(debt.getCategoryId())
 					.createNewDebtDTO();
 			debtsDTO.add(newDebtDTO);
 		}
 		return debtsDTO;
 	}
 
-	public DebtValueDTO getFullDebt(Long registerId) throws DebtNotFoundException {
+	public DebtValueDTO getFullDebt(Long registerId) {
 		List<Debt> debts = getDebts(registerId);
 		double totalValue = debts.stream().mapToDouble(Debt::getValue).sum();
 		return new DebtValueDTO.Builder()
@@ -101,12 +102,12 @@ public class DebtService {
 	public ResponseEntity<HttpStatus> updateValue(DebtDTO debtDTO) {
 		Debt updateDebt = new Debt.Builder()
 				.debtDescription(debtDTO.getDebtDescription())
-				.idDebt(debtDTO.getIdDebt())
+				.debtId(debtDTO.getDebtId())
 				.inputDate(LocalDate.now())
 				.value(debtDTO.getValue())
-				.idRegister(debtDTO.getIdRegister())
+				.registerId(debtDTO.getRegisterId())
 				.dueDate(debtDTO.getDueDate())
-				.idCategory(debtDTO.getIdCategory())
+				.categoryId(debtDTO.getIdCategory())
 				.status(debtDTO.getStatus().equals(StatusEnum.PAY.getLabel()) ? StatusEnum.PAY.getValue() : StatusEnum.AWAITING_PAYMENT.getValue())
 				.createDebt();
 		debtRepository.save(updateDebt);
@@ -127,7 +128,7 @@ public class DebtService {
 	}
 
 	public ResponseEntity<HttpStatus> payValue(DebtDTO debtDTO) throws DebtNotFoundException {
-		Optional<Debt> debt = debtRepository.findById(debtDTO.getIdDebt());
+		Optional<Debt> debt = debtRepository.findByDebtIdAndRegisterId(debtDTO.getDebtId(), debtDTO.getRegisterId());
 		if (debt.isEmpty()) {
 			throw new DebtNotFoundException("Débito não encontrado pelo ID informado");
 		}
@@ -138,32 +139,28 @@ public class DebtService {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	public DebtValueDTO getAllDebtsByStatusAndRegister(boolean isPay, Long registerId) throws DebtNotFoundException, RegisterNotFoundException {
-		List<Debt> debts;
-		if (isPay) {
-			debts = findByDebtByStatusAndRegisterId(StatusEnum.PAY.getValue(), registerId);
-		} else {
-			debts = findByDebtByStatusAndRegisterId(StatusEnum.AWAITING_PAYMENT.getValue(), registerId);
-		}
+	public DebtValueDTO getAllDebtsByStatusAndRegister(boolean isPay, Long registerId, Long userId) throws DebtNotFoundException, RegisterNotFoundException {
+		int status = isPay ? StatusEnum.PAY.getValue() : StatusEnum.AWAITING_PAYMENT.getValue();
+		List<Debt> debts = findByDebtByStatusAndRegisterId(status, registerId);
 		if (debts.isEmpty()) {
-			throw new DebtNotFoundException("Não foram encontrados débitos pagos na base");
+			String message = isPay ? "Não foram encontrados débitos pagos na base" : "Não foram encontrados débitos para pagamento na base";
+			throw new DebtNotFoundException(message);
 		}
-		Optional<Register> register = registerRepository.findById(registerId);
+
+		Optional<Register> register = registerRepository.findByUserIdAndRegisterId(userId, registerId);
 		if (register.isEmpty()) {
 			throw new RegisterNotFoundException("Registro não encontrado na base pelo ID");
 		}
-
 		return buildDebtValueDTO(register.get(), debts);
 	}
 
-	private DebtValueDTO buildDebtValueDTO(Register register, List<Debt> debts) throws DebtNotFoundException {
-		double fullDebt = getFullDebt(register.getIdRegister()).getTotalDebt();
+	private DebtValueDTO buildDebtValueDTO(Register register, List<Debt> debts) {
+		double fullDebt = getFullDebt(register.getRegisterId()).getTotalDebt();
 		double salary = register.getSalary();
 		double othersValue = Objects.isNull(register.getOthers()) ? 0.00 : register.getOthers();
 		double currentTotalValue = (salary - fullDebt) + othersValue;
 
 		return new DebtValueDTO.Builder()
-				.name(register.getName())
 				.debtList(buildNewDebtListByRegister(debts))
 				.totalEntryValue(salary + register.getOthers())
 				.currentTotalValue(currentTotalValue)
@@ -172,23 +169,6 @@ public class DebtService {
 	}
 
 	private List<Debt> findByDebtByStatusAndRegisterId(Integer status, Long registerId) {
-		return debtRepository.findByStatusAndIdRegister(status, registerId);
-	}
-
-	public List<DebtDTO> getAllDebtsBetweenDates(Long registerId, String startDate, String endDate) throws DebtNotFoundException {
-		List<Debt> allDebts = debtRepository.findByIdRegister(registerId);
-		LocalDate start = LocalDate.parse(startDate);
-		LocalDate end = LocalDate.parse(endDate);
-
-		List<Debt> debts = allDebts.stream().filter(
-				debt -> debt.getDueDate().isEqual(start)
-						|| debt.getDueDate().isBefore(end)
-						|| debt.getDueDate().isEqual(end)
-		).toList();
-
-		if (debts.isEmpty()) {
-			throw new DebtNotFoundException("Não foram encontrados débitos na faixa de datas solicitada");
-		}
-		return new ArrayList<>(buildNewDebtListByRegister(debts));
+		return debtRepository.findByStatusAndRegisterId(status, registerId);
 	}
 }

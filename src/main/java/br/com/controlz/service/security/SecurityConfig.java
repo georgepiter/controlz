@@ -14,21 +14,23 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final UserDetailsService userDetailsService;
-	private final JWTUtilComponent JWTUtilComponent;
+	private final JWTUtilComponent jwtUtilComponent;
 
 	private static final String[] PUBLIC_MATCHERS = {"/api/v1/email", "/api/v1/user/forgot"};
 	private static final String[] SWAGGER_MATCHERS = {"/swagger-resources/*", "*.html", "/api/v1/swagger.json"};
 
 	public SecurityConfig(UserDetailsService userDetailsService,
-						  JWTUtilComponent JWTUtilComponent) {
+						  JWTUtilComponent jwtUtilComponent) {
 		this.userDetailsService = userDetailsService;
-		this.JWTUtilComponent = JWTUtilComponent;
+		this.jwtUtilComponent = jwtUtilComponent;
 	}
 
 	@Override
@@ -36,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable();
 		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll();
 		http.authorizeRequests().antMatchers(SWAGGER_MATCHERS).hasRole("ADMIN").anyRequest().permitAll();
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), JWTUtilComponent));
-		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), JWTUtilComponent, userDetailsService));
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtilComponent));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtilComponent, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
@@ -47,15 +49,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration(" /**", new CorsConfiguration().applyPermitDefaultValues());
-		return source;
+	public BCryptPasswordEncoder encoderPassword() {
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
-	public BCryptPasswordEncoder encoderPassword() {
-		return new BCryptPasswordEncoder();
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 }
 

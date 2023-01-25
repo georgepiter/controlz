@@ -1,5 +1,7 @@
 package br.com.controlz.domain.entity;
 
+import br.com.controlz.domain.entity.security.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,19 +14,20 @@ public class Register implements Serializable {
 	@OneToMany(mappedBy = "register", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private final List<Debt> debts = new ArrayList<>();
 
+	@OneToMany(mappedBy = "register", cascade = CascadeType.REMOVE)
+	private final List<FinancialHistory> financialHistories = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", updatable = false, insertable = false)
+	private User user;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long idRegister;
-
-	@Column(name = "name")
-	private String name;
+	private Long registerId;
 
 	@Column(name = "registration_date")
 	private LocalDate registrationDate;
-
-	@Column(name = "email")
-	private String email;
 
 	@Column(name = "cell")
 	private String cell;
@@ -41,53 +44,46 @@ public class Register implements Serializable {
 	@Column(name = "update_date")
 	private LocalDate updateDate;
 
+	@Column(name = "user_id")
+	private Long userId;
+
 	public Register() {
 	}
 
-	protected Register(Long idRegister, String name, LocalDate registrationDate, String email, String cell, Double others, Double salary, byte[] photo, LocalDate updateDate) {
-		this.idRegister = idRegister;
-		this.name = name;
+	protected Register(Long registerId, LocalDate registrationDate,
+					   String cell, Double others, Double salary,
+					   byte[] photo, LocalDate updateDate, Long userId) {
+		this.registerId = registerId;
 		this.registrationDate = registrationDate;
-		this.email = email;
 		this.cell = cell;
 		this.others = others;
 		this.salary = salary;
 		this.photo = photo;
 		this.updateDate = updateDate;
+		this.userId = userId;
 	}
 
 	public static final class Builder {
-		private Long id;
-		private String name;
+		private Long registerId;
 		private LocalDate registrationDate;
-		private String email;
 		private String cell;
 		private Double others;
 		private Double salary;
 		private byte[] photo;
 		private LocalDate update;
+		private Long userId;
 
 		public Builder() {
 			//ignored
 		}
 
-		public Builder id(Long val) {
-			id = val;
-			return this;
-		}
-
-		public Builder name(String val) {
-			name = val;
+		public Builder registerId(Long val) {
+			registerId = val;
 			return this;
 		}
 
 		public Builder registrationDate(LocalDate val) {
 			registrationDate = val;
-			return this;
-		}
-
-		public Builder email(String val) {
-			email = val;
 			return this;
 		}
 
@@ -116,81 +112,45 @@ public class Register implements Serializable {
 			return this;
 		}
 
+		public Builder userId(Long val) {
+			userId = val;
+			return this;
+		}
+
 		public Register createNewRegister() {
 			return new Register(
-					id, name, registrationDate, email,
-					cell, others, salary, photo, update
+					registerId, registrationDate,
+					cell, others, salary, photo, update, userId
 			);
 		}
 	}
 
-
-	public Long getIdRegister() {
-		return idRegister;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public Long getRegisterId() {
+		return registerId;
 	}
 
 	public LocalDate getRegistrationDate() {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(LocalDate registrationDate) {
-		this.registrationDate = registrationDate;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getCell() {
 		return cell;
-	}
-
-	public void setCell(String cell) {
-		this.cell = cell;
 	}
 
 	public Double getOthers() {
 		return others;
 	}
 
-	public void setOthers(Double others) {
-		this.others = others;
-	}
-
 	public Double getSalary() {
 		return salary;
-	}
-
-	public void setSalary(Double salary) {
-		this.salary = salary;
 	}
 
 	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
-	}
-
-	public LocalDate getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(LocalDate updateDate) {
-		this.updateDate = updateDate;
+	public Long getUserId() {
+		return userId;
 	}
 
 	@Override
@@ -198,26 +158,24 @@ public class Register implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Register register = (Register) o;
-		return Objects.equals(idRegister, register.idRegister) && Objects.equals(name, register.name) && Objects.equals(registrationDate, register.registrationDate) && Objects.equals(email, register.email) && Objects.equals(cell, register.cell) && Objects.equals(others, register.others) && Objects.equals(salary, register.salary) && Objects.equals(updateDate, register.updateDate);
+		return Objects.equals(registerId, register.registerId) && Objects.equals(registrationDate, register.registrationDate) && Objects.equals(cell, register.cell) && Objects.equals(others, register.others) && Objects.equals(salary, register.salary) && Objects.equals(updateDate, register.updateDate) && Objects.equals(userId, register.userId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idRegister, name, registrationDate, email, cell, others, salary, updateDate);
+		return Objects.hash(registerId, registrationDate, cell, others, salary, updateDate, userId);
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", Register.class.getSimpleName() + "[", "]")
-				.add("idRegister=" + idRegister)
-				.add("name='" + name + "'")
+				.add("registerId=" + registerId)
 				.add("registrationDate=" + registrationDate)
-				.add("email='" + email + "'")
 				.add("cell='" + cell + "'")
 				.add("others=" + others)
 				.add("salary=" + salary)
-				.add("photo=" + Arrays.toString(photo))
 				.add("updateDate=" + updateDate)
+				.add("userId=" + userId)
 				.toString();
 	}
 }

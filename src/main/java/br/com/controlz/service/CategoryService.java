@@ -33,14 +33,12 @@ public class CategoryService {
 			throw new CategoryNotFoundException("Nenhuma categoria localizada na base");
 		}
 		List<CategoryDTO> categoryDTOS = new ArrayList<>();
-		categories.forEach(
-				category -> {
-					CategoryDTO newCategory = new CategoryDTO();
-					newCategory.setIdCategory(category.getIdCategory());
-					newCategory.setDescription(category.getDescription());
-					categoryDTOS.add(newCategory);
-				}
-		);
+		categories.forEach(category -> {
+			CategoryDTO newCategory = new CategoryDTO();
+			newCategory.setCategoryId(category.getCategoryId());
+			newCategory.setDescription(category.getDescription());
+			categoryDTOS.add(newCategory);
+		});
 		return categoryDTOS;
 	}
 
@@ -51,5 +49,17 @@ public class CategoryService {
 		}
 		categoryRepository.delete(category.get());
 		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Categoria deletada com sucesso!");
+	}
+
+	public ResponseEntityCustom updateCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException {
+		Optional<Category> category = categoryRepository.findById(categoryDTO.getCategoryId());
+		if (category.isEmpty()) {
+			throw new CategoryNotFoundException("Categoria não encontrada pelo ID");
+		}
+		Category updateCategory = new Category();
+		updateCategory.setCategoryId(categoryDTO.getCategoryId());
+		updateCategory.setDescription(categoryDTO.getDescription());
+		categoryRepository.save(updateCategory);
+		return new ResponseEntityCustom(HttpStatus.OK.value(), HttpStatus.OK, "Categoria atualizada com sucesso!");
 	}
 }

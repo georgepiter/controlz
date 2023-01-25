@@ -16,7 +16,7 @@ public class Email implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long idMail;
+	private Long emailId;
 
 	@Column(name = "email")
 	private String email;
@@ -28,15 +28,15 @@ public class Email implements Serializable {
 	private String subject;
 
 	@Column(name = "id_template")
-	private Long idTemplate;
+	private Long templateId;
 
-	public Email(Long idMail, String email, Integer emailStatus,
-				 String subject, Long idTemplate) {
-		this.idMail = idMail;
+	public Email(Long emailId, String email, Integer emailStatus,
+				 String subject, Long templateId) {
+		this.emailId = emailId;
 		this.email = email;
 		this.emailStatus = emailStatus;
 		this.subject = subject;
-		this.idTemplate = idTemplate;
+		this.templateId = templateId;
 	}
 
 	public Email() {
@@ -46,16 +46,12 @@ public class Email implements Serializable {
 		return properties;
 	}
 
-	public List<EmailProperty> setProperties(List<EmailProperty> properties) {
-		return this.properties;
+	public Long getEmailId() {
+		return emailId;
 	}
 
-	public Long getIdMail() {
-		return idMail;
-	}
-
-	public void setIdMail(Long idMail) {
-		this.idMail = idMail;
+	public void setEmailId(Long emailId) {
+		this.emailId = emailId;
 	}
 
 	public String getEmail() {
@@ -82,12 +78,12 @@ public class Email implements Serializable {
 		this.subject = subject;
 	}
 
-	public Long getIdTemplate() {
-		return idTemplate;
+	public Long getTemplateId() {
+		return templateId;
 	}
 
-	public void setIdTemplate(Long idTemplate) {
-		this.idTemplate = idTemplate;
+	public void setTemplateId(Long templateId) {
+		this.templateId = templateId;
 	}
 
 	@Override
@@ -96,27 +92,25 @@ public class Email implements Serializable {
 		if (o == null || getClass() != o.getClass()) return false;
 		Email email = (Email) o;
 		return Objects.equals(properties, email.properties)
-				&& Objects.equals(idMail, email.idMail)
+				&& Objects.equals(emailId, email.emailId)
 				&& Objects.equals(this.email, email.email)
 				&& Objects.equals(emailStatus, email.emailStatus)
 				&& Objects.equals(subject, email.subject)
-				&& Objects.equals(idTemplate, email.idTemplate);
+				&& Objects.equals(templateId, email.templateId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(properties, idMail, email, emailStatus, subject, idTemplate);
+		return Objects.hash(properties, emailId, email, emailStatus, subject, templateId);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder mail = new StringBuilder("Mail{");
-		mail.append("idMail=").append(idMail);
-		mail.append(", email='").append(this.email).append('\'');
-		mail.append(", emailStatus=").append(emailStatus);
-		mail.append(", subject='").append(subject).append('\'');
-		mail.append(", id_template=").append(idTemplate);
-		mail.append('}');
-		return mail.toString();
+		return "Mail{" + "idMail=" + emailId +
+				", email='" + this.email + '\'' +
+				", emailStatus=" + emailStatus +
+				", subject='" + subject + '\'' +
+				", id_template=" + templateId +
+				'}';
 	}
 }

@@ -3,7 +3,10 @@ package br.com.controlz.controller;
 import br.com.controlz.domain.dto.DebtValueDTO;
 import br.com.controlz.domain.dto.RegisterDTO;
 import br.com.controlz.domain.dto.ResponseEntityCustom;
-import br.com.controlz.domain.exception.*;
+import br.com.controlz.domain.exception.PhoneException;
+import br.com.controlz.domain.exception.RegisterException;
+import br.com.controlz.domain.exception.RegisterNotFoundException;
+import br.com.controlz.domain.exception.ValueException;
 import br.com.controlz.service.RegisterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @Api(value = "Registro", produces = MediaType.APPLICATION_JSON_VALUE, tags = {"Registro"})
@@ -29,57 +32,43 @@ public class RegisterController {
 	@PostMapping(value = "/")
 	@ApiOperation(value = "Método para salvar um novo registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntityCustom registerNewPerson(@RequestBody RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException, EmailException, FieldException {
+	public ResponseEntityCustom registerNewPerson(@NotNull @RequestBody RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException {
 		return registerService.registerNewPerson(registerDTO);
 	}
 
-	@GetMapping(value = "/id/{id}")
+	@GetMapping(value = "/{userId}")
 	@ApiOperation(value = "Obtém o registro pelo ID registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public RegisterDTO getRegisterById(@PathVariable Long id) throws RegisterNotFoundException {
-		return registerService.getRegisterById(id);
+	public RegisterDTO getRegisterById(@PathVariable Long userId) throws RegisterNotFoundException {
+		return registerService.getRegisterById(userId);
 	}
 
-	@GetMapping(value = "/all")
-	@ApiOperation(value = "Obtém todos os registros")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public List<RegisterDTO> getAllRegisters() throws RegisterNotFoundException {
-		return registerService.getAllRegisters();
-	}
-
-	@GetMapping(value = "/name/{name}")
-	@ApiOperation(value = "Obtém o registro pelo nome cadastrado")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public RegisterDTO getRegister(@PathVariable String name) throws RegisterNotFoundException {
-		return registerService.getRegister(name);
-	}
-
-	@GetMapping(value = "/totalEntryValue/{registerId}")
+	@GetMapping(value = "/totalEntryValue/{userId}")
 	@ApiOperation(value = "Obtém o valor de entrada + salário (Crédito)")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getTotalEntryValue(@PathVariable Long registerId) throws RegisterNotFoundException {
-		return registerService.getTotalEntryValue(registerId);
+	public DebtValueDTO getTotalEntryValue(@PathVariable Long userId) throws RegisterNotFoundException {
+		return registerService.getTotalEntryValue(userId);
 	}
 
-	@GetMapping(value = "/currentEntryValue/{registerId}")
-	@ApiOperation(value = "Obtém o valor atualizado total de crédito - o valor dos débitos (despesas)")
+	@GetMapping(value = "/currentEntryValue/{userId}")
+	@ApiOperation(value = "Obtém o valor atualizado total de crédito - o valor dos débitos (despesas) do mês atual")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getCurrentEntryValue(@PathVariable Long registerId) throws RegisterNotFoundException, DebtNotFoundException {
-		return registerService.getCurrentEntryValue(registerId);
+	public DebtValueDTO getCurrentEntryValue(@PathVariable Long userId) throws RegisterNotFoundException {
+		return registerService.getCurrentEntryValue(userId);
 	}
 
 	@PutMapping
 	@ApiOperation(value = "Atualiza as informações do registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntity<HttpStatus> updateRegister(@RequestBody RegisterDTO registerDTO) {
+	public ResponseEntity<HttpStatus> updateRegister(@NotNull @RequestBody RegisterDTO registerDTO) {
 		return registerService.updateRegister(registerDTO);
 	}
 
-	@DeleteMapping(value = "/id/{id}")
+	@DeleteMapping(value = "/{userId}")
 	@ApiOperation(value = "Deleta o registro e seus débitos pelo ID do Registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntityCustom deleteRegister(@PathVariable Long id) throws RegisterNotFoundException {
-		return registerService.deleteRegister(id);
+	public ResponseEntityCustom deleteRegister(@PathVariable Long userId) throws RegisterNotFoundException {
+		return registerService.deleteRegister(userId);
 	}
 
 }

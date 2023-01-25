@@ -21,7 +21,7 @@ public class Debt implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long idDebt;
+	private Long debtId;
 
 	@Column(name = "input_date")
 	private LocalDate inputDate;
@@ -33,7 +33,7 @@ public class Debt implements Serializable {
 	private Double value;
 
 	@Column(name = "register_id")
-	private Long idRegister;
+	private Long registerId;
 
 	@Column(name = "status")
 	private Integer status;
@@ -45,7 +45,7 @@ public class Debt implements Serializable {
 	private LocalDate dueDate;
 
 	@Column(name = "category_id")
-	private Long idCategory;
+	private Long categoryId;
 
 	@Column(name = "receipt_payment")
 	private byte[] receiptPayment;
@@ -54,39 +54,39 @@ public class Debt implements Serializable {
 	public Debt() {
 	}
 
-	protected Debt(Long idDebt, LocalDate inputDate, String debtDescription,
-				   Double value, Long idRegister, Integer status, LocalDate paymentDate,
-				   byte[] receiptPayment, LocalDate dueDate, Long idCategory) {
-		this.idDebt = idDebt;
+	protected Debt(Long debtId, LocalDate inputDate, String debtDescription,
+				   Double value, Long registerId, Integer status, LocalDate paymentDate,
+				   byte[] receiptPayment, LocalDate dueDate, Long categoryId) {
+		this.debtId = debtId;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
 		this.value = value;
-		this.idRegister = idRegister;
+		this.registerId = registerId;
 		this.status = status;
 		this.paymentDate = paymentDate;
 		this.receiptPayment = receiptPayment;
 		this.dueDate = dueDate;
-		this.idCategory = idCategory;
+		this.categoryId = categoryId;
 	}
 
 	public static final class Builder {
-		private Long idDebt;
+		private Long debtId;
 		private LocalDate inputDate;
 		private String debtDescription;
 		private Double value;
-		private Long idRegister;
+		private Long registerId;
 		private Integer status;
 		private LocalDate paymentDate;
 		private byte[] receiptPayment;
 		private LocalDate dueDate;
-		private Long idCategory;
+		private Long categoryId;
 
 		public Builder() {
 			//ignored
 		}
 
-		public Builder idDebt(Long val) {
-			idDebt = val;
+		public Builder debtId(Long val) {
+			debtId = val;
 			return this;
 		}
 
@@ -105,8 +105,8 @@ public class Debt implements Serializable {
 			return this;
 		}
 
-		public Builder idRegister(Long val) {
-			idRegister = val;
+		public Builder registerId(Long val) {
+			registerId = val;
 			return this;
 		}
 
@@ -125,8 +125,8 @@ public class Debt implements Serializable {
 			return this;
 		}
 
-		public Builder idCategory(Long val) {
-			idCategory = val;
+		public Builder categoryId(Long val) {
+			categoryId = val;
 			return this;
 		}
 
@@ -137,38 +137,26 @@ public class Debt implements Serializable {
 
 		public Debt createDebt() {
 			return new Debt(
-					idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate, receiptPayment, dueDate, idCategory
+					debtId, inputDate, debtDescription, value, registerId, status, paymentDate, receiptPayment, dueDate, categoryId
 
 			);
 		}
 	}
 
-	public void setIdDebt(Long idDebt) {
-		this.idDebt = idDebt;
+	public Long getDebtId() {
+		return debtId;
 	}
 
-	public Long getIdDebt() {
-		return idDebt;
-	}
-
-	public Long getIdRegister() {
-		return idRegister;
+	public Long getRegisterId() {
+		return registerId;
 	}
 
 	public LocalDate getInputDate() {
 		return inputDate;
 	}
 
-	public void setInputDate(LocalDate inputDate) {
-		this.inputDate = inputDate;
-	}
-
 	public String getDebtDescription() {
 		return debtDescription;
-	}
-
-	public void setDebtDescription(String debtDescription) {
-		this.debtDescription = debtDescription;
 	}
 
 	public Double getValue() {
@@ -179,16 +167,8 @@ public class Debt implements Serializable {
 		this.value = value;
 	}
 
-	public void setIdRegister(Long idRegister) {
-		this.idRegister = idRegister;
-	}
-
 	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
-	}
-
-	public byte[] getReceiptPayment() {
-		return receiptPayment;
 	}
 
 	public Integer getStatus() {
@@ -203,10 +183,6 @@ public class Debt implements Serializable {
 		return dueDate;
 	}
 
-	public void setDueDate(LocalDate dueDate) {
-		this.dueDate = dueDate;
-	}
-
 	public LocalDate getPaymentDate() {
 		return paymentDate;
 	}
@@ -215,12 +191,8 @@ public class Debt implements Serializable {
 		this.receiptPayment = receiptPayment;
 	}
 
-	public Long getIdCategory() {
-		return idCategory;
-	}
-
-	public void setIdCategory(Long idCategory) {
-		this.idCategory = idCategory;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
 	@Override
@@ -228,26 +200,26 @@ public class Debt implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Debt debt = (Debt) o;
-		return Objects.equals(idDebt, debt.idDebt) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value) && Objects.equals(idRegister, debt.idRegister) && Objects.equals(status, debt.status) && Objects.equals(paymentDate, debt.paymentDate) && Objects.equals(dueDate, debt.dueDate) && Objects.equals(idCategory, debt.idCategory);
+		return Objects.equals(debtId, debt.debtId) && Objects.equals(inputDate, debt.inputDate) && Objects.equals(debtDescription, debt.debtDescription) && Objects.equals(value, debt.value) && Objects.equals(registerId, debt.registerId) && Objects.equals(status, debt.status) && Objects.equals(paymentDate, debt.paymentDate) && Objects.equals(dueDate, debt.dueDate) && Objects.equals(categoryId, debt.categoryId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idDebt, inputDate, debtDescription, value, idRegister, status, paymentDate, dueDate, idCategory);
+		return Objects.hash(debtId, inputDate, debtDescription, value, registerId, status, paymentDate, dueDate, categoryId);
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", Debt.class.getSimpleName() + "[", "]")
-				.add("idDebt=" + idDebt)
+				.add("idDebt=" + debtId)
 				.add("inputDate=" + inputDate)
 				.add("debtDescription='" + debtDescription + "'")
 				.add("value=" + value)
-				.add("idRegister=" + idRegister)
+				.add("idRegister=" + registerId)
 				.add("status=" + status)
 				.add("paymentDate=" + paymentDate)
 				.add("dueDate=" + dueDate)
-				.add("idCategory=" + idCategory)
+				.add("idCategory=" + categoryId)
 				.toString();
 	}
 }

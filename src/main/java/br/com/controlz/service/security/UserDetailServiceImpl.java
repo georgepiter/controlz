@@ -29,7 +29,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("User não encontrado na base");
 		}
 		String authorities = applyAuthorities(user.get());
-		userSpringSecurityService.setId(user.get().getIdUser());
+		userSpringSecurityService.setId(user.get().getUserId());
 		userSpringSecurityService.setName(user.get().getName());
 		userSpringSecurityService.setPassword(user.get().getPassword());
 		userSpringSecurityService.setStatus(user.get().getStatus());
@@ -39,7 +39,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
 	private String applyAuthorities(User user) {
 		String authority = null;
-		Long idRole = user.getIdRole();
+		Long idRole = user.getRoleId();
 		if (RoleEnum.ADMIN.getCod().equals(idRole)) {
 			authority = RoleEnum.ADMIN.getDescription();
 		} else if (RoleEnum.MANAGER.getCod().equals(idRole)) {

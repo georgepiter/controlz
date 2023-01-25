@@ -25,7 +25,7 @@ public class CategoryController {
 
 	@PostMapping(value = "/")
 	@ApiOperation(value = "Método que registra uma nova categoria")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntityCustom registerNewCategory(@RequestBody CategoryDTO categoryDTO) {
 		return categoryService.registerNewCategory(categoryDTO);
 	}
@@ -37,11 +37,18 @@ public class CategoryController {
 		return categoryService.getAllCategories();
 	}
 
-	@DeleteMapping(value = "/idCategory/{idCategory}")
-	@ApiOperation(value = "Método que deleta um débito por ID debt")
+	@DeleteMapping(value = "/{idCategory}")
+	@ApiOperation(value = "Método que deleta uma categoria por Id")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntityCustom deleteCategoryById(@PathVariable Long idCategory) throws CategoryNotFoundException {
 		return categoryService.deleteCategoryById(idCategory);
+	}
+
+	@PutMapping(value = "/update")
+	@ApiOperation(value = "Método que atualiza a categoria")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public ResponseEntityCustom updateCategoryById(@RequestBody CategoryDTO categoryDTO) throws CategoryNotFoundException {
+		return categoryService.updateCategory(categoryDTO);
 	}
 
 }

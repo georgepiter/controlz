@@ -16,7 +16,7 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long idRole;
+    private Long roleId;
 
     @Column(name = "name")
     private String name;
@@ -24,17 +24,17 @@ public class Role implements Serializable {
     public Role() {
     }
 
-    public Role(Long idRole, String name) {
-        this.idRole = idRole;
+    public Role(Long roleId, String name) {
+        this.roleId = roleId;
         this.name = name;
     }
 
-    public Long getIdRole() {
-        return idRole;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setIdRole(Long idRole) {
-        this.idRole = idRole;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getName() {
@@ -50,11 +50,11 @@ public class Role implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return Objects.equals(userList, role.userList) && Objects.equals(idRole, role.idRole) && Objects.equals(name, role.name);
+        return Objects.equals(userList, role.userList) && Objects.equals(roleId, role.roleId) && Objects.equals(name, role.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userList, idRole, name);
+        return Objects.hash(userList, roleId, name);
     }
 }

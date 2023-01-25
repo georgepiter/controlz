@@ -46,7 +46,7 @@ public class JobResendEmailWithError {
 				for (Email email : emailErrorList) {
 					List<SendSmtpEmailTo> sendSmtpEmailTos = mailBuildService.compileEmail(email.getEmail());
 					Map<String, String> bodyMsg = getEmailProperty(email);
-					mailBuildService.sendCompiledEmail(sendSmtpEmailTos, email.getIdTemplate(), bodyMsg, email.getSubject());
+					mailBuildService.sendCompiledEmail(sendSmtpEmailTos, email.getTemplateId(), bodyMsg, email.getSubject());
 				}
 			} catch (EmailException e) {
 				throw new EmailSenderException(e.getMessage());
@@ -57,7 +57,7 @@ public class JobResendEmailWithError {
 
 	private Map<String, String> getEmailProperty(Email email) {
 		List<EmailProperty> emailProperty = emailPropertyRepository.findAll()
-				.stream().filter(p -> email.getIdMail().equals(p.getIdEmail())).toList();
+				.stream().filter(p -> email.getEmailId().equals(p.getEmailId())).toList();
 		Map<String, String> bodyMessage = new HashMap<>();
 		if (!emailProperty.isEmpty()) {
 			emailProperty.forEach(

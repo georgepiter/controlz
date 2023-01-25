@@ -4,25 +4,35 @@ import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 public class UserDTO {
 
-	private Long idUser;
+	@NotNull
 	private String name;
+
+	@NotNull
 	private String password;
+
+	@Email
 	private String email;
-	private Long idRole;
+
+	@NotNull
+	private Long roleId;
+	private Long userId;
 	private String status;
 	private String perfil;
 
 	public UserDTO() {
 	}
 
-	protected UserDTO(Long idUser, String name, String password, String email, Long idRole, String status, String perfil) {
-		this.idUser = idUser;
+	protected UserDTO(Long userId, String name, String password, String email, Long roleId, String status, String perfil) {
+		this.userId = userId;
 		this.name = name;
 		this.password = password;
 		this.email = email;
-		this.idRole = idRole;
+		this.roleId = roleId;
 		this.status = status;
 		this.perfil = perfil;
 	}
@@ -30,25 +40,26 @@ public class UserDTO {
 	public UserDTO(User user) {
 		name = user.getName();
 		email = user.getEmail();
-		idRole = user.getIdRole();
+		roleId = user.getRoleId();
 		status = user.getStatus().equals(StatusEnum.ACTIVE.getValue()) ? "ACTIVE" : "INACTIVE";
-		perfil = user.getIdRole().equals(RoleEnum.ADMIN.getCod()) ? "ADMIN" : "MANAGER";
+		perfil = user.getRoleId().equals(RoleEnum.ADMIN.getCod()) ? "ADMIN" : "MANAGER";
 	}
 
 	public static final class Builder {
-		private Long idUser;
+		private Long userId;
 		private String name;
 		private String password;
 		private String email;
-		private Long idRole;
+		private Long roleId;
 		private String status;
 		private String perfil;
 
 		public Builder() {
+			//ignored
 		}
 
-		public Builder idUser(Long val) {
-			idUser = val;
+		public Builder userId(Long val) {
+			userId = val;
 			return this;
 		}
 
@@ -67,8 +78,8 @@ public class UserDTO {
 			return this;
 		}
 
-		public Builder idRole(Long val) {
-			idRole = val;
+		public Builder roleId(Long val) {
+			roleId = val;
 			return this;
 		}
 
@@ -84,65 +95,38 @@ public class UserDTO {
 
 		public UserDTO createNewUser() {
 			return new UserDTO(
-					idUser, name, password, email,
-					idRole, status, perfil
+					userId, name, password, email,
+					roleId, status, perfil
 			);
 		}
 	}
 
-	public Long getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
+	public Long getUserId() {
+		return userId;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getPassword() {
 		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Long getIdRole() {
-		return idRole;
-	}
-
-	public void setIdRole(Long idRole) {
-		this.idRole = idRole;
+	public Long getRoleId() {
+		return roleId;
 	}
 
 	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public String getPerfil() {
 		return perfil;
 	}
 
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
-	}
 }

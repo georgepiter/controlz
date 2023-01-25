@@ -3,7 +3,6 @@ package br.com.controlz.service;
 import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.entity.security.User;
-import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
@@ -39,16 +38,19 @@ public class UserService {
 		if (!EmailUtils.isEmailPatternValid(userDTO.getEmail())) {
 			throw new EmailException("O Email não está nem um formato válido");
 		}
+
 		List<User> allUsers = userRepository.findAll()
 				.stream().filter(user -> user.getName().equals(userDTO.getName())
 						|| user.getEmail().equals(userDTO.getEmail())).toList();
+
 		if (!allUsers.isEmpty()) {
 			throw new UserException("Usuário já cadastrado com nome ou e-mail digitado");
 		}
+
 		User newUser = new User.Builder()
 				.name(userDTO.getName())
 				.email(userDTO.getEmail())
-				.idRole(RoleEnum.MANAGER.getCod())
+				.roleId(userDTO.getRoleId())
 				.status(StatusEnum.ACTIVE.getValue())
 				.createTime(LocalDateTime.now())
 				.password(passwordEncoder.encode(userDTO.getPassword()))
