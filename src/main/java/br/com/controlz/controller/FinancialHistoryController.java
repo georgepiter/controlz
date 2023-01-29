@@ -10,10 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
-@ApiIgnore
 @Api(value = "Historico", produces = MediaType.APPLICATION_JSON_VALUE, tags = {"Historico"})
 @RequestMapping(value = "api/v1/history")
 public class FinancialHistoryController {
