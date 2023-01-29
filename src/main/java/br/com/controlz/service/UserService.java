@@ -3,6 +3,7 @@ package br.com.controlz.service;
 import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.entity.security.User;
+import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +77,36 @@ public class UserService {
 
 	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(UserDTO user) throws EmailException, UsernameNotFoundException {
 		authService.generationPasswordAndSend(user.getEmail());
+		return ResponseEntity.ok(HttpStatus.OK);
+	}
+
+	public List<UserDTO> getAllUsers() {
+		List<User> users = userRepository.findAll();
+		List<UserDTO> userDTOS = new ArrayList<>();
+		users.forEach(
+				user -> {
+					UserDTO newUser = new UserDTO.Builder()
+							.email(user.getEmail())
+							.name(user.getName())
+							.userId(user.getUserId())
+							.roleId(user.getRoleId())
+							.status(user.getStatus().equals(StatusEnum.ACTIVE.getValue()) ? StatusEnum.ACTIVE.getLabel() : StatusEnum.INACTIVE.getLabel())
+							.perfil(user.getRoleId().equals(RoleEnum.ADMIN.getCod()) ? RoleEnum.ADMIN.getDescription() : RoleEnum.MANAGER.getDescription())
+							.createNewUser();
+					userDTOS.add(newUser);
+				}
+		);
+		return userDTOS;
+	}
+
+	public ResponseEntity<HttpStatus> updateUserStatus(UserDTO userDTO) {
+		Optional<User> user = userRepository.findById(userDTO.getUserId());
+		if (user.isEmpty()) {
+			throw new UsernameNotFoundException("User não encontrado na base");
+		}
+		user.get().setUserId(userDTO.getUserId());
+		user.get().setStatus(userDTO.getStatus().equals(StatusEnum.ACTIVE.getLabel()) ? StatusEnum.ACTIVE.getValue() : StatusEnum.INACTIVE.getValue());
+		userRepository.save(user.get());
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 }

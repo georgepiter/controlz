@@ -47,7 +47,7 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(Role role, Long userId, String name, String password, String email, LocalDateTime createTime, Long roleId, Integer status) {
+	protected User(Role role, Long userId, String name, String password, String email, LocalDateTime createTime, Long roleId, Integer status) {
 		this.role = role;
 		this.userId = userId;
 		this.name = name;

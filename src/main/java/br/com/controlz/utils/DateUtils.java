@@ -1,6 +1,7 @@
 package br.com.controlz.utils;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class DateUtils {
@@ -17,4 +18,11 @@ public class DateUtils {
 		}
 		return isBeforeExpiration;
 	}
+
+	public static String getPeriod() {
+		LocalDate localDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+		return localDate.format(formatter);
+	}
+
 }

@@ -42,7 +42,8 @@ public class RestExceptionHandler {
 			DebtNotFoundException.class,
 			UsernameNotFoundException.class,
 			EmailNotFoundException.class,
-			CategoryNotFoundException.class
+			CategoryNotFoundException.class,
+			FinancialHistoryNotFoundException.class
 	})
 	public ResponseEntityCustom handleNotFound(Exception e) {
 		return new ResponseEntityCustom(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());

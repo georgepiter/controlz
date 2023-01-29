@@ -1,7 +1,5 @@
 package br.com.controlz.domain.dto;
 
-import org.springframework.lang.NonNull;
-
 import java.time.LocalDate;
 
 public class RegisterDTO {
@@ -25,15 +23,19 @@ public class RegisterDTO {
 		this.userId = userId;
 	}
 
+	public RegisterDTO() {
+		this.idRegister = null;
+		this.userId = null;
+		this.cell = "null";
+		this.others = 0.00;
+		this.salary = 0.00;
+		this.registrationDate = LocalDate.now();
+		this.photo = new byte[0];
+	}
+
 	public static final class Builder {
-
-		@NonNull
 		private Long userId;
-
-		@NonNull
 		private Long idRegister;
-
-		@NonNull
 		private Double salary;
 		private String cell;
 		private Double others;

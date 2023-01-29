@@ -18,19 +18,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @Component
-public class JobResendEmailWithError {
+public class JobResendEmailWithErrorService {
 
-	private static final Logger logger = LoggerFactory.getLogger(JobResendEmailWithError.class);
+	private static final Logger logger = LoggerFactory.getLogger(JobResendEmailWithErrorService.class);
 
 	private final EmailRepository emailRepository;
 	private final MailBuildService mailBuildService;
 	private final EmailPropertyRepository emailPropertyRepository;
 
-	public JobResendEmailWithError(EmailRepository emailRepository,
-								   MailBuildService mailBuildService,
-								   EmailPropertyRepository emailPropertyRepository) {
+	public JobResendEmailWithErrorService(EmailRepository emailRepository,
+										  MailBuildService mailBuildService,
+										  EmailPropertyRepository emailPropertyRepository) {
 		this.emailRepository = emailRepository;
 		this.mailBuildService = mailBuildService;
 		this.emailPropertyRepository = emailPropertyRepository;

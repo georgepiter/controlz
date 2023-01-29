@@ -1,6 +1,5 @@
 package br.com.controlz.controller;
 
-import br.com.controlz.domain.dto.DebtValueDTO;
 import br.com.controlz.domain.dto.RegisterDTO;
 import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.exception.PhoneException;
@@ -37,27 +36,13 @@ public class RegisterController {
 	}
 
 	@GetMapping(value = "/{userId}")
-	@ApiOperation(value = "Obtém o registro pelo ID registro")
+	@ApiOperation(value = "Obtém o registro pelo Id registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public RegisterDTO getRegisterById(@PathVariable Long userId) throws RegisterNotFoundException {
+	public RegisterDTO getRegisterById(@PathVariable Long userId) {
 		return registerService.getRegisterById(userId);
 	}
 
-	@GetMapping(value = "/totalEntryValue/{userId}")
-	@ApiOperation(value = "Obtém o valor de entrada + salário (Crédito)")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getTotalEntryValue(@PathVariable Long userId) throws RegisterNotFoundException {
-		return registerService.getTotalEntryValue(userId);
-	}
-
-	@GetMapping(value = "/currentEntryValue/{userId}")
-	@ApiOperation(value = "Obtém o valor atualizado total de crédito - o valor dos débitos (despesas) do mês atual")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getCurrentEntryValue(@PathVariable Long userId) throws RegisterNotFoundException {
-		return registerService.getCurrentEntryValue(userId);
-	}
-
-	@PutMapping
+	@PutMapping(value = "/")
 	@ApiOperation(value = "Atualiza as informações do registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public ResponseEntity<HttpStatus> updateRegister(@NotNull @RequestBody RegisterDTO registerDTO) {

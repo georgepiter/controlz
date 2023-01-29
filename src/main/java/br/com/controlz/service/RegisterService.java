@@ -1,6 +1,5 @@
 package br.com.controlz.service;
 
-import br.com.controlz.domain.dto.DebtValueDTO;
 import br.com.controlz.domain.dto.RegisterDTO;
 import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.entity.Register;
@@ -22,12 +21,9 @@ import java.util.Optional;
 public class RegisterService {
 
 	private final RegisterRepository registerRepository;
-	private final DebtService debtService;
 
-	public RegisterService(RegisterRepository registerRepository,
-						   DebtService debtService) {
+	public RegisterService(RegisterRepository registerRepository) {
 		this.registerRepository = registerRepository;
-		this.debtService = debtService;
 	}
 
 	public ResponseEntityCustom registerNewPerson(RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException {
@@ -79,18 +75,20 @@ public class RegisterService {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	public RegisterDTO getRegisterById(Long userId) throws RegisterNotFoundException {
-		Register register = getRegisterFromDataBase(userId);
-		return new RegisterDTO.Builder()
-				.userId(register.getUserId())
-				.idRegister(register.getRegisterId())
-				.cell(register.getCell())
-				.others(register.getOthers())
-				.salary(register.getSalary())
-				.registrationDate(register.getRegistrationDate())
-				.photo(register.getPhoto())
-				.createNewRegisterDTO();
+	public RegisterDTO getRegisterById(Long userId) {
+		Optional<Register> register = registerRepository.findById(userId);
+
+		return register.map(value -> new RegisterDTO.Builder()
+				.userId(value.getUserId())
+				.idRegister(value.getRegisterId())
+				.cell(value.getCell())
+				.others(value.getOthers())
+				.salary(value.getSalary())
+				.registrationDate(value.getRegistrationDate())
+				.photo(value.getPhoto())
+				.createNewRegisterDTO()).orElseGet(RegisterDTO::new);
 	}
+
 
 	private Register getRegisterFromDataBase(Long userId) throws RegisterNotFoundException {
 		Optional<Register> register = registerRepository.findByUserId(userId);
@@ -105,28 +103,4 @@ public class RegisterService {
 		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Registro deletado com sucesso!");
 	}
 
-	public DebtValueDTO getTotalEntryValue(Long userId) throws RegisterNotFoundException {
-		Register register = getRegister(userId);
-		double totalEntryValue = register.getSalary() + register.getOthers();
-		return new DebtValueDTO.Builder()
-				.totalEntryValue(totalEntryValue)
-				.createNewDebtValue();
-	}
-
-	private Register getRegister(Long userId) throws RegisterNotFoundException {
-		Optional<Register> register = registerRepository.findByUserId(userId);
-		if (register.isEmpty()) {
-			throw new RegisterNotFoundException("Não foi encontrado registro na base");
-		}
-		return register.get();
-	}
-
-	public DebtValueDTO getCurrentEntryValue(Long userId) throws RegisterNotFoundException {
-		Register register = getRegister(userId);
-		double fullDebt = debtService.getFullDebt(register.getRegisterId()).getTotalDebt();
-		double currentEntryValue = register.getSalary() - fullDebt;
-		return new DebtValueDTO.Builder()
-				.currentTotalValue(currentEntryValue)
-				.createNewDebtValue();
-	}
 }

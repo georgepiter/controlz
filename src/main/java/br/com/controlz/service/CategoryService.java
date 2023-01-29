@@ -42,8 +42,8 @@ public class CategoryService {
 		return categoryDTOS;
 	}
 
-	public ResponseEntityCustom deleteCategoryById(Long idCategory) throws CategoryNotFoundException {
-		Optional<Category> category = categoryRepository.findById(idCategory);
+	public ResponseEntityCustom deleteCategoryById(Long categoryId) throws CategoryNotFoundException {
+		Optional<Category> category = categoryRepository.findById(categoryId);
 		if (category.isEmpty()) {
 			throw new CategoryNotFoundException("Categoria não encontrada pelo ID");
 		}
@@ -61,5 +61,16 @@ public class CategoryService {
 		updateCategory.setDescription(categoryDTO.getDescription());
 		categoryRepository.save(updateCategory);
 		return new ResponseEntityCustom(HttpStatus.OK.value(), HttpStatus.OK, "Categoria atualizada com sucesso!");
+	}
+
+	public CategoryDTO getCategoryId(Long categoryId) throws CategoryNotFoundException {
+		Optional<Category> category = categoryRepository.findById(categoryId);
+		if (category.isEmpty()) {
+			throw new CategoryNotFoundException("Categoria não encontrada pelo Id");
+		}
+		CategoryDTO categoryDTO = new CategoryDTO();
+		categoryDTO.setCategoryId(category.get().getCategoryId());
+		categoryDTO.setDescription(category.get().getDescription());
+		return categoryDTO;
 	}
 }

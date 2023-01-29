@@ -37,7 +37,7 @@ public class DebtController {
 	@GetMapping(value = "/all/{userId}/{registerId}")
 	@ApiOperation(value = "Método que retorna todos os débitos do mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getAllDebtsById(@PathVariable Long registerId, @PathVariable Long userId) throws RegisterNotFoundException {
+	public DebtValueDTO getAllDebtsById(@PathVariable Long userId, @PathVariable Long registerId) throws RegisterNotFoundException {
 		return debtService.getAllDebtsByRegister(registerId, userId);
 	}
 

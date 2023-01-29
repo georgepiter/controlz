@@ -1,9 +1,5 @@
 package br.com.controlz.domain.dto;
 
-import br.com.controlz.domain.entity.security.User;
-import br.com.controlz.domain.enums.RoleEnum;
-import br.com.controlz.domain.enums.StatusEnum;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -24,9 +20,6 @@ public class UserDTO {
 	private String status;
 	private String perfil;
 
-	public UserDTO() {
-	}
-
 	protected UserDTO(Long userId, String name, String password, String email, Long roleId, String status, String perfil) {
 		this.userId = userId;
 		this.name = name;
@@ -37,12 +30,7 @@ public class UserDTO {
 		this.perfil = perfil;
 	}
 
-	public UserDTO(User user) {
-		name = user.getName();
-		email = user.getEmail();
-		roleId = user.getRoleId();
-		status = user.getStatus().equals(StatusEnum.ACTIVE.getValue()) ? "ACTIVE" : "INACTIVE";
-		perfil = user.getRoleId().equals(RoleEnum.ADMIN.getCod()) ? "ADMIN" : "MANAGER";
+	public UserDTO() {
 	}
 
 	public static final class Builder {

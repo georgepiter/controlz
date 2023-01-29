@@ -37,11 +37,11 @@ public class CategoryController {
 		return categoryService.getAllCategories();
 	}
 
-	@DeleteMapping(value = "/{idCategory}")
-	@ApiOperation(value = "Método que deleta uma categoria por Id")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntityCustom deleteCategoryById(@PathVariable Long idCategory) throws CategoryNotFoundException {
-		return categoryService.deleteCategoryById(idCategory);
+	@GetMapping(value = "/{categoryId}")
+	@ApiOperation(value = "Método que retorna a categoria pelo id")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public CategoryDTO getCategoryId(@PathVariable Long categoryId) throws CategoryNotFoundException {
+		return categoryService.getCategoryId(categoryId);
 	}
 
 	@PutMapping(value = "/update")
@@ -49,6 +49,13 @@ public class CategoryController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public ResponseEntityCustom updateCategoryById(@RequestBody CategoryDTO categoryDTO) throws CategoryNotFoundException {
 		return categoryService.updateCategory(categoryDTO);
+	}
+
+	@DeleteMapping(value = "/{categoryId}")
+	@ApiOperation(value = "Método que deleta uma categoria por Id")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntityCustom deleteCategoryById(@PathVariable Long categoryId) throws CategoryNotFoundException {
+		return categoryService.deleteCategoryById(categoryId);
 	}
 
 }
