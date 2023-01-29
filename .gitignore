@@ -41,6 +41,7 @@ Thumbs.db
 *.iml
 *.iws
 *.ipr
+*.class
 
 # Byte-compiled / optimized / DLL files #
 ##########################################
