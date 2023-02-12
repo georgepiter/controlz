@@ -43,7 +43,6 @@ public class JobDebtDueDateAlertService {
 		this.userRepository = userRepository;
 	}
 
-
 	@Scheduled(cron = "0 0 * * * *")
 	private void checkDebtDueDate() {
 		logger.info("Executando Job de alerta de vencimento das dívidas");

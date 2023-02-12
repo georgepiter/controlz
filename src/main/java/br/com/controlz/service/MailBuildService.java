@@ -148,15 +148,17 @@ public class MailBuildService {
 	}
 
 	private void validateEmailMessageSuccessResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
-		Optional<Email> emailByStatusSent = emailRepository.findByEmail(emailStatusResponse.getEmail());
-		Email email = verifyMail(emailByStatusSent);
+		Email email = getVerifiedMail(emailStatusResponse);
 		emailRepository.deleteById(email.getEmailId());
 		logger.info("E-mail entregue com sucesso");
 	}
 
+	private Email getVerifiedMail(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
+		return emailRepository.findByEmail(emailStatusResponse.getEmail()).orElseThrow(() -> new EmailNotFoundException("Email não encontrado na base"));
+	}
+
 	private void validateEmailMessageErrorResponse(EmailStatusResponse emailStatusResponse) throws EmailNotFoundException {
-		Optional<Email> emailByStatusSend = emailRepository.findByEmail(emailStatusResponse.getEmail());
-		Email email = verifyMail(emailByStatusSend);
+		Email email = getVerifiedMail(emailStatusResponse);
 		if (EMAIL_SEND_ERROR.equals(email.getEmailStatus())) {
 			emailRepository.deleteById(email.getEmailId());
 		} else {
@@ -164,13 +166,6 @@ public class MailBuildService {
 			emailRepository.save(email);
 			logger.info("E-mail com status de erro salvo");
 		}
-	}
-
-	private Email verifyMail(Optional<Email> emailByStatusSend) throws EmailNotFoundException {
-		if (emailByStatusSend.isEmpty()) {
-			throw new EmailNotFoundException("email não encontrado na base");
-		}
-		return emailByStatusSend.get();
 	}
 
 	private boolean validateStatusEmail(String email) {

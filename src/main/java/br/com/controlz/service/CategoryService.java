@@ -8,9 +8,7 @@ import br.com.controlz.domain.repository.CategoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -30,47 +28,35 @@ public class CategoryService {
 	public List<CategoryDTO> getAllCategories() throws CategoryNotFoundException {
 		List<Category> categories = categoryRepository.findAll();
 		if (categories.isEmpty()) {
-			throw new CategoryNotFoundException("Nenhuma categoria localizada na base");
+			throw new CategoryNotFoundException("Nenhuma categoria encontrada na base");
 		}
-		List<CategoryDTO> categoryDTOS = new ArrayList<>();
-		categories.forEach(category -> {
-			CategoryDTO newCategory = new CategoryDTO();
-			newCategory.setCategoryId(category.getCategoryId());
-			newCategory.setDescription(category.getDescription());
-			categoryDTOS.add(newCategory);
-		});
-		return categoryDTOS;
+		return categories.stream().map(category -> {
+			CategoryDTO categoryDTO = new CategoryDTO();
+			categoryDTO.setCategoryId(category.getCategoryId());
+			categoryDTO.setDescription(category.getDescription());
+			return categoryDTO;
+		}).toList();
 	}
 
 	public ResponseEntityCustom deleteCategoryById(Long categoryId) throws CategoryNotFoundException {
-		Optional<Category> category = categoryRepository.findById(categoryId);
-		if (category.isEmpty()) {
-			throw new CategoryNotFoundException("Categoria não encontrada pelo ID");
-		}
-		categoryRepository.delete(category.get());
+		Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("Categoria não encontrada pelo ID"));
+		categoryRepository.delete(category);
 		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Categoria deletada com sucesso!");
 	}
 
 	public ResponseEntityCustom updateCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException {
-		Optional<Category> category = categoryRepository.findById(categoryDTO.getCategoryId());
-		if (category.isEmpty()) {
-			throw new CategoryNotFoundException("Categoria não encontrada pelo ID");
-		}
-		Category updateCategory = new Category();
-		updateCategory.setCategoryId(categoryDTO.getCategoryId());
-		updateCategory.setDescription(categoryDTO.getDescription());
-		categoryRepository.save(updateCategory);
+		Category category = categoryRepository.findById(categoryDTO.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Categoria não encontrada pelo ID"));
+		category.setCategoryId(categoryDTO.getCategoryId());
+		category.setDescription(categoryDTO.getDescription());
+		categoryRepository.save(category);
 		return new ResponseEntityCustom(HttpStatus.OK.value(), HttpStatus.OK, "Categoria atualizada com sucesso!");
 	}
 
 	public CategoryDTO getCategoryId(Long categoryId) throws CategoryNotFoundException {
-		Optional<Category> category = categoryRepository.findById(categoryId);
-		if (category.isEmpty()) {
-			throw new CategoryNotFoundException("Categoria não encontrada pelo Id");
-		}
+		Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("Categoria não encontrada pelo Id"));
 		CategoryDTO categoryDTO = new CategoryDTO();
-		categoryDTO.setCategoryId(category.get().getCategoryId());
-		categoryDTO.setDescription(category.get().getDescription());
+		categoryDTO.setCategoryId(category.getCategoryId());
+		categoryDTO.setDescription(category.getDescription());
 		return categoryDTO;
 	}
 }

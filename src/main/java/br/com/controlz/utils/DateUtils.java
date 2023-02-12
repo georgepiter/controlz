@@ -24,5 +24,4 @@ public class DateUtils {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 		return localDate.format(formatter);
 	}
-
 }

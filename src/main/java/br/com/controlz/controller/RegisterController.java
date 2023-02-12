@@ -35,17 +35,24 @@ public class RegisterController {
 		return registerService.registerNewPerson(registerDTO);
 	}
 
-	@GetMapping(value = "/{userId}")
-	@ApiOperation(value = "Obtém o registro pelo Id registro")
+	@GetMapping(value = "/user/{userId}")
+	@ApiOperation(value = "Obtém o registro pelo userId")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public RegisterDTO getRegisterById(@PathVariable Long userId) {
-		return registerService.getRegisterById(userId);
+	public RegisterDTO getRegisterByUserId(@PathVariable Long userId) {
+		return registerService.getRegisterByUserId(userId);
+	}
+
+	@GetMapping(value = "/{registerId}")
+	@ApiOperation(value = "Obtém o registro pelo registerId")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public RegisterDTO getRegisterById(@PathVariable Long registerId) throws RegisterNotFoundException {
+		return registerService.getRegisterById(registerId);
 	}
 
 	@PutMapping(value = "/")
 	@ApiOperation(value = "Atualiza as informações do registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntity<HttpStatus> updateRegister(@NotNull @RequestBody RegisterDTO registerDTO) {
+	public ResponseEntity<HttpStatus> updateRegister(@RequestBody RegisterDTO registerDTO) {
 		return registerService.updateRegister(registerDTO);
 	}
 

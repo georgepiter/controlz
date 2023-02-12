@@ -48,22 +48,21 @@ public class RegisterService {
 	}
 
 	private void isRecordAlreadyExists(RegisterDTO registerDTO) throws RegisterException {
-		Optional<Register> register = registerRepository.findByUserId(registerDTO.getUserId());
-		if (register.isPresent()) {
-			throw new RegisterException("Registro já cadastrado para utilizador");
+		if (registerRepository.existsByUserId(registerDTO.getUserId())) {
+			throw new RegisterException("Registro já existente para user");
 		}
 	}
 
 	private void validateSalary(RegisterDTO registerDTO) throws ValueException {
-		if (Objects.isNull(registerDTO.getSalary()) || registerDTO.getSalary() == 0.00) {
-			throw new ValueException("valor de salário inválido");
+		if (registerDTO.getSalary() <= 0) {
+			throw new ValueException("O salário precisa ser maior que zero");
 		}
 	}
 
 	public ResponseEntity<HttpStatus> updateRegister(RegisterDTO registerDTO) {
 		Register updatedRegister = new Register.Builder()
 				.userId(registerDTO.getUserId())
-				.registerId(registerDTO.getIdRegister())
+				.registerId(registerDTO.getRegisterId())
 				.registrationDate(registerDTO.getRegistrationDate())
 				.cell(registerDTO.getCell())
 				.others(registerDTO.getOthers())
@@ -75,12 +74,12 @@ public class RegisterService {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	public RegisterDTO getRegisterById(Long userId) {
-		Optional<Register> register = registerRepository.findById(userId);
+	public RegisterDTO getRegisterByUserId(Long userId) {
+		Optional<Register> register = registerRepository.findByUserId(userId);
 
 		return register.map(value -> new RegisterDTO.Builder()
 				.userId(value.getUserId())
-				.idRegister(value.getRegisterId())
+				.registerId(value.getRegisterId())
 				.cell(value.getCell())
 				.others(value.getOthers())
 				.salary(value.getSalary())
@@ -89,13 +88,8 @@ public class RegisterService {
 				.createNewRegisterDTO()).orElseGet(RegisterDTO::new);
 	}
 
-
 	private Register getRegisterFromDataBase(Long userId) throws RegisterNotFoundException {
-		Optional<Register> register = registerRepository.findByUserId(userId);
-		if (register.isEmpty()) {
-			throw new RegisterNotFoundException("Registro não encontrado pelo ID");
-		}
-		return register.get();
+		return registerRepository.findByUserId(userId).orElseThrow(()-> new RegisterNotFoundException("Registro não encontrado pelo ID"));
 	}
 
 	public ResponseEntityCustom deleteRegister(Long userId) throws RegisterNotFoundException {
@@ -103,4 +97,19 @@ public class RegisterService {
 		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Registro deletado com sucesso!");
 	}
 
+	public RegisterDTO getRegisterById(Long registerId) throws RegisterNotFoundException {
+		Optional<Register> register = registerRepository.findById(registerId);
+		if (register.isEmpty()) {
+			throw new RegisterNotFoundException("Não foi encontrado o registro pelo Id informado");
+		}
+		return new RegisterDTO.Builder()
+				.registrationDate(register.get().getRegistrationDate())
+				.photo(register.get().getPhoto())
+				.salary(register.get().getSalary())
+				.others(register.get().getOthers())
+				.cell(register.get().getCell())
+				.registerId(register.get().getRegisterId())
+				.userId(register.get().getUserId())
+				.createNewRegisterDTO();
+	}
 }

@@ -50,7 +50,6 @@ public class Debt implements Serializable {
 	@Column(name = "receipt_payment")
 	private byte[] receiptPayment;
 
-
 	public Debt() {
 	}
 
@@ -187,12 +186,20 @@ public class Debt implements Serializable {
 		return paymentDate;
 	}
 
+	public byte[] getReceiptPayment() {
+		return receiptPayment;
+	}
+
 	public void setReceiptPayment(byte[] receiptPayment) {
 		this.receiptPayment = receiptPayment;
 	}
 
 	public Long getCategoryId() {
 		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	@Override
@@ -219,7 +226,7 @@ public class Debt implements Serializable {
 				.add("status=" + status)
 				.add("paymentDate=" + paymentDate)
 				.add("dueDate=" + dueDate)
-				.add("idCategory=" + categoryId)
+				.add("categoryId=" + categoryId)
 				.toString();
 	}
 }

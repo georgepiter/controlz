@@ -7,7 +7,6 @@ import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
-import br.com.controlz.domain.exception.UserException;
 import br.com.controlz.domain.repository.UserRepository;
 import br.com.controlz.utils.EmailUtils;
 import org.springframework.http.HttpStatus;
@@ -17,9 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -36,17 +33,12 @@ public class UserService {
 		this.authService = authService;
 	}
 
-	public ResponseEntityCustom registerNewUser(UserDTO userDTO) throws EmailException, UserException {
-		if (!EmailUtils.isEmailPatternValid(userDTO.getEmail())) {
-			throw new EmailException("O Email não está nem um formato válido");
+	public ResponseEntityCustom registerNewUser(UserDTO userDTO) {
+		if (!EmailUtils.isValidEmailFormat(userDTO.getEmail())) {
+			return new ResponseEntityCustom(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, "O formato do email é inválido");
 		}
-
-		List<User> allUsers = userRepository.findAll()
-				.stream().filter(user -> user.getName().equals(userDTO.getName())
-						|| user.getEmail().equals(userDTO.getEmail())).toList();
-
-		if (!allUsers.isEmpty()) {
-			throw new UserException("Usuário já cadastrado com nome ou e-mail digitado");
+		if (userRepository.existsByNameOrEmail(userDTO.getName(), userDTO.getEmail())) {
+			return new ResponseEntityCustom(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, "Usuário já existe com o nome ou email especificado");
 		}
 
 		User newUser = new User.Builder()
@@ -58,8 +50,9 @@ public class UserService {
 				.password(passwordEncoder.encode(userDTO.getPassword()))
 				.createNewUser();
 		userRepository.save(newUser);
-		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Usuário criado com sucesso!");
+		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Usuário criado com sucesso");
 	}
+
 
 	public ResponseEntity<HttpStatus> resetPassword(UserDTO user) throws EmailException, EmailNotFoundException {
 		authService.changePassword(user.getEmail(), user.getPassword());
@@ -67,11 +60,8 @@ public class UserService {
 	}
 
 	public ResponseEntityCustom deleteUserById(Long idUser) {
-		Optional<User> user = userRepository.findById(idUser);
-		if (user.isEmpty()) {
-			throw new UsernameNotFoundException("Usuário não encontrado pelo ID na base");
-		}
-		userRepository.delete(user.get());
+		User user = userRepository.findById(idUser).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado pelo ID na base"));
+		userRepository.delete(user);
 		return new ResponseEntityCustom(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT, "Usuário deletado com sucesso!");
 	}
 
@@ -82,31 +72,31 @@ public class UserService {
 
 	public List<UserDTO> getAllUsers() {
 		List<User> users = userRepository.findAll();
-		List<UserDTO> userDTOS = new ArrayList<>();
-		users.forEach(
-				user -> {
-					UserDTO newUser = new UserDTO.Builder()
+		return users.stream()
+				.map(user -> {
+					String status = (user.getStatus().equals(StatusEnum.ACTIVE.getValue()))
+							? StatusEnum.ACTIVE.getLabel() : StatusEnum.INACTIVE.getLabel();
+
+					String perfil = (user.getRoleId().equals(RoleEnum.ADMIN.getCod()))
+							? RoleEnum.ADMIN.getDescription() : RoleEnum.MANAGER.getDescription();
+
+					return new UserDTO.Builder()
 							.email(user.getEmail())
 							.name(user.getName())
 							.userId(user.getUserId())
 							.roleId(user.getRoleId())
-							.status(user.getStatus().equals(StatusEnum.ACTIVE.getValue()) ? StatusEnum.ACTIVE.getLabel() : StatusEnum.INACTIVE.getLabel())
-							.perfil(user.getRoleId().equals(RoleEnum.ADMIN.getCod()) ? RoleEnum.ADMIN.getDescription() : RoleEnum.MANAGER.getDescription())
+							.status(status)
+							.perfil(perfil)
 							.createNewUser();
-					userDTOS.add(newUser);
-				}
-		);
-		return userDTOS;
+				})
+				.toList();
 	}
 
 	public ResponseEntity<HttpStatus> updateUserStatus(UserDTO userDTO) {
-		Optional<User> user = userRepository.findById(userDTO.getUserId());
-		if (user.isEmpty()) {
-			throw new UsernameNotFoundException("User não encontrado na base");
-		}
-		user.get().setUserId(userDTO.getUserId());
-		user.get().setStatus(userDTO.getStatus().equals(StatusEnum.ACTIVE.getLabel()) ? StatusEnum.ACTIVE.getValue() : StatusEnum.INACTIVE.getValue());
-		userRepository.save(user.get());
+		User user = userRepository.findById(userDTO.getUserId()).orElseThrow(() -> new UsernameNotFoundException("User não encontrado na base"));
+		user.setUserId(userDTO.getUserId());
+		user.setStatus(userDTO.getStatus().equals(StatusEnum.ACTIVE.getLabel()) ? StatusEnum.ACTIVE.getValue() : StatusEnum.INACTIVE.getValue());
+		userRepository.save(user);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 }

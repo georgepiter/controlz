@@ -1,6 +1,5 @@
 package br.com.controlz.controller;
 
-import br.com.controlz.domain.dto.FinancialHistoryDTO;
 import br.com.controlz.domain.dto.HistoryDTO;
 import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.exception.FinancialHistoryNotFoundException;
@@ -20,15 +19,6 @@ public class FinancialHistoryController {
 
 	public FinancialHistoryController(FinancialHistoryService financialHistoryService) {
 		this.financialHistoryService = financialHistoryService;
-	}
-
-	@GetMapping(value = "/{registerId}/{month}/{year}")
-	@ApiOperation(value = "Método que retorna o histórico com o valor total dos débitos e créditos por mês/ano")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public FinancialHistoryDTO getHistoryByMonthAndYear(@PathVariable Long registerId,
-														@PathVariable Integer month,
-														@PathVariable Integer year) throws FinancialHistoryNotFoundException {
-		return financialHistoryService.getHistoryByMonthAndYear(registerId, month, year);
 	}
 
 	@GetMapping(value = "/all/{registerId}")

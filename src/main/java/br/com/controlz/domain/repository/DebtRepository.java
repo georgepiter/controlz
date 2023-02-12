@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface DebtRepository extends JpaRepository<Debt, Long> {
 
-	Optional<Debt> findById(Long debtId);
+	Optional<Debt> findByDebtId(Long debtId);
 
 	List<Debt> findAll();
 

@@ -28,7 +28,7 @@ public class AuthService {
 	}
 
 	public void generationPasswordAndSend(String email) throws UsernameNotFoundException, EmailException {
-		if (!EmailUtils.isEmailPatternValid(email)) {
+		if (!EmailUtils.isValidEmailFormat(email)) {
 			throw new EmailException("Email inválido");
 		}
 		User user = userRepository.findByEmail(email).orElseThrow(
@@ -40,7 +40,7 @@ public class AuthService {
 	}
 
 	public void changePassword(String email, String password) throws EmailException, EmailNotFoundException {
-		if (!EmailUtils.isEmailPatternValid(email)) {
+		if (!EmailUtils.isValidEmailFormat(email)) {
 			throw new EmailException("Email inválido");
 		}
 		Optional<User> user = userRepository.findByEmail(email);

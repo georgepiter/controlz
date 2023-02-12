@@ -8,7 +8,7 @@ public final class EmailUtils {
 	private EmailUtils() {
 	}
 
-	public static boolean isEmailPatternValid(String email) {
+	public static boolean isValidEmailFormat(String email) {
 		boolean isEmailIdValid = false;
 		if (email != null && email.length() > 0) {
 			String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";

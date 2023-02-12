@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class RegisterDTO {
 
-	private final Long idRegister;
+	private final Long registerId;
 	private final Long userId;
 	private String cell;
 	private Double others;
@@ -12,9 +12,9 @@ public class RegisterDTO {
 	private LocalDate registrationDate;
 	private byte[] photo;
 
-	protected RegisterDTO(Long idRegister, String cell, Double others, Double salary,
+	protected RegisterDTO(Long registerId, String cell, Double others, Double salary,
 						  LocalDate registrationDate, byte[] photo, Long userId) {
-		this.idRegister = idRegister;
+		this.registerId = registerId;
 		this.cell = cell;
 		this.others = others;
 		this.salary = salary;
@@ -24,7 +24,7 @@ public class RegisterDTO {
 	}
 
 	public RegisterDTO() {
-		this.idRegister = null;
+		this.registerId = null;
 		this.userId = null;
 		this.cell = "null";
 		this.others = 0.00;
@@ -35,7 +35,7 @@ public class RegisterDTO {
 
 	public static final class Builder {
 		private Long userId;
-		private Long idRegister;
+		private Long registerId;
 		private Double salary;
 		private String cell;
 		private Double others;
@@ -47,8 +47,8 @@ public class RegisterDTO {
 			//ignored
 		}
 
-		public Builder idRegister(Long val) {
-			idRegister = val;
+		public Builder registerId(Long val) {
+			registerId = val;
 			return this;
 		}
 
@@ -84,14 +84,14 @@ public class RegisterDTO {
 
 		public RegisterDTO createNewRegisterDTO() {
 			return new RegisterDTO(
-					idRegister, cell,
+					registerId, cell,
 					others, salary, registrationDate, photo, userId
 			);
 		}
 	}
 
-	public Long getIdRegister() {
-		return idRegister;
+	public Long getRegisterId() {
+		return registerId;
 	}
 
 	public String getCell() {

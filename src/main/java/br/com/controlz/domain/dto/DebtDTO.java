@@ -7,10 +7,10 @@ public class DebtDTO {
 	private Long debtId;
 	private Long userId;
 	private String status;
-	private LocalDate paymentDate;
 	private byte[] receiptPayment;
 	private LocalDate dueDate;
-	private Long idCategory;
+	private LocalDate paymentDate;
+	private Long categoryId;
 	private Long registerId;
 	private LocalDate inputDate;
 	private String debtDescription;
@@ -19,12 +19,12 @@ public class DebtDTO {
 
 	protected DebtDTO(Long debtId, Long registerId, LocalDate inputDate,
 					  String debtDescription, Double value, String status,
-					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate, Long idCategory, Long userId) {
+					  LocalDate paymentDate, byte[] receiptPayment, LocalDate dueDate, Long categoryId, Long userId) {
 		this.debtId = debtId;
 		this.paymentDate = paymentDate;
 		this.receiptPayment = receiptPayment;
 		this.dueDate = dueDate;
-		this.idCategory = idCategory;
+		this.categoryId = categoryId;
 		this.registerId = registerId;
 		this.inputDate = inputDate;
 		this.debtDescription = debtDescription;
@@ -132,8 +132,8 @@ public class DebtDTO {
 		this.status = status;
 	}
 
-	public Long getIdCategory() {
-		return idCategory;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
 	public byte[] getReceiptPayment() {
@@ -158,5 +158,13 @@ public class DebtDTO {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public LocalDate getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(LocalDate paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 }
