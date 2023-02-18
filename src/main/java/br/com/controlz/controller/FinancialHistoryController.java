@@ -30,7 +30,7 @@ public class FinancialHistoryController {
 
 	@DeleteMapping(value = "/{registerId}/{historyId}")
 	@ApiOperation(value = "Deleta o histórico pelo id")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
 	public ResponseEntityCustom deleteHistoryById(@PathVariable Long registerId, @PathVariable Long historyId) throws FinancialHistoryNotFoundException {
 		return financialHistoryService.deleteHistoryById(registerId, historyId);
 	}

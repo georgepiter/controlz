@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -23,16 +22,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-		Optional<User> user = userRepository.findByName(name);
+		User user = userRepository.findByName(name).orElseThrow(() -> new UsernameNotFoundException("User não encontrado na base"));
+
 		UserSpringSecurityService userSpringSecurityService = new UserSpringSecurityService();
-		if (user.isEmpty()) {
-			throw new UsernameNotFoundException("User não encontrado na base");
-		}
-		String authorities = applyAuthorities(user.get());
-		userSpringSecurityService.setId(user.get().getUserId());
-		userSpringSecurityService.setName(user.get().getName());
-		userSpringSecurityService.setPassword(user.get().getPassword());
-		userSpringSecurityService.setStatus(user.get().getStatus());
+		String authorities = applyAuthorities(user);
+		userSpringSecurityService.setId(user.getUserId());
+		userSpringSecurityService.setName(user.getName());
+		userSpringSecurityService.setEmail(user.getEmail());
+		userSpringSecurityService.setPassword(user.getPassword());
+		userSpringSecurityService.setStatus(user.getStatus());
 		userSpringSecurityService.setAuthorities(List.of(new SimpleGrantedAuthority(authorities)));
 		return userSpringSecurityService;
 	}

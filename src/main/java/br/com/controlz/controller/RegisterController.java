@@ -15,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
-
 @RestController
 @Api(value = "Registro", produces = MediaType.APPLICATION_JSON_VALUE, tags = {"Registro"})
 @RequestMapping(value = "api/v1/register")
@@ -31,8 +29,15 @@ public class RegisterController {
 	@PostMapping(value = "/")
 	@ApiOperation(value = "Método para salvar um novo registro")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntityCustom registerNewPerson(@NotNull @RequestBody RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException {
+	public ResponseEntityCustom registerNewPerson(@RequestBody RegisterDTO registerDTO) throws ValueException, RegisterException, PhoneException {
 		return registerService.registerNewPerson(registerDTO);
+	}
+
+	@PostMapping(value = "/addOthers/{userId}/{otherValue}")
+	@ApiOperation(value = "Método adicionar outros valores somando com o que já está salvo na base")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public ResponseEntity<HttpStatus> registerNewOthersValues(@PathVariable Long userId, @PathVariable double otherValue) throws RegisterNotFoundException {
+		return registerService.registerNewOthersValues(userId, otherValue);
 	}
 
 	@GetMapping(value = "/user/{userId}")

@@ -89,7 +89,7 @@ public class RegisterService {
 	}
 
 	private Register getRegisterFromDataBase(Long userId) throws RegisterNotFoundException {
-		return registerRepository.findByUserId(userId).orElseThrow(()-> new RegisterNotFoundException("Registro não encontrado pelo ID"));
+		return registerRepository.findByUserId(userId).orElseThrow(() -> new RegisterNotFoundException("Registro não encontrado pelo ID"));
 	}
 
 	public ResponseEntityCustom deleteRegister(Long userId) throws RegisterNotFoundException {
@@ -112,4 +112,21 @@ public class RegisterService {
 				.userId(register.get().getUserId())
 				.createNewRegisterDTO();
 	}
+
+	public ResponseEntity<HttpStatus> registerNewOthersValues(Long userId, double otherValue) throws RegisterNotFoundException {
+		Register register = getRegisterFromDataBase(userId);
+		double othersValuesUpdated = register.getOthers() + otherValue;
+
+		Register updatedRegister = new Register.Builder()
+				.registrationDate(register.getRegistrationDate())
+				.photo(register.getPhoto())
+				.salary(register.getSalary())
+				.others(othersValuesUpdated)
+				.cell(register.getCell())
+				.registerId(register.getRegisterId())
+				.userId(register.getUserId())
+				.createNewRegister();
+
+		registerRepository.save(updatedRegister);
+		return ResponseEntity.ok(HttpStatus.OK);	}
 }

@@ -53,11 +53,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 											Authentication authResult) throws IOException {
 
 		String username = ((UserSpringSecurityService) authResult.getPrincipal()).getUsername();
+		String email = ((UserSpringSecurityService) authResult.getPrincipal()).getEmail();
 		Long userId = ((UserSpringSecurityService) authResult.getPrincipal()).getId();
 		String authority = Objects.requireNonNull(((UserSpringSecurityService) authResult.getPrincipal()).getAuthorities()
 				.stream().findFirst().orElse(null)).getAuthority();
 
-		String token = jwtUtilComponent.generateToken(username, userId, authority);
+		String token = jwtUtilComponent.generateToken(username, userId, authority, email);
 		AuthResponse authResponse = new AuthResponse();
 		authResponse.setToken(token);
 		response.setContentType("application/json; charset=utf-8");

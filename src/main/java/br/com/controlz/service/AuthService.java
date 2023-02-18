@@ -32,7 +32,8 @@ public class AuthService {
 			throw new EmailException("Email inválido");
 		}
 		User user = userRepository.findByEmail(email).orElseThrow(
-				() -> new UsernameNotFoundException("User não encontrado na base"));
+				() -> new UsernameNotFoundException("Email não cadastrado na base"));
+
 		String newPassword = PasswordUtils.generateNewPassword();
 		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 		mailBuildService.newSendPasswordEmail(user, newPassword);
