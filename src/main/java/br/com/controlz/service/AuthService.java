@@ -6,6 +6,8 @@ import br.com.controlz.domain.exception.EmailNotFoundException;
 import br.com.controlz.domain.repository.UserRepository;
 import br.com.controlz.utils.EmailUtils;
 import br.com.controlz.utils.PasswordUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ public class AuthService {
 		this.mailBuildService = mailBuildService;
 	}
 
-	public void generationPasswordAndSend(String email) throws UsernameNotFoundException, EmailException {
+	public ResponseEntity<HttpStatus> generationPasswordAndSend(String email) throws EmailException {
 		if (!EmailUtils.isValidEmailFormat(email)) {
 			throw new EmailException("Email inválido");
 		}
@@ -38,9 +40,10 @@ public class AuthService {
 		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 		mailBuildService.newSendPasswordEmail(user, newPassword);
 		userRepository.save(user);
+		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	public void changePassword(String email, String password) throws EmailException, EmailNotFoundException {
+	public ResponseEntity<HttpStatus> changePassword(String email, String password) throws EmailException, EmailNotFoundException {
 		if (!EmailUtils.isValidEmailFormat(email)) {
 			throw new EmailException("Email inválido");
 		}
@@ -50,5 +53,6 @@ public class AuthService {
 		}
 		user.get().setPassword(bCryptPasswordEncoder.encode(password));
 		userRepository.save(user.get());
+		return ResponseEntity.ok(HttpStatus.OK);
 	}
 }

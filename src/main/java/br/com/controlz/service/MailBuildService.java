@@ -12,7 +12,6 @@ import br.com.controlz.domain.response.EmailStatusResponse;
 import br.com.controlz.utils.MoneyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sibModel.SendSmtpEmail;
 import sibModel.SendSmtpEmailSender;
@@ -40,7 +39,7 @@ public class MailBuildService {
 		this.emailPropertyRepository = emailPropertyRepository;
 	}
 
-	public void newSendPasswordEmail(User user, String newPassword) throws UsernameNotFoundException, EmailException {
+	public void newSendPasswordEmail(User user, String newPassword) throws EmailException {
 		List<SendSmtpEmailTo> listEmail = compileEmail(user.getEmail());
 		Map<String, String> bodyMessage = buildMessageNewPassword(user.getName(), newPassword);
 		sendCompiledEmail(listEmail, TEMPLATE_ID_NEW_PASSWORD, bodyMessage, NEW_PASSWORD);

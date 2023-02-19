@@ -4,6 +4,7 @@ import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
+import br.com.controlz.service.AuthService;
 import br.com.controlz.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,9 +24,11 @@ import java.util.List;
 public class UserController {
 
 	private final UserService userService;
+	private final AuthService authService;
 
-	public UserController(UserService userService) {
+	public UserController(UserService userService, AuthService authService) {
 		this.userService = userService;
+		this.authService = authService;
 	}
 
 	@PostMapping(value = "/create")
@@ -39,13 +42,13 @@ public class UserController {
 	@ApiOperation(value = "Método que reseta a senha do utilizador")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public ResponseEntity<HttpStatus> resetPassword(@RequestBody UserDTO user) throws EmailNotFoundException, EmailException {
-		return userService.resetPassword(user);
+		return authService.changePassword(user.getEmail(), user.getPassword());
 	}
 
 	@PostMapping(value = "/forgot")
 	@ApiOperation(value = "Método que reseta a senha do utilizador e envia por e-mail")
 	public ResponseEntity<HttpStatus> resetPasswordAndSendToEmail(@RequestBody UserDTO user) throws EmailException {
-		return userService.resetPasswordAndSendToEmail(user);
+		return authService.generationPasswordAndSend(user.getEmail());
 	}
 
 	@PutMapping(value = "/status")
