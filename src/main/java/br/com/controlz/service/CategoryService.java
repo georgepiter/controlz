@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CategoryService {
@@ -19,7 +20,10 @@ public class CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
-	public ResponseEntityCustom registerNewCategory(CategoryDTO categoryDTO) {
+	public ResponseEntityCustom registerNewCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException {
+		if (Objects.isNull(categoryDTO.getDescription())) {
+			throw new CategoryNotFoundException("Necessário a descrição da categoria");
+		}
 		Category category = new Category(categoryDTO.getDescription());
 		categoryRepository.save(category);
 		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Nova categoria salva com sucesso!");

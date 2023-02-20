@@ -26,7 +26,7 @@ public class CategoryController {
 	@PostMapping(value = "/")
 	@ApiOperation(value = "Método que registra uma nova categoria")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntityCustom registerNewCategory(@RequestBody CategoryDTO categoryDTO) {
+	public ResponseEntityCustom registerNewCategory(@RequestBody CategoryDTO categoryDTO) throws CategoryNotFoundException {
 		return categoryService.registerNewCategory(categoryDTO);
 	}
 

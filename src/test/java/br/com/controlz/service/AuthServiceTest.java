@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -60,6 +61,8 @@ class AuthServiceTest {
 		ResponseEntity<HttpStatus> response = authService.generationPasswordAndSend(email);
 
 		// then
+		ArgumentCaptor<User> categoryCaptor = ArgumentCaptor.forClass(User.class);
+		verify(userRepository).save(categoryCaptor.capture());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		verify(userRepository, times(1)).save(user);
 	}
