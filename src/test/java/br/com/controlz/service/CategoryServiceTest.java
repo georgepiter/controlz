@@ -25,7 +25,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CategoryTest {
+@DisplayName("Testes para CategoryService")
+class CategoryServiceTest {
 
 	@Mock
 	private CategoryRepository categoryRepository;

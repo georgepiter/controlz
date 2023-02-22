@@ -4,6 +4,8 @@ import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
+import br.com.controlz.domain.exception.UserException;
+import br.com.controlz.domain.exception.UserNotFoundException;
 import br.com.controlz.service.AuthService;
 import br.com.controlz.service.UserService;
 import io.swagger.annotations.Api;
@@ -15,7 +17,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class UserController {
 	@PostMapping(value = "/create")
 	@ApiOperation(value = "Método que registra um novo utilizador")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntityCustom registerNewUser(@RequestBody UserDTO user) {
+	public ResponseEntityCustom registerNewUser(@RequestBody UserDTO user) throws UserException {
 		return userService.registerNewUser(user);
 	}
 
@@ -54,8 +55,15 @@ public class UserController {
 	@PutMapping(value = "/status")
 	@ApiOperation(value = "Altera status do user")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<HttpStatus> updateUserStatus(@NotNull @RequestBody UserDTO userDTO) {
+	public ResponseEntity<HttpStatus> updateUserStatus(@RequestBody UserDTO userDTO) {
 		return userService.updateUserStatus(userDTO);
+	}
+
+	@PutMapping(value = "/role/{userId}/{roleId}")
+	@ApiOperation(value = "Altera o perfil do user")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<HttpStatus> updateUserRole(@PathVariable Long userId, @PathVariable Long roleId) throws UserNotFoundException {
+		return userService.updateUserRole(userId, roleId);
 	}
 
 	@GetMapping(value = "/all")

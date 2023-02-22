@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Api(value = "Débito", produces = MediaType.APPLICATION_JSON_VALUE, tags = {"Débito"})
 @RequestMapping(value = "api/v1/debt")
@@ -47,6 +49,13 @@ public class DebtController {
 		return debtService.getAllDebtsByRegister(registerId, userId);
 	}
 
+	@GetMapping(value = "/allDebts/{userId}")
+	@ApiOperation(value = "Método que retorna todos os débitos")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public List<DebtDTO> getAllDebtsByUserIdAndRegisterId(@PathVariable Long userId) throws RegisterNotFoundException {
+		return debtService.getAllDebtsByUserIdAndRegisterId(userId);
+	}
+
 	@GetMapping(value = "/dash/{userId}/{registerId}")
 	@ApiOperation(value = "Método que retorna valor total dos débitos e saldo do mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
@@ -54,19 +63,6 @@ public class DebtController {
 		return debtService.getValuesByMonth(registerId, userId);
 	}
 
-	@GetMapping(value = "/allPay/{userId}/{registerId}")
-	@ApiOperation(value = "Método que retorna todos débitos pagos do mês")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getAllDebtsPay(@PathVariable Long registerId, @PathVariable Long userId) throws DebtNotFoundException, RegisterNotFoundException {
-		return debtService.getAllDebtsByStatusAndRegister(true, registerId, userId);
-	}
-
-	@GetMapping(value = "/allDue/{userId}/{registerId}")
-	@ApiOperation(value = "Método que retorna todos débitos á pagar do mês")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getAllDebtsDue(@PathVariable Long registerId, @PathVariable Long userId) throws DebtNotFoundException, RegisterNotFoundException {
-		return debtService.getAllDebtsByStatusAndRegister(false, registerId, userId);
-	}
 
 	@PutMapping(value = "/update")
 	@ApiOperation(value = "Método que atualiza um débito")

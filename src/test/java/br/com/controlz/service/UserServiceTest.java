@@ -6,6 +6,7 @@ import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
+import br.com.controlz.domain.exception.UserException;
 import br.com.controlz.domain.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +30,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
-
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Testes para UserService")
 class UserServiceTest {
 
 	@Mock
@@ -49,7 +50,7 @@ class UserServiceTest {
 
 	@Test
 	@DisplayName("Testa o cadastro de um novo usuário com sucesso")
-	void testRegisterNewUserSuccess() {
+	void testRegisterNewUserSuccess() throws UserException {
 
 		// given
 		UserDTO userDTO = new UserDTO.Builder()
@@ -74,7 +75,7 @@ class UserServiceTest {
 
 	@Test
 	@DisplayName("Testa o cadastro de um novo usuário com email inválido")
-	void testRegisterNewUserInvalidEmail() {
+	void testRegisterNewUserInvalidEmail() throws UserException {
 
 		// given
 		UserDTO userDTO = new UserDTO.Builder()
@@ -94,7 +95,7 @@ class UserServiceTest {
 
 	@Test
 	@DisplayName("Testa o cadastro de um novo usuário com email e nome já existentes")
-	void testRegisterNewUserExistingEmailAndName() {
+	void testRegisterNewUserExistingEmailAndName() throws UserException {
 
 		// given
 		UserDTO userDTO = new UserDTO.Builder()
@@ -106,7 +107,7 @@ class UserServiceTest {
 		given(userRepository.existsByNameOrEmail(userDTO.getName(), userDTO.getEmail())).willReturn(true);
 
 		// when
-		ResponseEntityCustom response = userService.registerNewUser(userDTO);
+		ResponseEntityCustom response = userService.registerNewUser(userDTO);//todo ajustar
 
 		// then
 		assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
@@ -274,6 +275,5 @@ class UserServiceTest {
 		// then
 		verify(userRepository, times(0)).delete(any(User.class));
 	}
-
 
 }

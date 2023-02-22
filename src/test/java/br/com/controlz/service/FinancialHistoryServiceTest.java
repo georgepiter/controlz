@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +27,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class FinancialHistoryTest {
+@DisplayName("Testes para FinancialHistoryService")
+class FinancialHistoryServiceTest {
 
 
 	@Mock
@@ -61,24 +62,23 @@ public class FinancialHistoryTest {
 	void shouldReturnFinancialHistorySortedByPeriodDesc() {
 		// given
 		Long registerId = 1L;
-		List<FinancialHistory> financialHistory = new ArrayList<>();
-		financialHistory.add(new FinancialHistory.Builder()
-				.financialHistoryId(1L)
-				.registerId(registerId)
-				.balanceCredit(100.0d)
-				.totalCredit(300.0d)
-				.totalDebt(200.0d)
-				.period("2023,02")
-				.createNewFinancialHistory());
-
-		financialHistory.add(new FinancialHistory.Builder()
-				.financialHistoryId(2L)
-				.registerId(registerId)
-				.balanceCredit(100.0d)
-				.totalCredit(300.0d)
-				.totalDebt(200.0d)
-				.period("2023,01")
-				.createNewFinancialHistory());
+		List<FinancialHistory> financialHistory = Arrays.asList(
+				new FinancialHistory.Builder()
+						.financialHistoryId(1L)
+						.registerId(registerId)
+						.balanceCredit(100.0d)
+						.totalCredit(300.0d)
+						.totalDebt(200.0d)
+						.period("2023,02")
+						.createNewFinancialHistory(),
+				new FinancialHistory.Builder()
+						.financialHistoryId(2L)
+						.registerId(registerId)
+						.balanceCredit(100.0d)
+						.totalCredit(300.0d)
+						.totalDebt(200.0d)
+						.period("2023,01")
+						.createNewFinancialHistory());
 
 		when(financialHistoryRepository.findByRegisterId(registerId)).thenReturn(financialHistory);
 

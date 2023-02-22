@@ -154,6 +154,10 @@ public class User implements Serializable {
 		return roleId;
 	}
 
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
 	public Integer getStatus() {
 		return status;
 	}

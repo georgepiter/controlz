@@ -5,6 +5,8 @@ import br.com.controlz.domain.dto.UserDTO;
 import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.enums.RoleEnum;
 import br.com.controlz.domain.enums.StatusEnum;
+import br.com.controlz.domain.exception.UserException;
+import br.com.controlz.domain.exception.UserNotFoundException;
 import br.com.controlz.domain.repository.UserRepository;
 import br.com.controlz.utils.EmailUtils;
 import org.springframework.http.HttpStatus;
@@ -28,12 +30,12 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public ResponseEntityCustom registerNewUser(UserDTO userDTO) {
+	public ResponseEntityCustom registerNewUser(UserDTO userDTO) throws UserException {
 		if (!EmailUtils.isValidEmailFormat(userDTO.getEmail())) {
 			return new ResponseEntityCustom(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, "O formato do email é inválido");
 		}
 		if (userRepository.existsByNameOrEmail(userDTO.getName(), userDTO.getEmail())) {
-			return new ResponseEntityCustom(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, "Usuário já existe com o nome ou email especificado");
+			throw new UserException("Usuário já existe com o nome ou email especificado");
 		}
 
 		User newUser = new User.Builder()
@@ -80,6 +82,13 @@ public class UserService {
 		User user = userRepository.findById(userDTO.getUserId()).orElseThrow(() -> new UsernameNotFoundException("User não encontrado na base"));
 		user.setUserId(userDTO.getUserId());
 		user.setStatus(userDTO.getStatus().equals(StatusEnum.ACTIVE.getLabel()) ? StatusEnum.ACTIVE.getValue() : StatusEnum.INACTIVE.getValue());
+		userRepository.save(user);
+		return ResponseEntity.ok(HttpStatus.OK);
+	}
+
+	public ResponseEntity<HttpStatus> updateUserRole(Long userId, Long roleId) throws UserNotFoundException {
+		User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User não encontrado pelo Id"));
+		user.setRoleId(roleId);
 		userRepository.save(user);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}

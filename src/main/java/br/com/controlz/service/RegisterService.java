@@ -47,13 +47,13 @@ public class RegisterService {
 				.createNewRegister();
 	}
 
-	private void isRecordAlreadyExists(RegisterDTO registerDTO) throws RegisterException {
+	void isRecordAlreadyExists(RegisterDTO registerDTO) throws RegisterException {
 		if (registerRepository.existsByUserId(registerDTO.getUserId())) {
 			throw new RegisterException("Registro já existente para user");
 		}
 	}
 
-	private void validateSalary(RegisterDTO registerDTO) throws ValueException {
+	void validateSalary(RegisterDTO registerDTO) throws ValueException {
 		if (registerDTO.getSalary() <= 0) {
 			throw new ValueException("O salário precisa ser maior que zero");
 		}
