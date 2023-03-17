@@ -26,14 +26,14 @@ public class JobCreateFinancialHistoryService {
 	private final FinancialHistoryRepository financialHistoryRepository;
 
 	public JobCreateFinancialHistoryService(DebtRepository debtRepository,
-											RegisterRepository registerRepository,
-											FinancialHistoryRepository financialHistoryRepository) {
+	                                        RegisterRepository registerRepository,
+	                                        FinancialHistoryRepository financialHistoryRepository) {
 		this.debtRepository = debtRepository;
 		this.registerRepository = registerRepository;
 		this.financialHistoryRepository = financialHistoryRepository;
 	}
 
-	@Scheduled(cron = "00 10 28-31L * * *")
+	@Scheduled(cron = "0 0 28-31 * *")
 	private void createFinancialHistory() {
 		logger.info("Executando job para criação do historico");
 		List<Debt> debts = getAllDebtsForCurrentMonth();
