@@ -49,11 +49,11 @@ public class DebtController {
 		return debtService.getAllDebtsByRegister(registerId, userId);
 	}
 
-	@GetMapping(value = "/allDebts/{userId}")
+	@GetMapping(value = "/allDebts/{userId}/{monthDebt}")
 	@ApiOperation(value = "Método que retorna todos os débitos")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public List<DebtDTO> getAllDebtsByUserIdAndRegisterId(@PathVariable Long userId) throws RegisterNotFoundException {
-		return debtService.getAllDebtsByUserIdAndRegisterId(userId);
+	public List<DebtDTO> getAllDebtsByUserIdAndRegisterId(@PathVariable Long userId, @PathVariable String monthDebt) throws RegisterNotFoundException {
+		return debtService.getAllDebtsByUserIdAndRegisterId(userId, monthDebt);
 	}
 
 	@GetMapping(value = "/dash/{userId}/{registerId}")
@@ -62,7 +62,6 @@ public class DebtController {
 	public DebtValueDashDTO getValuesByMonth(@PathVariable Long userId, @PathVariable Long registerId) throws RegisterNotFoundException {
 		return debtService.getValuesByMonth(registerId, userId);
 	}
-
 
 	@PutMapping(value = "/update")
 	@ApiOperation(value = "Método que atualiza um débito")

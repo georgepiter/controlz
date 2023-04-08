@@ -15,8 +15,6 @@ public interface DebtRepository extends JpaRepository<Debt, Long> {
 
 	Optional<Debt> findByDebtId(Long debtId);
 
-	List<Debt> findAll();
-
 	Optional<Debt> findByDebtIdAndRegisterId(Long debtId, Long registerId);
 
 	List<Debt> findByStatus(Integer value);
@@ -27,7 +25,9 @@ public interface DebtRepository extends JpaRepository<Debt, Long> {
 	@Query("SELECT d FROM Debt d WHERE d.dueDate BETWEEN :start AND :end")
 	List<Debt> findByDueDate(@Param("start") LocalDate start, @Param("end") LocalDate end);
 
-	List<Debt> findByRegisterId(Long registerId);
+	@Query("SELECT d FROM Debt d WHERE d.register.registerId = :registerId AND FUNCTION('YEAR', d.dueDate) = FUNCTION('YEAR', :monthDate) AND FUNCTION('MONTH', d.dueDate) = FUNCTION('MONTH', :monthDate)")
+	List<Debt> findByRegisterIdAndDueDate(@Param("registerId") Long registerId, @Param("monthDate") LocalDate monthDate);
+
 }
 
 

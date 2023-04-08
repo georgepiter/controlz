@@ -11,12 +11,13 @@ import br.com.controlz.domain.exception.DebtNotFoundException;
 import br.com.controlz.domain.exception.RegisterNotFoundException;
 import br.com.controlz.domain.repository.DebtRepository;
 import br.com.controlz.domain.repository.RegisterRepository;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,6 @@ public class DebtService {
 		LocalDate lastDayOfMonth = now.with(TemporalAdjusters.lastDayOfMonth());
 		return debtRepository.findByDueDateAndRegisterId(firstDayOfMonth, lastDayOfMonth, registerId);
 	}
-
 
 	private List<DebtDTO> buildNewDebtListByRegister(List<Debt> debts) {
 		List<DebtDTO> debtsDTO = new ArrayList<>();
@@ -186,12 +186,14 @@ public class DebtService {
 				.orElseThrow(() -> new RegisterNotFoundException("Registro não encontrado na base"));
 	}
 
-	public List<DebtDTO> getAllDebtsByUserIdAndRegisterId(Long userId) throws RegisterNotFoundException {
+	public List<DebtDTO> getAllDebtsByUserIdAndRegisterId(Long userId, String monthDebt) throws RegisterNotFoundException {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+		LocalDate monthLocalDate = YearMonth.parse(monthDebt, formatter).atDay(1);
 		Long registerId = registerRepository.findByUserId(userId)
 				.orElseThrow(() -> new RegisterNotFoundException("Registro não encontrado para UserId"))
 				.getRegisterId();
 
-		return debtRepository.findByRegisterId(registerId).stream()
+		return debtRepository.findByRegisterIdAndDueDate(registerId, monthLocalDate).stream()
 				.map(debt -> new DebtDTO.Builder()
 						.registerId(registerId)
 						.userId(userId)

@@ -5,7 +5,10 @@ import br.com.controlz.domain.entity.security.User;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
 @Table(name = "register")
@@ -51,8 +54,8 @@ public class Register implements Serializable {
 	}
 
 	protected Register(Long registerId, LocalDate registrationDate,
-					   String cell, Double others, Double salary,
-					   byte[] photo, LocalDate updateDate, Long userId) {
+	                   String cell, Double others, Double salary,
+	                   byte[] photo, LocalDate updateDate, Long userId) {
 		this.registerId = registerId;
 		this.registrationDate = registrationDate;
 		this.cell = cell;

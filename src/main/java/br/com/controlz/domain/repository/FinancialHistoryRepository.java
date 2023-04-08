@@ -12,7 +12,5 @@ public interface FinancialHistoryRepository extends JpaRepository<FinancialHisto
 
 	List<FinancialHistory> findByRegisterId(Long registerId);
 
-	Optional<FinancialHistory> findByRegisterIdAndPeriod(Long registerId, String period);
-
 	Optional<FinancialHistory> findByRegisterIdAndFinancialHistoryId(Long registerId, Long historyId);
 }

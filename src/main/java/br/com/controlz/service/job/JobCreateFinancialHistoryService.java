@@ -33,7 +33,7 @@ public class JobCreateFinancialHistoryService {
 		this.financialHistoryRepository = financialHistoryRepository;
 	}
 
-	@Scheduled(cron = "0 0 28-31 * *")
+	@Scheduled(cron = "0 0 0 28-31 * ?")
 	private void createFinancialHistory() {
 		logger.info("Executando job para criação do historico");
 		List<Debt> debts = getAllDebtsForCurrentMonth();

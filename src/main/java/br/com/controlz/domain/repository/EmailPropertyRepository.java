@@ -9,6 +9,4 @@ import java.util.List;
 @Repository
 public interface EmailPropertyRepository extends JpaRepository<EmailProperty, Long> {
 
-	List<EmailProperty> findAll();
-
 }

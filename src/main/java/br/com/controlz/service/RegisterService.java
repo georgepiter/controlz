@@ -9,7 +9,6 @@ import br.com.controlz.domain.exception.RegisterNotFoundException;
 import br.com.controlz.domain.exception.ValueException;
 import br.com.controlz.domain.repository.RegisterRepository;
 import br.com.controlz.utils.PhoneUtils;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -74,7 +73,7 @@ public class RegisterService {
 		registerRepository.save(updatedRegister);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
-	@Cacheable(value = "cached")
+
 	public RegisterDTO getRegisterByUserId(Long userId) {
 		Optional<Register> register = registerRepository.findByUserId(userId);
 

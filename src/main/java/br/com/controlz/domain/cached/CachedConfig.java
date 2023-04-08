@@ -14,15 +14,15 @@ import java.util.concurrent.TimeUnit;
 public class CachedConfig {
 
 	@Bean
-	public Caffeine caffeineConfig() {
+	public Caffeine<Object, Object> caffeineConfig() {
 		return Caffeine.newBuilder()
-				.expireAfterWrite(1, TimeUnit.MINUTES)
+				.expireAfterWrite(3, TimeUnit.MINUTES)
 				.maximumSize(30)
 				.recordStats();
 	}
 
 	@Bean
-	public CacheManager cacheManager(Caffeine caffeine) {
+	public CacheManager cacheManager(Caffeine<Object, Object> caffeine) {
 		CaffeineCacheManager cacheManager = new CaffeineCacheManager();
 		cacheManager.setCaffeine(caffeine);
 		return cacheManager;
