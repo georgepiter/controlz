@@ -11,13 +11,12 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.*;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger.web.UiConfiguration;
+import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 import java.util.List;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
     @Bean
@@ -50,7 +49,7 @@ public class SwaggerConfig {
                 .title("CONTROLZ")
                 .description("API de cadastro e controle financeiro")
                 .version("1.0.0")
-                .contact(new Contact("George Piter", null, "george.piter@terra.com.br"))
+                .contact(new Contact("George Piter", null,"sem email"))
                 .build();
     }
 
@@ -61,4 +60,5 @@ public class SwaggerConfig {
                 .defaultModelExpandDepth(-1)
                 .build();
     }
+
 }
