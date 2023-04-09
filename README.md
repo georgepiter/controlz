@@ -8,7 +8,7 @@
 - [x] Spring security
 - [x] Token JWT
 - [x] Sendinblue - Integração para envio de e-mail´s
-- [x] Swagger - Após iniciar o projeto acesse: http://localhost:8080/swagger-ui
+- [x] Swagger - Após iniciar o projeto acesse: http://localhost:8080/swagger-ui/index.html
 
 ## 💻 Pré-requisitos
 
