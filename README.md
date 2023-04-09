@@ -4,7 +4,7 @@
 
 - [x] Banco de dados - MYSQL 8.0.30
 - [x] Java 17
-- [x] Spring Boot 2.6.3
+- [x] Spring Boot 2.5.2
 - [x] Spring security
 - [x] Token JWT
 - [x] Sendinblue - Integração para envio de e-mail´s
