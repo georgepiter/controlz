@@ -17,11 +17,45 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Você instalou a versão do Java`< JDK17 / requeridos>`
 * Você instalou a versão`< MYSQL 8.0.30 / requeridos>`
 
-## 🚀 Instalando <Entrega Veloz>
+## 🚀 Instalando
 
 Após efetuar o clone do Back End adicione o POM do projeto ao Mavem e aguarde o dowmload das dependências.
 
-Em seguida adicione as environments variables com suas configurações.
+Em seguida adicione as environments variables com suas configurações:
+
+## URL e credenciais do Banco. 
+- [x] DATABASE_URL
+- [x] DATABASE_USERNAME
+- [x] DATABASE_PASSWORD
+
+##  Infos de Token.
+- [x] JWT_SECRET - Chave secreta a sua escolha para gerar assinatura do token 
+- [x] JWT_EXPIRATION - Tempo de expiração do token em milissegundos 
+
+## SENDIBLUE - API de envio de e-mail personalizados.
+- [x] SENDINBLUE_API_KEY - Chave gerada para integrar com a API de e-mail´s da sendiBlue.
+- [x] SENDINBLUE_URL - URL de conexão para Integrar com a API do sendiBlue. 
+- [x] É necessário cadastro para geração da API key e url, segue o link da documentação https://developers.sendinblue.com/reference/sendtransacemail
+
+## Instruções para utilizar o template de e-mails.
+
+O sistema possue dois templates:
+
+Aviso de reset de senha usuário utilizador
+
+<img src="https://user-images.githubusercontent.com/68233141/231508158-f8d2cf4b-65e0-4523-af3b-bb6b9737a23a.png" alt="Aviso de reset de senha usuário utilizador" width="500" />
+
+Aviso de vencimento de débito
+
+<img src="https://user-images.githubusercontent.com/68233141/231507544-89f15db0-0e75-4b03-bd96-eaf191ab7499.png" alt="Aviso de vencimento de débito" width="500" />
+
+## O sistema possue 3 jobs:
+
+- [x] Aviso de vencimento de débitos, que é executado todos os dias e avisa via e-mail os débitos que estão 2 dias antes de vencer.
+- [x] Gera histórico do balanço mensal, todo último dia de cada mês o job cria um balanço de todo o mês.
+- [x] Reenvio de e-mail, todo dia 01:00 é efetuado uma tentativa de reenvio dos e-mails com erro;
+
+- Existe um webHook que a SENDIBLUE faz um post caso tenha um sucesso ao entregar o e-mail ou falhas.
   
 ## 📫 SQL:
    https://github.com/georgepiter/controlz/blob/main/SQL_project.sql
