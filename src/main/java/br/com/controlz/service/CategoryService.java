@@ -36,11 +36,6 @@ public class CategoryService {
 		return new ResponseEntityCustom(HttpStatus.CREATED.value(), HttpStatus.CREATED, "Nova categoria salva com sucesso!");
 	}
 
-	public List<CategoryDTO> getAllCategories() throws CategoryNotFoundException {
-		List<Category> categories = categoryRepository.findAll();
-		return validateAndBuildCategoryListDTO(categories);
-	}
-
 	private static List<CategoryDTO> validateAndBuildCategoryListDTO(List<Category> categories) throws CategoryNotFoundException {
 		if (categories.isEmpty()) {
 			throw new CategoryNotFoundException("Nenhuma categoria encontrada na base");
