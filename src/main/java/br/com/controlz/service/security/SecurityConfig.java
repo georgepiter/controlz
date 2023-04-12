@@ -33,6 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		this.jwtUtilComponent = jwtUtilComponent;
 	}
 
+	/**
+	 * Para ambiente de desenvolvimento add a config
+	 * http.cors().and().csrf().disable();
+	 * para desabilitar o cors e o csrf
+	 *
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll();
@@ -52,6 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	/**
+	 * necessário configurar setAllowedMethods a url
+	 * do front caso contrário o valor default
+	 * aceitará chamadas de todas origens
+	 *
+	 */
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
