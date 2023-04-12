@@ -1,4 +1,4 @@
-# ControlZ - Controle de finanças pessoais.
+# :heavy_dollar_sign: ControlZ - Controle de finanças pessoais :pig:
 
 ## 💻 O projeto foi desenvolvido com:
 
@@ -25,16 +25,16 @@ Após efetuar o clone do Back End adicione o POM do projeto ao Mavem e aguarde o
 
 Em seguida adicione as environments variables com suas configurações:
 
-## URL e credenciais do Banco. 
+## :key: URL e credenciais do Banco. 
 - [x] DATABASE_URL
 - [x] DATABASE_USERNAME
 - [x] DATABASE_PASSWORD
 
-##  Infos de Token.
+## :link: Infos de Token.
 - [x] JWT_SECRET - Chave secreta a sua escolha para gerar assinatura do token 
 - [x] JWT_EXPIRATION - Tempo de expiração do token em milissegundos 
 
-## SENDIBLUE - API de envio de e-mail personalizados.
+## :mailbox: SENDIBLUE - API de envio de e-mail personalizados.
 - [x] SENDINBLUE_API_KEY - Chave gerada para integrar com a API de e-mail´s da sendiBlue.
 - [x] SENDINBLUE_URL - URL de conexão para Integrar com a API do sendiBlue. 
 - [x] É necessário cadastro para geração da API key e url, segue o link da documentação https://developers.sendinblue.com/reference/sendtransacemail
@@ -51,7 +51,7 @@ Aviso de vencimento de débito
 
 <img src="https://user-images.githubusercontent.com/68233141/231507544-89f15db0-0e75-4b03-bd96-eaf191ab7499.png" alt="Aviso de vencimento de débito" width="500" />
 
-## O sistema possue 3 jobs:
+## :moyai: O sistema possue 3 jobs:
 
 - [x] Aviso de vencimento de débitos, que é executado todos os dias e avisa via e-mail os débitos que estão 2 dias antes de vencer.
 - [x] Gera histórico do balanço mensal, todo último dia de cada mês o job cria um balanço de todo o mês.
