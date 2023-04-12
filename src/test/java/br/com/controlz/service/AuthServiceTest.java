@@ -4,7 +4,6 @@ import br.com.controlz.domain.entity.security.User;
 import br.com.controlz.domain.exception.EmailException;
 import br.com.controlz.domain.exception.EmailNotFoundException;
 import br.com.controlz.domain.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,10 +38,10 @@ class AuthServiceTest {
 	@InjectMocks
 	private AuthService authService;
 
-	@BeforeEach
-	public void setUp() {
-		authService = new AuthService(this.userRepository, this.passwordEncoder, this.mailBuildService);
-	}
+//	@BeforeEach
+//	public void setUp() {
+//		authService = new AuthService(this.userRepository, this.passwordEncoder, this.mailBuildService);
+//	}
 
 	@Test
 	@DisplayName("Testa a geração de uma nova senha para um usuário existente")

@@ -2,6 +2,7 @@ package br.com.controlz.service.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final UserDetailsService userDetailsService;
 	private final JWTUtilComponent jwtUtilComponent;
 
-	private static final String[] PUBLIC_MATCHERS = {"/api/v1/email", "/api/v1/user/forgot"};
+	private static final String[] PUBLIC_MATCHERS = {"/api/v1/email", "/api/v1/user/forgot", "/login"};
 	private static final String[] SWAGGER_MATCHERS = {"/swagger-resources/*", "*.html", "/api/v1/swagger.json"};
 
 	public SecurityConfig(UserDetailsService userDetailsService,
@@ -41,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable();
 		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll();
 		http.authorizeRequests().antMatchers(SWAGGER_MATCHERS).hasRole("ADMIN").anyRequest().permitAll();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtilComponent));
@@ -71,6 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 }
 

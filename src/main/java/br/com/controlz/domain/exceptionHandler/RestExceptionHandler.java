@@ -51,13 +51,13 @@ public class RestExceptionHandler {
 		return new ResponseEntityCustom(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
 	}
 
-	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler({
 			AuthenticationException.class,
-			AuthInvalidException.class
+			AuthInvalidException.class,
 	})
 	public ResponseEntityCustom handleForbidden(Exception e) {
-		return new ResponseEntityCustom(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN, e.getMessage());
+		return new ResponseEntityCustom(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED, e.getMessage());
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
