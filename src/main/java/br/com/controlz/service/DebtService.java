@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -72,27 +71,6 @@ public class DebtService {
 		LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
 		LocalDate lastDayOfMonth = now.with(TemporalAdjusters.lastDayOfMonth());
 		return debtRepository.findByDueDateAndRegisterId(firstDayOfMonth, lastDayOfMonth, registerId);
-	}
-
-	private List<DebtDTO> buildNewDebtListByRegister(List<Debt> debts) {
-		List<DebtDTO> debtsDTO = new ArrayList<>();
-		for (Debt debt : debts) {
-			String statusLabel = debt.getStatus().equals(StatusEnum.PAY.getValue()) ? "Pago" : "Aguardando Pagamento";
-			DebtDTO newDebtDTO = new DebtDTO.Builder()
-					.debtId(debt.getDebtId())
-					.registerId(debt.getRegisterId())
-					.debtDescription(debt.getDebtDescription())
-					.value(debt.getValue())
-					.inputDate(debt.getInputDate())
-					.status(statusLabel)
-					.receiptPayment(debt.getReceiptPayment())
-					.dueDate(debt.getDueDate())
-					.paymentDate(debt.getPaymentDate())
-					.categoryId(debt.getCategoryId())
-					.createNewDebtDTO();
-			debtsDTO.add(newDebtDTO);
-		}
-		return debtsDTO;
 	}
 
 	public DebtValueDTO getFullDebt(Long registerId) {
@@ -206,9 +184,10 @@ public class DebtService {
 		}
 
 		List<Map<String, List<DebtDTO>>> debtsByCategory = new ArrayList<>();
-		for (Long categoryId : debtsMap.keySet()) {
+		for (Map.Entry<Long, List<DebtDTO>> entry : debtsMap.entrySet()) {
+			Long categoryId = entry.getKey();
 			String categoryName = categoryMap.get(categoryId);
-			List<DebtDTO> categoryDebts = debtsMap.get(categoryId);
+			List<DebtDTO> categoryDebts = entry.getValue();
 			Map<String, List<DebtDTO>> mapCategory = new HashMap<>();
 			mapCategory.put(categoryName, categoryDebts);
 			debtsByCategory.add(mapCategory);
