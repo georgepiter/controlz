@@ -2,13 +2,13 @@
 
 ## 💻 O projeto foi desenvolvido com:
 
-- [x] Banco de dados - MYSQL 8.0.30
 - [x] Java 17
 - [x] Spring Boot 2.5.2
 - [x] Spring security
 - [x] Token JWT
 - [x] Sendinblue - Integração para envio de e-mail´s
 - [x] Swagger - Após iniciar o projeto acesse: http://localhost:8080/swagger-ui/index.html
+- [x] Banco de dados - MYSQL 8.0.30 - Modelagem do banco de dados no workbench: https://github.com/georgepiter/controlz/blob/main/modelagem%20do%20projeto.mwb
 
 ## 💻 Pré-requisitos
 
