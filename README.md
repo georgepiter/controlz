@@ -1,6 +1,6 @@
 # ControlZ - Controle de finanças pessoais.
 
-## 💻 O projeto foi desenvolvido em:
+## 💻 O projeto foi desenvolvido com:
 
 - [x] Banco de dados - MYSQL 8.0.30
 - [x] Java 17
@@ -25,9 +25,6 @@ Em seguida adicione as environments variables com suas configurações.
   
 ## 📫 SQL:
    https://github.com/georgepiter/controlz/blob/main/SQL_project.sql
-    
-## 📫 Collection do Postman:
-  https://github.com/georgepiter/controlz/blob/main/Controlz.postman_collection.json
 
 ## 📫 Contribuindo com o projeto:
 
