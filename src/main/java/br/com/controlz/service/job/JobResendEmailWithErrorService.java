@@ -35,7 +35,7 @@ public class JobResendEmailWithErrorService {
 		this.emailPropertyRepository = emailPropertyRepository;
 	}
 
-	@Scheduled(cron = "0 1 * * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	private void resendEmailWithError() throws EmailSenderException {
 		logger.info("Executando Job de reenvio de emails com erros");
 		List<Email> emailErrorList = emailRepository.findAll().stream()
@@ -52,6 +52,7 @@ public class JobResendEmailWithErrorService {
 			}
 			logger.info("Job de reenvio de emails com erros finalizado");
 		}
+		logger.info("Não foram encontrados e-mails com status de erro");
 	}
 
 	private Map<String, String> getEmailProperty(Email email) {
