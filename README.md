@@ -8,7 +8,9 @@
 - [x] Token JWT
 - [x] Sendinblue - Integração para envio de e-mail´s
 - [x] Swagger - Após iniciar o projeto acesse: http://localhost:8080/swagger-ui/index.html
-- [x] Banco de dados - MYSQL 8.0.30 - Modelagem do banco de dados no workbench: https://github.com/georgepiter/controlz/blob/main/modelagem%20do%20projeto.mwb
+- [x] SQL para criação das tables e da base https://github.com/georgepiter/controlz/blob/main/docs/create_data_base_sql.sql
+- [x] Banco de dados - MYSQL 8.0.30 - Modelagem do banco de dados no workbench: https://github.com/georgepiter/controlz/blob/main/docs/modelagem%20do%20projeto.mwb
+- [x] Link para o front end: https://github.com/georgepiter/my-finances
 
 ## 💻 Pré-requisitos
 
@@ -56,9 +58,6 @@ Aviso de vencimento de débito
 - [x] Reenvio de e-mail, todo dia 01:00 é efetuado uma tentativa de reenvio dos e-mails com erro;
 
 - Existe um webHook que a SENDIBLUE faz um post caso tenha um sucesso ao entregar o e-mail ou falhas.
-  
-## 📫 SQL:
-   https://github.com/georgepiter/controlz/blob/main/SQL_project.sql
 
 ## 📫 Contribuindo com o projeto:
 
