@@ -21,7 +21,8 @@ public class RestExceptionHandler {
 			FieldException.class,
 			ValueException.class,
 			EmailException.class,
-			EmailSenderException.class
+			EmailSenderException.class,
+			CategoryDeleteException.class
 	})
 	public ResponseEntityCustom handleBadRequest(Exception e) {
 		return new ResponseEntityCustom(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, e.getMessage());

@@ -1,9 +1,6 @@
 package br.com.controlz.controller;
 
-import br.com.controlz.domain.dto.DebtDTO;
-import br.com.controlz.domain.dto.DebtValueDTO;
-import br.com.controlz.domain.dto.DebtValueDashDTO;
-import br.com.controlz.domain.dto.ResponseEntityCustom;
+import br.com.controlz.domain.dto.*;
 import br.com.controlz.domain.exception.DebtNotFoundException;
 import br.com.controlz.domain.exception.RegisterNotFoundException;
 import br.com.controlz.service.DebtService;
@@ -45,14 +42,14 @@ public class DebtController {
 	@GetMapping(value = "/all/{userId}/{registerId}")
 	@ApiOperation(value = "Método que retorna todos os débitos do mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public DebtValueDTO getAllDebtsById(@PathVariable Long userId, @PathVariable Long registerId) throws RegisterNotFoundException {
+	public DebtGroupDTO getAllDebtsById(@PathVariable Long userId, @PathVariable Long registerId) throws RegisterNotFoundException {
 		return debtService.getAllDebtsByRegister(registerId, userId);
 	}
 
 	@GetMapping(value = "/allDebts/{userId}/{monthDebt}")
 	@ApiOperation(value = "Método que retorna todos os débitos")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public List<DebtDTO> getAllDebtsByUserIdAndRegisterId(@PathVariable Long userId, @PathVariable String monthDebt) throws RegisterNotFoundException {
+	public DebtGroupDTO getAllDebtsByUserIdAndRegisterId(@PathVariable Long userId, @PathVariable String monthDebt) throws RegisterNotFoundException {
 		return debtService.getAllDebtsByUserIdAndRegisterId(userId, monthDebt);
 	}
 

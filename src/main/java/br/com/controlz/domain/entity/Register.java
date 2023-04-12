@@ -24,6 +24,9 @@ public class Register implements Serializable {
 	@JoinColumn(name = "user_id", updatable = false, insertable = false)
 	private User user;
 
+	@OneToMany(mappedBy = "register", cascade = CascadeType.REMOVE)
+	private final List<Category> categories = new ArrayList<>();
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

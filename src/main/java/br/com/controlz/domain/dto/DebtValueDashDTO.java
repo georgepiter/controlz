@@ -1,5 +1,8 @@
 package br.com.controlz.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DebtValueDashDTO {
 
 	private Double totalDebt;
@@ -10,6 +13,10 @@ public class DebtValueDashDTO {
 		this.totalDebt = totalDebt;
 		this.totalEntryValue = totalEntryValue;
 		this.currentTotalValue = currentTotalValue;
+	}
+
+	public DebtValueDashDTO() {
+
 	}
 
 	public Double getTotalDebt() {

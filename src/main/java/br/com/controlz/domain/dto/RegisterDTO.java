@@ -6,11 +6,11 @@ public class RegisterDTO {
 
 	private final Long registerId;
 	private final Long userId;
-	private String cell;
-	private Double others;
-	private Double salary;
-	private LocalDate registrationDate;
-	private byte[] photo;
+	private final String cell;
+	private final Double others;
+	private final Double salary;
+	private final LocalDate registrationDate;
+	private final byte[] photo;
 
 	protected RegisterDTO(Long registerId, String cell, Double others, Double salary,
 						  LocalDate registrationDate, byte[] photo, Long userId) {

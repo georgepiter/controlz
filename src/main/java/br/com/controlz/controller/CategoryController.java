@@ -2,6 +2,7 @@ package br.com.controlz.controller;
 
 import br.com.controlz.domain.dto.CategoryDTO;
 import br.com.controlz.domain.dto.ResponseEntityCustom;
+import br.com.controlz.domain.exception.CategoryDeleteException;
 import br.com.controlz.domain.exception.CategoryNotFoundException;
 import br.com.controlz.service.CategoryService;
 import io.swagger.annotations.Api;
@@ -37,6 +38,13 @@ public class CategoryController {
 		return categoryService.getAllCategories();
 	}
 
+	@GetMapping(value = "/all/{registerId}")
+	@ApiOperation(value = "Método que retorna todas categorias por registerId")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+	public List<CategoryDTO> getAllCategoriesByRegisterId(@PathVariable Long registerId) throws CategoryNotFoundException {
+		return categoryService.getAllCategoriesByRegisterId(registerId);
+	}
+
 	@GetMapping(value = "/{categoryId}")
 	@ApiOperation(value = "Método que retorna a categoria pelo id")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
@@ -51,11 +59,11 @@ public class CategoryController {
 		return categoryService.updateCategory(categoryDTO);
 	}
 
-	@DeleteMapping(value = "/{categoryId}")
+	@DeleteMapping(value = "/{categoryId}/{registerId}")
 	@ApiOperation(value = "Método que deleta uma categoria por Id")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntityCustom deleteCategoryById(@PathVariable Long categoryId) throws CategoryNotFoundException {
-		return categoryService.deleteCategoryById(categoryId);
+	public ResponseEntityCustom deleteCategoryById(@PathVariable Long categoryId, @PathVariable Long registerId) throws CategoryNotFoundException, CategoryDeleteException {
+		return categoryService.deleteCategoryById(categoryId, registerId);
 	}
 
 }

@@ -1,39 +1,41 @@
 package br.com.controlz.service;
 
-import br.com.controlz.domain.dto.DebtDTO;
-import br.com.controlz.domain.dto.DebtValueDTO;
-import br.com.controlz.domain.dto.DebtValueDashDTO;
-import br.com.controlz.domain.dto.ResponseEntityCustom;
+import br.com.controlz.domain.dto.*;
+import br.com.controlz.domain.entity.Category;
 import br.com.controlz.domain.entity.Debt;
 import br.com.controlz.domain.entity.Register;
 import br.com.controlz.domain.enums.StatusEnum;
 import br.com.controlz.domain.exception.DebtNotFoundException;
 import br.com.controlz.domain.exception.RegisterNotFoundException;
+import br.com.controlz.domain.repository.CategoryRepository;
 import br.com.controlz.domain.repository.DebtRepository;
 import br.com.controlz.domain.repository.RegisterRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+
+import static java.util.stream.Collectors.toMap;
 
 @Service
 public class DebtService {
 
 	private final DebtRepository debtRepository;
 	private final RegisterRepository registerRepository;
+	private final CategoryRepository categoryRepository;
 
 	public DebtService(DebtRepository debtRepository,
-					   RegisterRepository registerRepository) {
+	                   RegisterRepository registerRepository,
+	                   CategoryRepository categoryRepository) {
 		this.debtRepository = debtRepository;
 		this.registerRepository = registerRepository;
+		this.categoryRepository = categoryRepository;
 	}
 
 	public ResponseEntityCustom registerNewDebt(DebtDTO debt) throws RegisterNotFoundException {
@@ -59,10 +61,10 @@ public class DebtService {
 				.createDebt();
 	}
 
-	public DebtValueDTO getAllDebtsByRegister(Long registerId, Long userId) throws RegisterNotFoundException {
+	public DebtGroupDTO getAllDebtsByRegister(Long registerId, Long userId) throws RegisterNotFoundException {
 		List<Debt> debts = getDebts(registerId);
 		Register register = getRegisterFromDataBase(userId, registerId);
-		return buildDebtValueDTO(register, debts);
+		return buildDebtCategoryGroupDTO(register, debts);
 	}
 
 	private List<Debt> getDebts(Long registerId) {
@@ -138,19 +140,83 @@ public class DebtService {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	private DebtValueDTO buildDebtValueDTO(Register register, List<Debt> debts) {
+	private DebtGroupDTO buildDebtCategoryGroupDTO(Register register, List<Debt> debts) {
+
 		double fullDebt = getFullDebt(register.getRegisterId()).getTotalDebt();
 		double salary = register.getSalary();
 		double othersValue = Objects.isNull(register.getOthers()) ? 0.00 : register.getOthers();
 		double currentTotalValue = (salary - fullDebt) + othersValue;
 
-		return new DebtValueDTO.Builder()
-				.debtList(buildNewDebtListByRegister(debts))
-				.totalEntryValue(salary + register.getOthers())
-				.currentTotalValue(currentTotalValue)
-				.totalDebt(fullDebt)
-				.createNewDebtValue();
+		List<Category> categories = categoryRepository.findAll();
+		List<Map<String, List<DebtDTO>>> groupDebtsByCategory = groupDebtsByCategory(debts, categories);
+
+		List<DebtCategoryGroupDTO> debtsCategoryGroupDTO = new ArrayList<>();
+
+		DebtGroupDTO debtGroupDTO = new DebtGroupDTO();
+		debtGroupDTO.setTotalDebt(fullDebt);
+		debtGroupDTO.setCurrentTotalValue(currentTotalValue);
+		debtGroupDTO.setTotalEntryValue(salary + othersValue);
+
+		appendDebtsCategoryGroupDTO(categories, groupDebtsByCategory, debtsCategoryGroupDTO, debtGroupDTO);
+
+		return debtGroupDTO;
 	}
+
+	private static void appendDebtsCategoryGroupDTO(List<Category> categories, List<Map<String, List<DebtDTO>>> groupDebtsByCategory, List<DebtCategoryGroupDTO> debtsCategoryGroupDTO, DebtGroupDTO debtGroupDTO) {
+		for (Map<String, List<DebtDTO>> stringListMap : groupDebtsByCategory) {
+			String categoryName = stringListMap.keySet().iterator().next();
+			List<DebtDTO> debtList = stringListMap.get(categoryName);
+
+			Optional<Category> category = categories.stream()
+					.filter(c -> c.getDescription().equals(categoryName))
+					.findAny();
+
+			DebtCategoryGroupDTO debtCategoryDTO = new DebtCategoryGroupDTO();
+			debtCategoryDTO.setTypeCategory(Objects.isNull(categoryName) ? "SEM CATEGORIA" : categoryName);
+			debtCategoryDTO.setCategoryId(category.isEmpty() ? 0L : category.get().getCategoryId());
+			debtCategoryDTO.setDebtList(debtList);
+			debtsCategoryGroupDTO.add(debtCategoryDTO);
+		}
+		debtGroupDTO.setDebtsCategoryGroupDTO(debtsCategoryGroupDTO);
+	}
+
+	private List<Map<String, List<DebtDTO>>> groupDebtsByCategory(List<Debt> debts, List<Category> categories) {
+
+		Map<Long, String> categoryMap = categories.stream()
+				.collect(toMap(Category::getCategoryId, Category::getDescription));
+
+		Map<Long, List<DebtDTO>> debtsMap = new HashMap<>();
+		for (Debt debt : debts) {
+			Long categoryId = debt.getCategoryId();
+			String statusLabel = debt.getStatus().equals(StatusEnum.PAY.getValue()) ? "Pago" : "Aguardando Pagamento";
+			DebtDTO debtDTO = new DebtDTO.Builder()
+					.debtId(debt.getDebtId())
+					.registerId(debt.getRegisterId())
+					.debtDescription(debt.getDebtDescription())
+					.value(debt.getValue())
+					.inputDate(debt.getInputDate())
+					.status(statusLabel)
+					.receiptPayment(debt.getReceiptPayment())
+					.dueDate(debt.getDueDate())
+					.paymentDate(debt.getPaymentDate())
+					.categoryId(categoryId)
+					.createNewDebtDTO();
+
+			debtsMap.computeIfAbsent(categoryId, k -> new ArrayList<>()).add(debtDTO);
+		}
+
+		List<Map<String, List<DebtDTO>>> debtsByCategory = new ArrayList<>();
+		for (Long categoryId : debtsMap.keySet()) {
+			String categoryName = categoryMap.get(categoryId);
+			List<DebtDTO> categoryDebts = debtsMap.get(categoryId);
+			Map<String, List<DebtDTO>> mapCategory = new HashMap<>();
+			mapCategory.put(categoryName, categoryDebts);
+			debtsByCategory.add(mapCategory);
+		}
+
+		return debtsByCategory;
+	}
+
 
 	public DebtDTO getDebtById(Long debtId) throws DebtNotFoundException {
 		Debt debt = debtRepository.findById(debtId).orElseThrow(() -> new DebtNotFoundException("Não foi encontrado o débito pelo Id informado"));
@@ -186,28 +252,25 @@ public class DebtService {
 				.orElseThrow(() -> new RegisterNotFoundException("Registro não encontrado na base"));
 	}
 
-	public List<DebtDTO> getAllDebtsByUserIdAndRegisterId(Long userId, String monthDebt) throws RegisterNotFoundException {
+	public DebtGroupDTO getAllDebtsByUserIdAndRegisterId(Long userId, String monthDebt) throws RegisterNotFoundException {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 		LocalDate monthLocalDate = YearMonth.parse(monthDebt, formatter).atDay(1);
+
 		Long registerId = registerRepository.findByUserId(userId)
 				.orElseThrow(() -> new RegisterNotFoundException("Registro não encontrado para UserId"))
 				.getRegisterId();
 
-		return debtRepository.findByRegisterIdAndDueDate(registerId, monthLocalDate).stream()
-				.map(debt -> new DebtDTO.Builder()
-						.registerId(registerId)
-						.userId(userId)
-						.receiptPayment(debt.getReceiptPayment())
-						.debtId(debt.getDebtId())
-						.categoryId(debt.getCategoryId())
-						.status(debt.getStatus() == StatusEnum.AWAITING_PAYMENT.getValue() ? StatusEnum.AWAITING_PAYMENT.getLabel() : StatusEnum.PAY.getLabel())
-						.value(debt.getValue())
-						.inputDate(debt.getInputDate())
-						.debtDescription(debt.getDebtDescription())
-						.dueDate(debt.getDueDate())
-						.paymentDate(debt.getPaymentDate())
-						.createNewDebtDTO())
-				.toList();
+		List<Debt> allDebt = debtRepository.findByRegisterIdAndDueDate(registerId, monthLocalDate);
+		List<Category> categories = categoryRepository.findAll();
+		List<Map<String, List<DebtDTO>>> groupDebtsByCategory = groupDebtsByCategory(allDebt, categories);
+
+		List<DebtCategoryGroupDTO> debtsCategoryGroupDTO = new ArrayList<>();
+
+		DebtGroupDTO debtGroupDTO = new DebtGroupDTO();
+
+		appendDebtsCategoryGroupDTO(categories, groupDebtsByCategory, debtsCategoryGroupDTO, debtGroupDTO);
+
+		return debtGroupDTO;
 	}
 
 }

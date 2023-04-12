@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 @Entity
 @Table(name = "category")
@@ -13,6 +12,10 @@ public class Category implements Serializable {
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private final List<Debt> debts = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "register_id", updatable = false, insertable = false)
+	private Register register;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +25,15 @@ public class Category implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-	public Category(String description) {
+	@Column(name = "register_id")
+	private Long registerId;
+
+	public Category(String description, Long registerId) {
 		this.description = description;
+		this.registerId = registerId;
 	}
 
 	public Category() {
-	}
-
-	public List<Debt> getDebts() {
-		return debts;
 	}
 
 	public Long getCategoryId() {
@@ -49,24 +52,33 @@ public class Category implements Serializable {
 		this.description = description;
 	}
 
+	public Long getRegisterId() {
+		return registerId;
+	}
+
+	public void setRegisterId(Long registerId) {
+		this.registerId = registerId;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Category category = (Category) o;
-		return Objects.equals(categoryId, category.categoryId) && Objects.equals(description, category.description);
+		return Objects.equals(categoryId, category.categoryId) && Objects.equals(description, category.description) && Objects.equals(registerId, category.registerId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoryId, description);
+		return Objects.hash(categoryId, description, registerId);
 	}
 
 	@Override
 	public String toString() {
-		return new StringJoiner(", ", Category.class.getSimpleName() + "[", "]")
-				.add("categoryId=" + categoryId)
-				.add("description='" + description + "'")
-				.toString();
+		return "Category{" +
+				"categoryId=" + categoryId +
+				", description='" + description + '\'' +
+				", registerId=" + registerId +
+				'}';
 	}
 }

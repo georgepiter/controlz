@@ -1,19 +1,22 @@
 package br.com.controlz.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDate;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DebtDTO {
 
-	private Long debtId;
+	private final Long debtId;
 	private Long userId;
 	private String status;
-	private byte[] receiptPayment;
-	private LocalDate dueDate;
+	private final byte[] receiptPayment;
+	private final LocalDate dueDate;
 	private LocalDate paymentDate;
-	private Long categoryId;
-	private Long registerId;
-	private LocalDate inputDate;
-	private String debtDescription;
+	private final Long categoryId;
+	private final Long registerId;
+	private final LocalDate inputDate;
+	private final String debtDescription;
 	private Double value;
 
 

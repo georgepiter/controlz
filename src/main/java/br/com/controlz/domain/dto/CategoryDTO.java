@@ -4,6 +4,7 @@ public class CategoryDTO {
 
 	private Long categoryId;
 	private String description;
+	private Long registerId;
 
 	public CategoryDTO() {
 		//ignored
@@ -23,5 +24,13 @@ public class CategoryDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Long getRegisterId() {
+		return registerId;
+	}
+
+	public void setRegisterId(Long registerId) {
+		this.registerId = registerId;
 	}
 }

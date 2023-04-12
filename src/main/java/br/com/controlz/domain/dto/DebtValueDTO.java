@@ -3,11 +3,10 @@ package br.com.controlz.domain.dto;
 import java.util.List;
 
 public class DebtValueDTO {
-
-	private List<DebtDTO> debtList;
-	private Double totalDebt;
-	private Double totalEntryValue;
-	private Double currentTotalValue;
+	private final List<DebtDTO> debtList;
+	private final Double totalDebt;
+	private final Double totalEntryValue;
+	private final Double currentTotalValue;
 
 	protected DebtValueDTO(List<DebtDTO> debtList, Double totalDebt, Double totalEntryValue, Double currentTotalValue) {
 		this.debtList = debtList;

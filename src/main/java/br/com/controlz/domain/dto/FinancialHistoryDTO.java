@@ -2,12 +2,12 @@ package br.com.controlz.domain.dto;
 
 public class FinancialHistoryDTO {
 
-	private Long financialHistoryId;
-	private Long registerId;
-	private Double totalCredit;
-	private Double totalDebt;
-	private String period;
-	private Double balanceCredit;
+	private final Long financialHistoryId;
+	private final Long registerId;
+	private final Double totalCredit;
+	private final Double totalDebt;
+	private final String period;
+	private final Double balanceCredit;
 
 	protected FinancialHistoryDTO(Long financialHistoryId, Long registerId, Double totalCredit, Double totalDebt, String period, Double balanceCredit) {
 		this.financialHistoryId = financialHistoryId;
