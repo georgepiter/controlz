@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: 
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - my-network
+
+  backend:
+    container_name: backend	
+    build: 
+      context: ./controlz
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: jdbc:mysql://host.docker.internal:3306/controlz?serverTimezone=UTC&useLegacyDatetimeCode=false
+      DATABASE_USERNAME: 
+      DATABASE_PASSWORD: 
+      JWT_SECRET: 
+      JWT_EXPIRATION: 600000
+      SENDINBLUE_API_KEY: 
+      SENDINBLUE_URL: https://api.sendinblue.com
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - my-network
+
+  frontend:
+    build: ./my-finances
+    container_name: frontend
+    environment:
+      APP_NAME: FINANCES
+      BASE_URL: 
+      BASE_URL_API: http://backend:8080
+      NODE_ENV: development
+      BASE_URL_AUTH: /api/v1
+      NEXTAUTH_URL: http://localhost:3000
+      JWT_SECRET: HS512
+    ports:
+      - "3000:3000"
+    networks:
+      - my-network
+      
+volumes:
+  mysql-data:
+networks:
+  my-network:
+   driver: bridge
