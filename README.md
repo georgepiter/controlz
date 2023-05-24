@@ -39,6 +39,11 @@ Em seguida adicione as environments variables com suas configurações:
 - [x] SENDINBLUE_URL - URL de conexão para Integrar com a API do sendiBlue. 
 - [x] É necessário cadastro para geração da API key e url, segue o link da documentação https://developers.sendinblue.com/reference/sendtransacemail
 
+## DOCKER
+- [x] Preencha o arquivo docker-compose que está em : https://github.com/georgepiter/controlz/blob/main/docs/docker-compose.yml
+- [x] Mova o docker-compose para o dir onde está a pasta raiz do back-end controlz e o front-end my-finances 
+- [x] execute o comando docker-compose up --build e após o container ser criado acesse o sistema pela porta 3000 do local host
+
 ## Instruções para utilizar o template de e-mails.
 
 O sistema possue dois templates:
