@@ -40,7 +40,7 @@ public class DebtController {
 	}
 
 	@GetMapping(value = "/all/{userId}/{registerId}")
-	@ApiOperation(value = "Método que retorna todos os débitos do mês")
+	@ApiOperation(value = "Método que retorna todos os débitos próximo mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public DebtGroupDTO getAllDebtsById(@PathVariable Long userId, @PathVariable Long registerId) throws RegisterNotFoundException {
 		return debtService.getAllDebtsByRegister(registerId, userId);
@@ -54,7 +54,7 @@ public class DebtController {
 	}
 
 	@GetMapping(value = "/dash/{userId}/{registerId}")
-	@ApiOperation(value = "Método que retorna valor total dos débitos e saldo do mês")
+	@ApiOperation(value = "Método que retorna valor total dos débitos e saldo do mês do próximo mês")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public DebtValueDashDTO getValuesByMonth(@PathVariable Long userId, @PathVariable Long registerId) throws RegisterNotFoundException {
 		return debtService.getValuesByMonth(registerId, userId);
