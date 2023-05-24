@@ -66,11 +66,11 @@ public class DebtService {
 		return buildDebtCategoryGroupDTO(register, debts);
 	}
 
-	private List<Debt> getDebts(Long registerId) {
+	public List<Debt> getDebts(Long registerId) {
 		LocalDate now = LocalDate.now();
-		LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
-		LocalDate lastDayOfMonth = now.with(TemporalAdjusters.lastDayOfMonth());
-		return debtRepository.findByDueDateAndRegisterId(firstDayOfMonth, lastDayOfMonth, registerId);
+		LocalDate firstDayOfNextMonth = now.plusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
+		LocalDate lastDayOfNextMonth = now.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+		return debtRepository.findByDueDateAndRegisterId(firstDayOfNextMonth, lastDayOfNextMonth, registerId);
 	}
 
 	public DebtValueDTO getFullDebt(Long registerId) {
