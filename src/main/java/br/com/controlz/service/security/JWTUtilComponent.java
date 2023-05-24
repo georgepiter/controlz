@@ -16,7 +16,7 @@ public class JWTUtilComponent {
 	private String secret;
 
 	@Value("${jwt.expiration}")
-	private Integer expiration;
+	private String expiration;
 
 	public String generateToken(String username, Long userId, String authority, String email) {
 		return Jwts.builder()
