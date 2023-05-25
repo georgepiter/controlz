@@ -21,7 +21,7 @@ public class JWTUtilComponent {
 	public String generateToken(String username, Long userId, String authority, String email) {
 		return Jwts.builder()
 				.setSubject(username)
-				.setExpiration(new Date(System.currentTimeMillis() + expiration))
+				.setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(expiration)))
 				.claim("name", username)
 				.claim("email", email)
 				.claim("userId", userId)
