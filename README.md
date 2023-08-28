@@ -21,7 +21,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 ## 🚀 Instalando
 
-Após efetuar o clone do Back End adicione o POM do projeto ao Mavem e aguarde o dowmload das dependências.
+Após efetuar o clone do Back End adicione o POM do projeto ao Mavem e aguarde o download das dependências.
 
 Em seguida adicione as environments variables com suas configurações:
 
