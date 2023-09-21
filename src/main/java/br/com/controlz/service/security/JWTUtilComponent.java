@@ -16,12 +16,12 @@ public class JWTUtilComponent {
 	private String secret;
 
 	@Value("${jwt.expiration}")
-	private String expiration;
+	private Long expiration;
 
 	public String generateToken(String username, Long userId, String authority, String email) {
 		return Jwts.builder()
 				.setSubject(username)
-				.setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(expiration)))
+				.setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.claim("name", username)
 				.claim("email", email)
 				.claim("userId", userId)

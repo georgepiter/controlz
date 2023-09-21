@@ -1,6 +1,8 @@
 package br.com.controlz.domain.dto;
 
-public class CategoryDTO {
+import java.io.Serializable;
+
+public class CategoryDTO implements Serializable {
 
 	private Long categoryId;
 	private String description;

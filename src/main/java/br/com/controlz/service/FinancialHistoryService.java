@@ -8,7 +8,6 @@ import br.com.controlz.domain.exception.FinancialHistoryNotFoundException;
 import br.com.controlz.domain.repository.FinancialHistoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import springfox.documentation.annotations.Cacheable;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +23,6 @@ public class FinancialHistoryService {
 		this.financialHistoryRepository = financialHistoryRepository;
 	}
 
-	@Cacheable(value = "cached")
 	public HistoryDTO getAllFinancialHistoryById(Long registerId) {
 		HistoryDTO historyDTO = new HistoryDTO();
 		List<FinancialHistory> financialHistory = financialHistoryRepository.findByRegisterId(registerId);

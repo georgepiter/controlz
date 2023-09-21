@@ -26,14 +26,14 @@ public class MailBuildService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MailBuildService.class);
 
-	private final APIService apiService;
+	private final ApiService apiService;
 	private final EmailRepository emailRepository;
 	private final EmailPropertyRepository emailPropertyRepository;
 
 
-	public MailBuildService(APIService apiService,
-							EmailRepository emailRepository,
-							EmailPropertyRepository emailPropertyRepository) {
+	public MailBuildService(ApiService apiService,
+	                        EmailRepository emailRepository,
+	                        EmailPropertyRepository emailPropertyRepository) {
 		this.apiService = apiService;
 		this.emailRepository = emailRepository;
 		this.emailPropertyRepository = emailPropertyRepository;

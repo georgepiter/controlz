@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class APIService {
+public class ApiService {
 
 	public static final Long CONNECT_TIME_OUT = 5L;
 	public static final Long READ_TIME_OUT = 15L;
