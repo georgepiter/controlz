@@ -1,6 +1,9 @@
 package br.com.controlz.controller;
 
-import br.com.controlz.domain.dto.*;
+import br.com.controlz.domain.dto.DebtDTO;
+import br.com.controlz.domain.dto.DebtGroupDTO;
+import br.com.controlz.domain.dto.DebtValueDashDTO;
+import br.com.controlz.domain.dto.ResponseEntityCustom;
 import br.com.controlz.domain.exception.DebtNotFoundException;
 import br.com.controlz.domain.exception.RegisterNotFoundException;
 import br.com.controlz.service.DebtService;
