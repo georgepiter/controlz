@@ -125,7 +125,7 @@ public class DebtService {
 		double othersValue = Objects.isNull(register.getOthers()) ? 0.00 : register.getOthers();
 		double currentTotalValue = (salary - fullDebt) + othersValue;
 
-		List<Category> categories = categoryRepository.findAll();
+		List<Category> categories = categoryRepository.findAll(); //todo implementar padrão de interface com serviço de repositories
 		List<Map<String, List<DebtDTO>>> groupDebtsByCategory = groupDebtsByCategory(debts, categories);
 
 		List<DebtCategoryGroupDTO> debtsCategoryGroupDTO = new ArrayList<>();

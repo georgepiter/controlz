@@ -1,8 +1,14 @@
 package br.com.controlz.domain.cached;
 
 import br.com.controlz.domain.dto.CategoryDTO;
+import br.com.controlz.domain.dto.DebtDTO;
+import br.com.controlz.domain.dto.DebtGroupDTO;
+import br.com.controlz.domain.dto.DebtValueDashDTO;
 import br.com.controlz.domain.exception.CategoryNotFoundException;
+import br.com.controlz.domain.exception.DebtNotFoundException;
+import br.com.controlz.domain.exception.RegisterNotFoundException;
 import br.com.controlz.service.CategoryService;
+import br.com.controlz.service.DebtService;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
@@ -17,11 +23,14 @@ public class CachedService {
 
 	private final CacheManager cacheManager;
 	private final CategoryService categoryService;
+	private final DebtService debtService;
 
 	public CachedService(CacheManager cacheManager,
-	                     CategoryService categoryService) {
+	                     CategoryService categoryService,
+	                     DebtService debtService) {
 		this.cacheManager = cacheManager;
 		this.categoryService = categoryService;
+		this.debtService = debtService;
 	}
 
 	protected Optional<Cache.ValueWrapper> getCachedById(String cacheName, long id) {
@@ -65,6 +74,61 @@ public class CachedService {
 		return categoryDTO;
 	}
 
+	public DebtDTO getOrLoadDebtFromCache(Long debtId) throws DebtNotFoundException {
+		DebtDTO debtDTO;
+		String cachedName = "debt";
+		Optional<Cache.ValueWrapper> cacheValue = getCachedById(cachedName, debtId);
+
+		if (cacheValue.isPresent()) {
+			debtDTO = ((DebtDTO) cacheValue.get().get());
+		} else {
+			debtDTO = debtService.getDebtById(debtId);
+			putCachedById(debtId, debtDTO, cachedName);
+		}
+		return debtDTO;
+	}
+
+	public DebtGroupDTO getOrLoadDebtGroupFromCache(Long userId, Long registerId) throws RegisterNotFoundException {
+		DebtGroupDTO debtGroupDTO;
+		String cachedName = "debt";
+		Optional<Cache.ValueWrapper> cacheValue = getCachedById(cachedName, userId);
+
+		if (cacheValue.isPresent()) {
+			debtGroupDTO = ((DebtGroupDTO) cacheValue.get().get());
+		} else {
+			debtGroupDTO = debtService.getAllDebtsByRegister(registerId, userId);
+			putCachedById(userId, debtGroupDTO, cachedName);
+		}
+		return debtGroupDTO;
+	}
+
+	public DebtGroupDTO getOrLoadDebtGroupFromCacheOrService(Long userId, String monthDebt) throws RegisterNotFoundException {
+		DebtGroupDTO debtGroupDTO;
+		String cachedName = "debt";
+		Optional<Cache.ValueWrapper> cacheValue = getCachedById(cachedName, userId);
+
+		if (cacheValue.isPresent()) {
+			debtGroupDTO = ((DebtGroupDTO) cacheValue.get().get());
+		} else {
+			debtGroupDTO = debtService.getAllDebtsByUserIdAndRegisterId(userId, monthDebt);
+			putCachedById(userId, debtGroupDTO, cachedName);
+		}
+		return debtGroupDTO;
+	}
+
+	public DebtValueDashDTO getOrLoadDebtValueDashFromCacheOrService(Long userId, Long registerId) throws RegisterNotFoundException {
+		DebtValueDashDTO debtValueDashDTO;
+		String cachedName = "debt";
+		Optional<Cache.ValueWrapper> cacheValue = getCachedById(cachedName, userId);
+
+		if (cacheValue.isPresent()) {
+			debtValueDashDTO = ((DebtValueDashDTO) cacheValue.get().get());
+		} else {
+			debtValueDashDTO = debtService.getValuesByMonth(registerId, userId);
+			putCachedById(userId, debtValueDashDTO, cachedName);
+		}
+		return debtValueDashDTO;
+	}
 }
 
 
